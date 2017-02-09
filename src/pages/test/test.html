@@ -1,17 +1,28 @@
-<ion-header>
-
-    <ion-navbar>
-        <ion-title>TEST PAGE</ion-title>
-    </ion-navbar>
-
-</ion-header>
+<ion-content style="background-color: gray">
 
 
-<ion-content>
-    <div text-center padding>
-        <div id="mydiv" style="display: inline-block;width: 100px;height: 40px;background-color: blue">
 
+    <div class="a1-container-absolute">
+        <div class="a1-container">
+            <div class="a1-container-absolute a1-bg-black-transparent" (click)="onClickShowView(NONE)"></div>
+            <div class="a1-acontainer-bottom" [style.visibility]="mView==VIEW_FILTER?'visible':'hidden'">
+                <div style="width: 100%; overflow-x: auto;padding: 10px;white-space: nowrap">
+                    <div class="preview-item" *ngFor="let filter of filters; let i=index;" (click)="onClickSelectFilter(i)" [class.preview-item-selected]="i==mSelected">
+                        <img src={{filter.preview}}>
+                        <div class="preview-item-name">{{filter.name}}</div>
+                    </div>
+                </div>
+
+                <div text-center>
+                    <button ion-button clear icon-only class="btn-icon">
+                        <ion-icon name="ios-reverse-camera-outline" class="mIcon"></ion-icon>    
+                    </button>
+
+                    <button ion-button clear icon-only class="btn-icon" (click)="onClickToggleAudio()">
+                        <ion-icon [name]='mAudioEnable? "ios-mic-outline": "ios-mic-off-outline"' class="mIcon" ></ion-icon>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-
 </ion-content>

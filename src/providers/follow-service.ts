@@ -1,16 +1,11 @@
-import { UserPreview, RoomLive } from './config';
+import { UserPreview } from './config';
 
 
 export class FollowManager {
     followings: Array<UserPreview> = [];
     followers: Array<UserPreview> = [];
-    mRooms: Array<RoomLive> = [];
-
     constructor() {
 
-    }
-    cleanRoom() {
-        this.mRooms = [];
     }
     /**@data : Mảng các talent được follows */
     onResponseFollowings(data) {
@@ -21,9 +16,9 @@ export class FollowManager {
             talent.name = tl.title;
             talent.avatar = tl.avatar;
             talent.point = tl.point;
-            talent.level = tl.level;
+            talent.level = tl.level;                              
             this.followings.push(talent);
-        }
+        }                
     }
     /**@data : Mảng các users đang follows mình */
     onResponseFollowers(data) {

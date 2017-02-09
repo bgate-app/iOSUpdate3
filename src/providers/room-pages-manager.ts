@@ -1,59 +1,16 @@
-import { RoomPage, RoomLive, UserPreview } from './config';
-import { UserService } from './user-service';
+import { RoomPage, RoomLive } from './config';
 
-
-export class RoomPool {
-    rooms: Array<RoomLive> = [];
-    _room_in_uses: Array<RoomLive> = [];
-    constructor() {
-
-    }
-    create() {
-        while (this.rooms.length < 20) this.rooms.push(new RoomLive());
-    }
-
-    obtain(): RoomLive {
-        if (this.rooms.length == 0) {
-            while (this.rooms.length < 20) this.rooms.push(new RoomLive());
-        }
-        let room = this.rooms.pop();
-        this._room_in_uses.push(room);
-        return room;
-    }
-
-    findRoomById(id: string): RoomLive {
-        for (let room of this._room_in_uses) {
-            if (room.room_id == id) return room;
-        }
-        return null;
-    }
-
-    findRoomByTalentName(talent_name: string): RoomLive {
-        for (let room of this._room_in_uses) {
-            if (room.talent.name == talent_name) return room;
-        }
-        return null;
-    }
-    findRoomByTalent(talent: UserPreview): RoomLive {
-        return this.findRoomByTalentName(talent.username);
-    }
-}
-
-export class RoomManager {
+export class RoomPageManager {
     /*danh sách phân loại phòng*/
     mPages: Array<RoomPage> = [];
     /*danh sách phòng đang trực tuyến*/
     mRooms: Array<RoomLive> = [];
 
     mSelectedCategory: number = -1;
-
-    mRoomPool: RoomPool = new RoomPool();
     constructor() {
-        this.mRoomPool.create();
+
     }
-    findTalentRoom(talent_name: string) {
-        return this.mRoomPool.findRoomByTalentName(talent_name);
-    }
+
     onResponseRoomPageCategories(data, forceClearData) {
         if (data.status != 1) return;
         if (forceClearData) this.mPages = [];
@@ -73,28 +30,13 @@ export class RoomManager {
     hasRoomCategory() {
         return this.mPages.length > 0 && this.mPages[0].rooms.length > 0;
     }
-    onResponseRoomsLiveStream(userService: UserService, data, forceClearData) {
-        if (data.status != 1) return;
-        if (forceClearData) this.mRooms = [];
-        for (let room of data.content) {
-            let r = this.getHotLiveRoomByID(room.roomId);
-            if (r == undefined) {
-                let roomlive = this.mRoomPool.obtain();
-                roomlive.onResponseHotRoomLive(room);
-                this.mRooms.push(roomlive);
-            } else {
-                r.onResponseHotRoomLive(room);
-            }
-        }
-    }
-
     onResponseHotLiveStream(data, forceClearData) {
         if (data.status != 1) return;
         if (forceClearData) this.mRooms = [];
         for (let room of data.content) {
             let r = this.getHotLiveRoomByID(room.roomId);
             if (r == undefined) {
-                let roomlive = this.mRoomPool.obtain();
+                let roomlive = new RoomLive();
                 roomlive.onResponseHotRoomLive(room);
                 this.mRooms.push(roomlive);
             } else {

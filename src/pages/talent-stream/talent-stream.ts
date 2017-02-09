@@ -10,7 +10,7 @@ import { GiftEffectManager } from '../live-stream/gift-effects';
 import { UserSendGift, Gift } from '../../providers/gift-service';
 import { PomeloState } from '../../providers/pomelo-service';
 import { PomeloCmd, PomeloParamsKey, ResponseCode } from '../../providers/network-config';
-
+import { ScreenOrientation } from "ionic-native";
 
 import { Keyboard } from 'ionic-native';
 
@@ -35,13 +35,14 @@ export class ChatModule {
     this.mChatContainer = document.getElementById(id);
   }
   floatingChat(floating: boolean) {
-    if (floating && screen.width > screen.height) return;
-    let ele = document.getElementById("mContentContainer");
+    let ele = document.getElementById('mContentContainer');
     if (ele == undefined) return;
     if (floating) {
-      ele.style.bottom = this.mKeyboardHeight + screen.width * 0.22 + "px";
+      ele.style.transform = "translate3d(0, " + (-this.mKeyboardHeight) + "px, 0)";
+      ele.style.webkitTransform = "translate3d(0, " + (-this.mKeyboardHeight) + "px, 0)";
     } else {
-      ele.style.bottom = '80px';
+      ele.style.transform = "translate3d(0, 0, 0)";
+      ele.style.webkitTransform = "translate3d(0, 0, 0)";
     }
   }
 
@@ -68,7 +69,7 @@ export class ChatModule {
 
   addChatSessionOnGift(userSendGift: UserSendGift) {
     let chatSession = new ChatSession();
-    chatSession.avatar = userSendGift.user.avatar;
+    chatSession.setAvatar(userSendGift.user.avatar);
     chatSession.name = userSendGift.user.name;
     chatSession.user_role = userSendGift.user.role;
     chatSession.type = ChatSessionType.GIFT_REQUEST;
@@ -84,37 +85,42 @@ export class ChatModule {
 export enum StreamState {
   NONE = 0,
   PREVIEWING,
-  STREAMING,
-  PAUSED,
-  STOPPED
+  BROADCASTING
 }
 
 export class StreamModule {
 
   mState: StreamState = StreamState.NONE;
   constructor(private mStreamPlugin: StreamPlugin) { }
-  startCameraPreview(rtmp: string) {
+  startCameraPreview() {
     if (this.mState != StreamState.PREVIEWING) {
-      this.mStreamPlugin.startCameraPreview({
-        rtmp: rtmp,
-        camera_direction: 'front'
-      });
+      if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.startCameraPreview();
       this.setState(StreamState.PREVIEWING);
     }
   }
 
-  startBroadcast() {
-    if (this.mState != StreamState.STREAMING) {
-      this.mStreamPlugin.startBroadcast();
-      this.setState(StreamState.STREAMING);
+  startBroadcast(success, error, options) {
+    if (this.mState != StreamState.BROADCASTING) {
+      if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.startBroadcast(success, error, options);
+      //this.setState(StreamState.BROADCASTING);
     }
   }
   stopBroadcast() {
-    this.mStreamPlugin.stopBroadcast();
-    this.setState(StreamState.STOPPED);
+    if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.stopBroadcast();
+    //  this.setState(StreamState.PREVIEWING);
+  }
+  stopBroadcastAll() {
+    if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.stopBroadcastAndPreview();
+    this.setState(StreamState.NONE);
   }
   switchCamera() {
-    this.mStreamPlugin.switchCamera();
+    if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.switchCamera();
+  }
+  setFilter(filter: number) {
+    if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.setFilter(filter);
+  }
+  setAudioEnable(enable: boolean) {
+    if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.setAudioEnable(enable);
   }
   setState(newState: StreamState) {
     this.mState = newState;
@@ -146,6 +152,9 @@ export class TalentStreamPage {
   mControls = {
     mView: this.NONE,
     mChat: this.CHAT_TEXT
+  };
+  slides_options = {
+    initialSlide: 1
   };
 
   mAnimationFrameId: number;
@@ -193,12 +202,25 @@ export class TalentStreamPage {
 
     this.mChatModule.onUpdate();
     this.mGiftManager.onUpdate();
+    if (this.mShowMessage) {
+      this.mCountDown--;
+      if (this.mCountDown <= 0) {
+        this.mCountDown = 0;
+        this.mShowMessage = false;
+      }
+    }
   }
 
+  isPortraitMode() {
+    if (this.mDataService.isAndroid()) {
+      return screen.height > screen.width;
+    } else {
+      return ScreenOrientation.orientation == "portrait" || ScreenOrientation.orientation == "portrait-primary" || ScreenOrientation.orientation == "portrait-secondary";
+    }
+  }
 
   ionViewDidEnter() {
-    // this.mDataService.mKeyBoardHeight = screen.height / 3;// fix me
-    // console.log(this.mDataService.mKeyBoardHeight);
+
     this.mChatModule.setKeyboardHeight(this.mDataService.mKeyBoardHeight);
 
     this.events.unsubscribe("user:back");
@@ -217,7 +239,7 @@ export class TalentStreamPage {
 
     this.scheduleUpdate();
 
-    this.mStreamModule.startCameraPreview(this.mDataService.mTalentRoom.mRoom.rtmp_url);
+    this.mStreamModule.startCameraPreview();
 
     this.startRoomLive(this.mDataService.mTalentRoom.mRoom);
 
@@ -246,7 +268,7 @@ export class TalentStreamPage {
       if (this.mDataService.mKeyBoardHeight == 0) {
         this.mChatModule.setKeyboardHeight(e.keyboardHeight);
         this.mDataService.mKeyBoardHeight = e.keyboardHeight;
-        this.mChatModule.floatingChat(true);
+        if (this.isPortraitMode()) this.mChatModule.floatingChat(true);
         let ele = document.getElementById("mStickerContainer");
         if (ele != undefined) {
           ele.style.height = this.mDataService.mKeyBoardHeight + "px";
@@ -291,14 +313,10 @@ export class TalentStreamPage {
     content.style.background = enable ? "" : "transparent";
   }
   tryJoinRoomLive() {
-    console.log("try join room ");
-
     this.mDataService.mPomeloService.checkConnectoConnector(this.mDataService.mUser.username, () => {
       if (this.mDataService.mPomeloService.mPomeloState == PomeloState.ROOM_JOINED) {
         this.mJoinRoomAfterLeaveRoom = true;
         this.mDataService.mPomeloService.leave_room();
-        console.log(" request leave room to join room");
-
       } else {
         this.mDataService.mPomeloService.join_room(this.mLiveStreamData.roomlive.room_id, '');
         console.log("request join room " + this.mDataService.mPomeloService.mPomeloState + " " + this.mLiveStreamData.roomlive.room_id);
@@ -355,15 +373,72 @@ export class TalentStreamPage {
   ionViewDidLeave() {
     this.unScheduleUpdate();
     this.tryLeaveRoom();
-    this.mStreamModule.stopBroadcast();
+    this.mStreamModule.stopBroadcastAll();
   }
 
-  onClickSwitchCamera() {
+  mShowMessage = false;
+  mCountDown = 0;
+  mMessage = "";
+  mBusy = false;
+  showRTMPMessage(message) {
+    this.mShowMessage = true;
+    this.mMessage = message;
+    this.mCountDown = 60;
+  }
+  onRTMPConnecting() {
+    this.showRTMPMessage("Đang kết nối tới server  ..");
+  }
+  onRTMPConnected() {
+    this.showRTMPMessage("Đã kết nối tới server");
+  }
+  onRTMPStreammed() {
+    this.showRTMPMessage("Streaming thành công !");
+    this.mStreamModule.setState(StreamState.BROADCASTING);
+    this.mBusy = false;
 
   }
+  onRTMPStopped() {
+    this.showRTMPMessage("Ngắt kết nối tới server");
+    this.mStreamModule.setState(StreamState.PREVIEWING);
+    this.mBusy = false;
+  }
+  onRTMPDisconnected() {
+    this.showRTMPMessage("Đã ngắt kết nối");
+  }
+  onRTMPNetworkWeak() {
+    this.showRTMPMessage("Kết nối mạng không ổn định!");
+  }
+
+
 
   onClickStartStream() {
-    this.mStreamModule.startBroadcast();
+    if (this.mBusy) return;
+    this.mBusy = true;
+    this.mStreamModule.startBroadcast(data => {
+      console.log(JSON.stringify(data));
+      if (data.status == 0) {
+        this.onRTMPConnecting();
+      } else if (data.status == 1) {
+        this.onRTMPConnected();
+      } else if (data.status == 2) {
+        this.onRTMPStreammed();
+      }
+      else if (data.status == 3) {
+        this.onRTMPStopped();
+      }
+      else if (data.status == 4) {
+        this.onRTMPDisconnected();
+      }
+      else if (data.status == 5) {
+        this.onRTMPNetworkWeak();
+      }
+    }, error => {
+      console.log("Broadcast error : " + JSON.stringify(error));
+    }, {
+        rtmp: this.mLiveStreamData.roomlive.rtmp_url,
+        filter: 0,
+        audio_enable: "true"
+      });
   }
   dialog_showing: boolean = false;
   showConfirmStopStreaming() {
@@ -376,10 +451,7 @@ export class TalentStreamPage {
           }, {
             text: 'Ok',
             handler: () => {
-
               this.stopBroadcast();
-              this.tryLeaveRoom();
-              this.enableBackground(true);
             }
           }
         ]
@@ -387,22 +459,25 @@ export class TalentStreamPage {
       confim.present();
       confim.onDidDismiss(() => {
         this.dialog_showing = false;
+        this.mBusy = false;
       });
       this.dialog_showing = true;
-
+      this.mBusy = true;
     }
 
   }
 
   stopBroadcast() {
     this.mStreamModule.stopBroadcast();
+
   }
   onClickBack() {
-    if (this.mStreamModule.mState != StreamState.STREAMING) {
-      this.navCtrl.pop();
-    } else {
+    if (this.mBusy) { return; }
+    if (this.mStreamModule.mState == StreamState.BROADCASTING) {
       this.showConfirmStopStreaming();
+      return;
     }
+    this.navCtrl.pop();
   }
 
   onClickSwapCamera() {
@@ -416,7 +491,6 @@ export class TalentStreamPage {
     this.mControls.mView = type;
     if (type == this.VIEW_CHAT) {
       this.mControls.mChat = this.CHAT_TEXT;
-
       let ele = document.getElementById("mStickerContainer");
       if (ele != undefined) {
         ele.style.height = this.mDataService.mKeyBoardHeight + "px";
@@ -424,11 +498,13 @@ export class TalentStreamPage {
 
       setTimeout(() => {
         this.mChatInput.setFocus();
-        this.mChatModule.floatingChat(true);
+        //this.mChatModule.floatingChat(true);
+        if (this.isPortraitMode()) this.mChatModule.floatingChat(true);
       }, 100);
     }
 
     if (type == this.NONE) {
+      //this.mChatModule.floatingChat(false);
       this.mChatModule.floatingChat(false);
     }
 
@@ -447,7 +523,7 @@ export class TalentStreamPage {
   onClickSendChat() {
     if (/\S/.test(this.mChatContent)) {
       let chat = new ChatSession();
-      chat.avatar = this.mDataService.mUser.avatar;
+      chat.setAvatar(this.mDataService.mUser.avatar);
       chat.name = this.mDataService.mUser.name;
       chat.user_role = this.mDataService.mUser.role_id;
       chat.content = this.chatService.filter(this.mChatContent);
@@ -465,14 +541,12 @@ export class TalentStreamPage {
 
 
   onUpdateResponseQueue(route: string, data: any) {
-
     if (route.localeCompare(PomeloCmd.DISCONNECT) == 0) {
       this.onDisconnected();
     }
     else if (route.localeCompare(PomeloCmd.QUERY_USER_INFO) == 0) {
     }
     else if (route.localeCompare(PomeloCmd.LEAVE_ROOM) == 0) {
-      console.log("LEFT ROOM");
       this.mDataService.mPomeloService.mPomeloState = PomeloState.LOGINED;
       if (this.mJoinRoomAfterLeaveRoom) {
         this.mDataService.mPomeloService.join_room(this.mLiveStreamData.roomlive.room_id, "");
@@ -524,7 +598,7 @@ export class TalentStreamPage {
     else if (route.localeCompare(PomeloCmd.USER_SEND_GIFT) == 0) {
       let giftRequest: UserSendGift = new UserSendGift();
       giftRequest.user.name = data[PomeloParamsKey.TITLE];
-      giftRequest.user.avatar = data[PomeloParamsKey.AVATAR];
+      giftRequest.user.setAvatar(data[PomeloParamsKey.AVATAR]);
       giftRequest.gift = this.mDataService.mGiftManager.getGiftByID(data[PomeloParamsKey.GIFT_ID]);
       this.mGiftManager.addGiftRequest(giftRequest);
       this.mChatModule.addChatSessionOnGift(giftRequest);
@@ -537,7 +611,7 @@ export class TalentStreamPage {
       if (data[PomeloParamsKey.USERID] != this.mDataService.mUser.username) {
         let chat = new ChatSession();
         if (data[PomeloParamsKey.EXTRAS] != undefined) {
-          chat.avatar = data[PomeloParamsKey.EXTRAS][PomeloParamsKey.AVATAR];
+          chat.setAvatar(data[PomeloParamsKey.EXTRAS][PomeloParamsKey.AVATAR]);
           chat.user_role = data[PomeloParamsKey.EXTRAS][PomeloParamsKey.ROLE_ID];
         }
         chat.name = data[PomeloParamsKey.FROM];
@@ -551,7 +625,7 @@ export class TalentStreamPage {
       for (let hisChat of data[PomeloParamsKey.ARRAY]) {
         let chat = new ChatSession();
         if (hisChat[PomeloParamsKey.EXTRAS] != undefined) {
-          chat.avatar = hisChat[PomeloParamsKey.EXTRAS][PomeloParamsKey.AVATAR];
+          chat.setAvatar(hisChat[PomeloParamsKey.EXTRAS][PomeloParamsKey.AVATAR]);
           chat.user_role = hisChat[PomeloParamsKey.EXTRAS][PomeloParamsKey.ROLE_ID];
         }
         chat.name = hisChat[PomeloParamsKey.FROM];
@@ -600,9 +674,14 @@ export class TalentStreamPage {
     }
     else if (route.localeCompare(PomeloCmd.SHARE) == 0) {
 
+    } else if (route.localeCompare(PomeloCmd.USER_LIKE) == 0) {
+      this.mChatModule.addSystemMessage("<strong>" + data[PomeloParamsKey.TITLE] + " </strong>vừa thích kênh của bạn");
+    } else if (route.localeCompare(PomeloCmd.USER_FOLLOW) == 0) {
+      this.mChatModule.addSystemMessage("<strong>" + data[PomeloParamsKey.TITLE] + " </strong>vừa theo dõi bạn");
+    } else if (route.localeCompare(PomeloCmd.USER_SHARE) == 0) {
+      this.mChatModule.addSystemMessage("<strong>" + data[PomeloParamsKey.TITLE] + " </strong>vừa chia sẻ kênh của bạn");
     }
   }
-
 
   mShowAlertConnected: boolean = false;
   onDisconnected() {
@@ -616,7 +695,8 @@ export class TalentStreamPage {
         {
           text: 'OK',
           handler: () => {
-            this.onClickBack();
+            this.navCtrl.pop();
+            //this.onClickBack();
           }
         }
       ]
@@ -687,6 +767,32 @@ export class TalentStreamPage {
   }
 
 
-  // ======================================================================
+  // ======================================================================  
+
+  ngAfterViewInit() {
+    let ele3 = document.getElementById("view-setting");
+    ele3.addEventListener('touchstart', (event) => {
+      event.stopPropagation();
+    });
+    ele3.addEventListener('touchmove', (event) => {
+      event.stopPropagation();
+    });
+  }
+  mAudioEnable: boolean = true;
+  onClickToggleAudio() {
+    this.mAudioEnable = !this.mAudioEnable;
+    this.mStreamModule.setAudioEnable(this.mAudioEnable);
+  }
+  mShowFilter: boolean = true;
+  onClickToggleFilters() {
+    this.mShowFilter = !this.mShowFilter;
+  }
+  onClickSelectFilter(id) {
+    this.mDataService.mFilterManager.setSelectedFilter(id);
+    this.mStreamModule.setFilter(id);
+  }
+  onClickSwitchCamera() {
+    this.mStreamModule.switchCamera();
+  }
 
 }

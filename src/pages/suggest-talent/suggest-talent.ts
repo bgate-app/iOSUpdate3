@@ -46,7 +46,7 @@ export class SuggestTalentPage {
         let user = UserPreview.createTalent();
         user.username = talent.name;
         user.name = talent.title;
-        user.avatar = talent.avatar;
+        user.setAvatar(talent.avatar);
         user.money = talent.money;
         user.level = talent.level;
         user.point = talent.point;

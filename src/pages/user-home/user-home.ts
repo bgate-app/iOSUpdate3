@@ -3,19 +3,18 @@ import { NavController, Refresher, Content, ToastController, Events, AlertContro
 import { UserInfoPage } from '../user-info/user-info';
 import { UserStreamPage } from '../user-stream/user-stream';
 import { TalentStreamPage } from '../talent-stream/talent-stream';
-import { TalentDetailPage } from '../talent-detail/talent-detail';
 import { LoginPage } from '../login/login';
 
 import { TopPage } from '../top/top';
 import { StreamCategoryPage } from '../stream-category/stream-category';
 import { SuggestTalentPage } from '../suggest-talent/suggest-talent';
+import { TalentDetailPage } from '../talent-detail/talent-detail';
 
 import { StreamPlugin } from '../../providers/stream-plugin';
 import { PomeloState } from '../../providers/pomelo-service';
 
 import { RoomLive, RoomPage, RefreshState, LoadMoreState, UserPreview, UserRole, Default } from '../../providers/config';
 import { DataService } from '../../providers/data-service';
-import { Utils } from '../../providers/utils';
 import { LiveStreamPage } from '../live-stream/live-stream';
 import { RoomLiveField, Chaos, FieldsBuilder, PomeloCmd, ResponseCode, UserManagerField, NetworkConfig } from '../../providers/network-config';
 
@@ -110,7 +109,7 @@ export class UserHomePage {
             this.mDataService.mPomeloService.checkConnectoConnector(this.mDataService.mUser.username, () => {
                 this.mEnableDisconnectEvent = true;
             }, () => { });
-            this.mStreamPlugin.initVideoPlayer();
+            if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.initAll();
         }, 500);
         this.requestUserInfo();
         this.mDataService.requestMessages();
@@ -420,21 +419,15 @@ export class UserHomePage {
 
     onClickShowView(type) {
         if (type == this.VIEW_STREAM) {
-            if (this.mDataService.mUser.role_id == UserRole.TALENT) {
-                this.navCtrl.push(TalentStreamPage);
-            } else {
+            if (this.mDataService.isAndroid()) {
+                if (this.mDataService.mUser.role_id == UserRole.TALENT) {
+                    this.navCtrl.push(TalentStreamPage);
+                } else {
+                    this.navCtrl.push(UserStreamPage);
+                }
+            } else if (this.mDataService.isIOS()) {
                 this.navCtrl.push(UserStreamPage);
             }
-
-            // if (this.mDataService.isAndroid()) {
-            //     if (this.mDataService.mUser.role_id == UserRole.TALENT) {
-            //         this.navCtrl.push(TalentStreamPage);
-            //     } else {
-            //         this.navCtrl.push(UserStreamPage);
-            //     }
-            // } else if (this.mDataService.isIOS()) {
-            //     this.navCtrl.push(UserStreamPage);
-            // }
             return;
         }
         if (type == this.VIEW_USER_INFO) {
@@ -532,10 +525,7 @@ export class UserHomePage {
     onFollowingResponse(data) {
         if (data.status != ResponseCode.SUCCESS) return;
         this.mDataService.mFollowManager.onResponseFollowings(data.content);
-        this.mDataService.requestFollowRooms();
     }
-
-
     mRequestingFollow = true;
     requestFollowingsInfo() {
         this.mDataService.mNetworkService.requestUserFollowings('0-50',
@@ -593,7 +583,7 @@ export class UserHomePage {
                 let user = UserPreview.createTalent();
                 user.username = talent.name;
                 user.name = talent.title;
-                user.avatar = talent.avatar;
+                user.setAvatar(talent.avatar);
                 user.money = talent.money;
                 user.level = talent.level;
                 user.point = talent.point;

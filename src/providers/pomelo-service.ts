@@ -106,7 +106,7 @@ export class PomeloService {
                     }
                     this.checkConnectoConnector(username, success, error);
                 } else {
-                error();
+                    error();
                 }
             });
         } else if (this.mPomeloState == PomeloState.CONNECTED_TO_GATE) {
@@ -150,9 +150,9 @@ export class PomeloService {
         }
 
     }
-    
+
     public sendRequest(route: string, params: any) {
-        this.log("Send request " + route);      
+        this.log("Send request " + route);
         let r = route.split('.');
         let cmd = r[1];
         if (route == NetworkConfig.ROOM_JOIN) {
@@ -378,6 +378,9 @@ export class PomeloService {
         this.on_like();
         this.on_unlike();
         this.on_share();
+        this.on_user_like();
+        this.on_user_share();
+        this.on_user_follow();
     }
 
 
@@ -559,4 +562,21 @@ export class PomeloService {
             this.mResponses.push(new ResponsePomelo(PomeloCmd.SHARE, data));
         });
     }
+
+    on_user_like() {
+        window['pomelo'].on(PomeloCmd.USER_LIKE, (data) => {
+            this.mResponses.push(new ResponsePomelo(PomeloCmd.USER_LIKE, data));
+        });
+    }
+    on_user_share() {
+        window['pomelo'].on(PomeloCmd.USER_FOLLOW, (data) => {
+            this.mResponses.push(new ResponsePomelo(PomeloCmd.USER_FOLLOW, data));
+        });
+    }
+    on_user_follow() {
+        window['pomelo'].on(PomeloCmd.USER_SHARE, (data) => {
+            this.mResponses.push(new ResponsePomelo(PomeloCmd.USER_SHARE, data));
+        });
+    }
+
 }

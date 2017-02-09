@@ -9,6 +9,62 @@ export class Default {
     public static USER_SEX: string = "Bí mật";
     public static ROOM_ID: string = "undefined_room";
 }
+export class Filter {
+    name: string;
+    id: number;
+    preview: string;
+}
+export class FilterManager {
+    mSelectedIndex: number = 0;
+    filters: Array<Filter> = [
+        { id: 0, name: "SkinWhiten", preview: "assets/filters/beauty.png" },
+        // { id: 1, name: "Beauty", preview: "assets/filters/beauty.png" },
+        { id: 2, name: "WhiteCat", preview: "assets/filters/whitecat.png" },
+        { id: 3, name: "Fairy Tale", preview: "assets/filters/fairytale.png" },
+        { id: 4, name: "BlackCat", preview: "assets/filters/blackcat.png" },
+        { id: 5, name: "Romance", preview: "assets/filters/romance.png" },
+        { id: 6, name: "Sakura", preview: "assets/filters/sakura.png" },
+        { id: 7, name: "Amaro", preview: "assets/filters/amoro.jpg" },
+        { id: 8, name: "Walden", preview: "assets/filters/walden.jpg" },
+        { id: 9, name: "Antique", preview: "assets/filters/antique.png" },
+        { id: 10, name: "Calm", preview: "assets/filters/calm.png" },
+        { id: 11, name: "Brannan", preview: "assets/filters/brannan.jpg" },
+        { id: 12, name: "Brooklyn", preview: "assets/filters/brooklyn.jpg" },
+        { id: 13, name: "EarlyBird", preview: "assets/filters/earlybird.jpg" },
+        { id: 14, name: "Freud", preview: "assets/filters/freud.jpg" },
+        { id: 15, name: "Hefe", preview: "assets/filters/hefe.jpg" },
+        { id: 16, name: "Hudson", preview: "assets/filters/hudson.jpg" },
+        { id: 17, name: "Inkwell", preview: "assets/filters/inkwell.jpg" },
+        { id: 18, name: "Kevin", preview: "assets/filters/kevin.jpg" },
+        // { id: 19, name: "Lomo", preview: "assets/filters/lomo.jpg" },
+        { id: 20, name: "N1977", preview: "assets/filters/1977.jpg" },
+        { id: 21, name: "Nashville", preview: "assets/filters/nashville.jpg" },
+        { id: 22, name: "Pixar", preview: "assets/filters/piaxr.jpg" },
+        { id: 23, name: "Rise", preview: "assets/filters/rise.jpg" },
+        { id: 24, name: "Sierra", preview: "assets/filters/sierra.jpg" },
+        { id: 25, name: "Sutro", preview: "assets/filters/sutro.jpg" },
+        { id: 26, name: "Toastero", preview: "assets/filters/toastero.jpg" },
+        { id: 27, name: "Valencia", preview: "assets/filters/valencia.jpg" },
+        { id: 28, name: "Xproii", preview: "assets/filters/walden.jpg" },
+        { id: 29, name: "Evergreen", preview: "assets/filters/warm.png" },
+        { id: 30, name: "Healthy", preview: "assets/filters/healthy.png" },
+        { id: 31, name: "Cool", preview: "assets/filters/cool.png" },
+        { id: 32, name: "Emerald", preview: "assets/filters/emerald.png" },
+        { id: 33, name: "Latte", preview: "assets/filters/latte.png" },
+        { id: 34, name: "Warm", preview: "assets/filters/warm.png" },
+        { id: 35, name: "Tender", preview: "assets/filters/tender.png" },
+        { id: 36, name: "Sweets", preview: "assets/filters/sweets.png" },
+        { id: 37, name: "Nostalgia", preview: "assets/filters/nostalgia.png" },
+        { id: 38, name: "Sunrise", preview: "assets/filters/sunrise.png" },
+        { id: 39, name: "Sunset", preview: "assets/filters/sunset.png" },
+        { id: 40, name: "Crayon", preview: "assets/filters/crayon.jpg" },
+        { id: 41, name: "Sketch", preview: "assets/filters/sketch.png" },
+    ];
+
+    setSelectedFilter(id) {
+        this.mSelectedIndex = id;
+    }
+}
 export class UserSetting {
     mRecieveNotify: boolean = true;
 }
@@ -84,7 +140,7 @@ export enum RoomLiveState {
     BLOCK = 0, UNBLOCK = 1
 }
 export enum RoomLiveStatus {
-    UNDEFINED = -1, OFF_AIR = 0, ON_AIR = 1
+    OFF_AIR = 0, ON_AIR = 1
 }
 export enum UserRole {
     USER = 0, TALENT, ADMIN
@@ -112,6 +168,9 @@ export class UserPreview {
     phone: string;
     private constructor() {
 
+    }
+    setAvatar(ava) {
+        if (ava != undefined && ava.length > 0) this.avatar = ava;
     }
     public static createUser(): UserPreview {
         let user = new UserPreview();
@@ -161,9 +220,9 @@ export class UserPreview {
         this.name = user.title;
         this.username = user.name;
         this.money = user.money;
-        this.avatar = user.avatar;
         this.role = user.role_id;
         this.level = user.level;
+        this.setAvatar(user.avatar);
     }
 
     onResponseTalentLiveStreamInfo(data) {
@@ -178,7 +237,7 @@ export class UserPreview {
         this.name = user.name;
         this.username = user.username;
         this.status = user.status;
-        this.avatar = user.avatar;
+        this.setAvatar(user.avatar);
         this.cover = user.cover;
         this.money = user.money;
         this.gift = user.gift;
@@ -208,7 +267,7 @@ export class TalentTopData {
             u.money = user.money;
             u.top_value = user.money_send_gift;
             u.level = user.level;
-            u.avatar = user.avatar;
+            u.setAvatar(user.avatar);
             this.fans.push(u);
         }
     }
@@ -221,7 +280,7 @@ export class TalentTopData {
             u.money = user.money;
             u.top_value = user.money_send_gift;
             u.level = user.level;
-            u.avatar = user.avatar;
+            u.setAvatar(user.avatar);
             this.users.push(u);
         }
     }
@@ -252,7 +311,7 @@ export class TopData {
         this.users_day = [];
         for (let dt of data) {
             let user = UserPreview.createUser();
-            user.avatar = dt.avatar;
+            user.setAvatar(dt.avatar);
             user.name = dt.title;
             user.money = dt.money;
             user.top_value = dt.top_value;
@@ -265,7 +324,7 @@ export class TopData {
         this.users_month = [];
         for (let dt of data) {
             let user = UserPreview.createUser();
-            user.avatar = dt.avatar;
+            user.setAvatar(dt.avatar);
             user.name = dt.title;
             user.money = dt.money;
             user.top_value = dt.top_value;
@@ -278,7 +337,7 @@ export class TopData {
         this.users_year = [];
         for (let dt of data) {
             let user = UserPreview.createUser();
-            user.avatar = dt.avatar;
+            user.setAvatar(dt.avatar);
             user.name = dt.title;
             user.money = dt.money;
             user.top_value = dt.top_value;
@@ -291,7 +350,7 @@ export class TopData {
         this.talents_day = [];
         for (let dt of data) {
             let talent = UserPreview.createTalent();
-            talent.avatar = dt.avatar;
+            talent.setAvatar(dt.avatar);
             talent.level = dt.level;
             talent.name = dt.title;
             talent.point = dt.point;
@@ -305,7 +364,7 @@ export class TopData {
         this.talents_month = [];
         for (let dt of data) {
             let talent = UserPreview.createTalent();
-            talent.avatar = dt.avatar;
+            talent.setAvatar(dt.avatar);
             talent.level = dt.level;
             talent.name = dt.title;
             talent.point = dt.point;
@@ -319,7 +378,7 @@ export class TopData {
         this.talents_year = [];
         for (let dt of data) {
             let talent = UserPreview.createTalent();
-            talent.avatar = dt.avatar;
+            talent.setAvatar(dt.avatar);
             talent.level = dt.level;
             talent.name = dt.title;
             talent.point = dt.point;
@@ -367,7 +426,7 @@ export class RoomLive {
     onResponseHotRoomLive(data) {
         this.talent.username = data[RoomLiveField.talent_name];
         this.talent.name = data[RoomLiveField.talent_title];
-        this.talent.avatar = data[RoomLiveField.talent_avatar];
+        this.talent.setAvatar(data[RoomLiveField.talent_avatar]);
 
         this.room_id = data[RoomLiveField.room_id];
         this.name = data[RoomLiveField.room_name];
@@ -384,7 +443,7 @@ export class RoomLive {
     onResponseRoomLive(data) {
         this.talent.username = data[RoomLiveField.talent_name];
         this.talent.name = data[RoomLiveField.talent_title];
-        this.talent.avatar = data[RoomLiveField.talent_avatar];
+        this.talent.setAvatar(data[RoomLiveField.talent_avatar]);
 
         this.room_id = data[RoomLiveField.room_id];
         this.name = data[RoomLiveField.room_name];
@@ -400,7 +459,7 @@ export class RoomLive {
     onResponseTalentRoomInfo(data) {
         this.talent.username = data[RoomLiveField.talent_name];
         this.talent.name = data[RoomLiveField.talent_title];
-        this.talent.avatar = data[RoomLiveField.talent_avatar];
+        this.talent.setAvatar(data[RoomLiveField.talent_avatar]);
 
         this.name = data[RoomLiveField.room_name];
         this.view = data[RoomLiveField.number_users];
@@ -426,14 +485,7 @@ export class RoomPage {
         return this.rooms.filter((item, index) => {
             return index < 4;
         });
-    }
-    findTalentRoom(talent_name: string): RoomLive {
-        for (let room of this.rooms) {
-            if (room.talent.username == talent_name) {
-                return room;
-            }
-        }
-        return null;
+
     }
 }
 
@@ -469,11 +521,14 @@ export class User {
     constructor() {
         this.reset();
     }
+    setAvatar(ava) {
+        if (ava != undefined && ava.length > 0) this.avatar = ava;
+    }
     public clone(): User {
         let user = new User();
         user.account_type = this.account_type;
         user.id = this.id;
-        user.avatar = this.avatar;
+        user.setAvatar(this.avatar);
         user.cover = this.cover;
         user.name = this.name;
         user.level = this.level;
@@ -542,10 +597,10 @@ export class User {
         this.money = data.money;
         if (data.sex != undefined) this.sex = data.sex;
         if (data.phone != undefined) this.phone = data.phone;
-        if (data.avatar != undefined) this.avatar = data.avatar;
         if (data.cover != undefined) this.cover = data.cover;
         if (data.email != undefined) this.email = data.email;
         if (data.coupon != undefined) this.coupon = data.coupon;
+        this.setAvatar(data.avatar);
 
     }
     onLoggedOut() {
@@ -567,6 +622,11 @@ export class ChatSession {
         this.name = "Guest";
         this.avatar = Default.USER_AVATAR;
         this.content = "Bạn hát hay quá";
+    }
+    setAvatar(ava) {
+        if (ava != undefined && ava.length > 0) {
+            this.avatar = ava;
+        }
     }
 }
 
@@ -608,11 +668,10 @@ export class LiveStreamData {
     }
     onRoomUser(data) {
         if (this.new_users.length > 12) this.new_users.pop();
-        if (data.avatar == undefined || data.avatar.length == 0) return;
         let user = UserPreview.createUser();
         user.username = data.username;
         user.name = data.name;
-        user.avatar = data.avatar;
+        user.setAvatar(data.avatar);
         user.money = data.money;
         user.role = data.role;
         this.new_users.unshift(user);
@@ -623,7 +682,7 @@ export class LiveStreamData {
         let user = UserPreview.createUser();
         user.username = data.name;
         user.name = data.title;
-        user.avatar = data.avatar;
+        user.setAvatar(data.avatar);
         user.money = data.money;
         user.role = data.role_id;
         this.new_users.unshift(user);

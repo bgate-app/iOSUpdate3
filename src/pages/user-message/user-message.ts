@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 import { DataService } from '../../providers/data-service';
-import { Default, Message, MessageStatus, MessageType } from '../../providers/config';
+import { Message } from '../../providers/config';
 import { ResponseCode } from '../../providers/network-config';
 import { UserMessageDetailPage } from '../user-message-detail/user-message-detail';
 

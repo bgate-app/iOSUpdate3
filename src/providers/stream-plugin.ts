@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 
 @Injectable()
 export class StreamPlugin {
@@ -12,38 +12,45 @@ export class StreamPlugin {
       this.mAiaStream = window['plugins'].aiaStream;
     }
   }
-  setAudioEnable(mEnable) {
-    if (this.mAiaStream == undefined) return;
-    return this.mAiaStream.setAudioEnable({
-      enable: mEnable
+  isAvailable() {
+    return this.mAiaStream != null;
+  }
+  initAll() {
+    this.init();
+    return this.mAiaStream.initAll();
+  }
+  initBroadcast() {
+    return this.mAiaStream.initBroadcast();
+  }
+
+  startCameraPreview() {
+    return this.mAiaStream.startCameraPreview();
+  }
+  stopCameraPreview() {
+    return this.mAiaStream.stopCameraPreview();
+  }
+  startBroadcast(successCallback, errorCallback, options) {
+    this.mAiaStream.startBroadcast(successCallback, errorCallback, options);
+  }
+  stopBroadcast() {
+    return this.mAiaStream.stopBroadcast();
+  }
+  stopBroadcastAndPreview() {
+    return this.mAiaStream.stopBroadcastAndPreview();
+  }
+  switchCamera() {
+    return this.mAiaStream.switchCamera();
+  }
+  setFilter(index: number) {
+    return this.mAiaStream.setFilter({
+      filter: index
     });
   }
-  startCameraPreview(config) {
-    this.init();
-    if (this.mAiaStream == undefined) return;
-    return this.mAiaStream.startCameraPreview(config);
+  setAudioEnable(enable: boolean) {
+    return this.mAiaStream.setAudioEnable({
+      audio_enable: enable
+    });
   }
-
-  stopCameraPreview() {
-    if (this.mAiaStream == undefined) return;
-    return this.mAiaStream.stopCameraPreview({});
-  }
-
-  startBroadcast() {
-    if (this.mAiaStream == undefined) return;
-    return this.mAiaStream.startBroadcast({});
-  }
-
-  stopBroadcast() {
-    if (this.mAiaStream == undefined) return;
-    return this.mAiaStream.stopBroadcast({});
-  }
-
-  switchCamera() {
-    if (this.mAiaStream == undefined) return;
-    return this.mAiaStream.switchCamera({});
-  }
-
 
   /**For RTMP Player */
 

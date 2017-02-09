@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, Events } from 'ionic-angular';
 import { StreamPlugin } from '../../providers/stream-plugin';
-import { UserRole } from '../../providers/config';
 import { DataService } from '../../providers/data-service';
 export enum RecordingState {
   NONE = 0,
@@ -33,11 +32,7 @@ export class UserStreamPage {
     });
     if (this.mDataService.isAndroid()) {
       this.mStreamPlugin.init();
-      this.mStreamPlugin.startCameraPreview({
-        rtmp: 'rtmp://203.162.13.87:1936/live/100016',
-        camera_direction: 'front'
-      });
-
+      this.mStreamPlugin.startCameraPreview();
       setTimeout(() => {
         let content = document.getElementById("streamContent");
         content.style.background = "transparent";
@@ -46,8 +41,9 @@ export class UserStreamPage {
   }
 
   ionViewDidLeave() {
-    if(this.mDataService.isAndroid())
-    this.mStreamPlugin.stopBroadcast();
+    if(this.mDataService.isAndroid()){
+      this.mStreamPlugin.stopBroadcastAndPreview();
+    }    
   }
 
   onClickStartStream() {

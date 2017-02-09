@@ -24,7 +24,7 @@ export class TalentDetailPage {
     } else {
       this.mRoom = new RoomLive();
       this.mRoom.talent = this.mTalent;
-      this.mRoom.status = RoomLiveStatus.UNDEFINED;
+      this.mRoom.status = RoomLiveStatus.OFF_AIR;
     }
 
     while (this.fans.length < 3) this.fans.push(UserPreview.createUser());

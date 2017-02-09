@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Events, NavController, NavParams, Platform, AlertController, ToastController, Slides, ModalController } from 'ionic-angular';
+import { Events, NavController, NavParams, Platform, AlertController, ToastController, Slides,ModalController } from 'ionic-angular';
 import { UserPreview, ChatSession, UserRole } from '../../providers/config';
 import { Utils } from '../../providers/utils';
 import { RoomLive, LiveStreamData, ChatSessionType, RoomLiveStatus, TalentTopData } from '../../providers/config';
@@ -18,6 +18,7 @@ import { GiftEffectManager } from './gift-effects';
 import { StreamPlugin } from '../../providers/stream-plugin';
 
 import { TalentDetailPage } from '../talent-detail/talent-detail';
+
 @Component({
     selector: 'page-live-stream',
     templateUrl: 'live-stream.html'
@@ -444,7 +445,7 @@ export class LiveStreamPage {
     }
     addChatSessionOnGift(userSendGift: UserSendGift) {
         let chatSession = new ChatSession();
-        chatSession.avatar = userSendGift.user.avatar;
+        chatSession.setAvatar(userSendGift.user.avatar);
         chatSession.name = userSendGift.user.name;
         chatSession.user_role = userSendGift.user.role;
         chatSession.type = ChatSessionType.GIFT_REQUEST;
@@ -552,7 +553,7 @@ export class LiveStreamPage {
     onClickSendChat() {
         if (/\S/.test(this.mChatContent)) {
             let chat = new ChatSession();
-            chat.avatar = this.mDataService.mUser.avatar;
+            chat.setAvatar(this.mDataService.mUser.avatar);
             chat.name = this.mDataService.mUser.name;
             chat.user_role = this.mDataService.mUser.role_id;
             chat.content = this.chatService.filter(this.mChatContent);
@@ -795,20 +796,8 @@ export class LiveStreamPage {
 
 
     }
-    onClickFollowTalent() {
-        if (this.mLiveStreamData.user.role == 1) {
-            this.mDataService.mNetworkService.requestUserFollow(this.mLiveStreamData.user.username).then(
-                data => {
-                    if (data['status'] == ResponseCode.SUCCESS || data['status'] == 14) {
-                        if (this.mLiveStreamData.user.username == this.mLiveStreamData.roomlive.talent.username)
-                            this.enableFollowButton(false);
-                        this.mLiveStreamData.user.followed = true;
-                    }
-                }
-            );
-        }
-    }
-    onClickUser(user: UserPreview) {
+
+      onClickUser(user: UserPreview) {
         if (user.role == UserRole.TALENT) {
             this.onClickShowView(this.VIEW_NONE);
             setTimeout(() => {
@@ -828,6 +817,20 @@ export class LiveStreamPage {
             this.enableFollowButton(!this.mLiveStreamData.roomlive.talent.followed);
         }, 200);
 
+    }
+
+    onClickFollowTalent() {
+        if (this.mLiveStreamData.user.role == 1) {
+            this.mDataService.mNetworkService.requestUserFollow(this.mLiveStreamData.user.username).then(
+                data => {
+                    if (data['status'] == ResponseCode.SUCCESS || data['status'] == 14) {
+                        if (this.mLiveStreamData.user.username == this.mLiveStreamData.roomlive.talent.username)
+                            this.enableFollowButton(false);
+                        this.mLiveStreamData.user.followed = true;
+                    }
+                }
+            );
+        }
     }
     onClickUnFollowTalent() {
         if (this.mLiveStreamData.user.role == 1) {
@@ -925,7 +928,7 @@ export class LiveStreamPage {
             if (data[PomeloParamsKey.SUCCESS]) {
                 let giftRequest: UserSendGift = new UserSendGift();
                 giftRequest.user.name = this.mDataService.mUser.name;
-                giftRequest.user.avatar = this.mDataService.mUser.avatar;
+                giftRequest.user.setAvatar(this.mDataService.mUser.avatar);
                 giftRequest.gift = this.mDataService.mGiftManager.getGiftByID(this.mSelectedGiftID);
                 this.mGiftEffectManager.addGiftRequest(giftRequest);
                 this.mDataService.mUser.money = data[PomeloParamsKey.MONEY];
@@ -939,7 +942,7 @@ export class LiveStreamPage {
         else if (route.localeCompare(PomeloCmd.USER_SEND_GIFT) == 0) {
             let giftRequest: UserSendGift = new UserSendGift();
             giftRequest.user.name = data[PomeloParamsKey.TITLE];
-            giftRequest.user.avatar = data[PomeloParamsKey.AVATAR];
+            giftRequest.user.setAvatar(data[PomeloParamsKey.AVATAR]);
             giftRequest.gift = this.mDataService.mGiftManager.getGiftByID(data[PomeloParamsKey.GIFT_ID]);
             this.mGiftEffectManager.addGiftRequest(giftRequest);
             this.addChatSessionOnGift(giftRequest);
@@ -952,7 +955,7 @@ export class LiveStreamPage {
             if (data[PomeloParamsKey.USERID] != this.mDataService.mUser.username) {
                 let chat = new ChatSession();
                 if (data[PomeloParamsKey.EXTRAS] != undefined) {
-                    chat.avatar = data[PomeloParamsKey.EXTRAS][PomeloParamsKey.AVATAR];
+                    chat.setAvatar(data[PomeloParamsKey.EXTRAS][PomeloParamsKey.AVATAR]);
                     chat.user_role = data[PomeloParamsKey.EXTRAS][PomeloParamsKey.ROLE_ID];
                 }
                 chat.name = data[PomeloParamsKey.FROM];
@@ -964,7 +967,7 @@ export class LiveStreamPage {
             for (let hisChat of data[PomeloParamsKey.ARRAY]) {
                 let chat = new ChatSession();
                 if (hisChat[PomeloParamsKey.EXTRAS] != undefined) {
-                    chat.avatar = hisChat[PomeloParamsKey.EXTRAS][PomeloParamsKey.AVATAR];
+                    chat.setAvatar(hisChat[PomeloParamsKey.EXTRAS][PomeloParamsKey.AVATAR]);
                     chat.user_role = hisChat[PomeloParamsKey.EXTRAS][PomeloParamsKey.ROLE_ID];
                 }
                 chat.name = hisChat[PomeloParamsKey.FROM];

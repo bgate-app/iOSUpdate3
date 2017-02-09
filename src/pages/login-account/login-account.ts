@@ -57,10 +57,10 @@ export class LoginAccountPage {
   onUpdate() {
     if (this.mRequesting) {
       this.mCount++;
-      if (this.mCount > 100) {
-        this.mCount = 0;
+      if (this.mCount > 84) {
+        this.mCount = 1;
       }
-      let idx = Math.floor(this.mCount / 20);
+      let idx =Math.abs( Math.floor(this.mCount / 12)-4);
       this.mText = "";
       while (this.mText.length < idx) {
         this.mText += ".";

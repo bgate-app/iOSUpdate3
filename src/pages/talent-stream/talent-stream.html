@@ -1,126 +1,6 @@
 <ion-content id="streamContent">
-
-    <!--preview-->
-    <div class="mFullScreenAbsolute" *ngIf="mStreamModule.mState==NONE || mStreamModule.mState==PREVIEWING">
-        <div class="mContainer" style=" display: flex; align-items: center;">
-            <div style="margin: 0 auto;">
-                <div padding text-center class="mInputLive">
-                    <ion-input type="text" placeholder="Chủ đề LIVE của bạn" id="mInputText"></ion-input>
-                </div>
-                <div padding text-center class="mInputTag">
-                    # Tag LIVE của bạn
-                </div>
-                <div padding text-center>
-                    <button ion-button round class="button-live" (click)="onClickStartStream()">Bắt đầu LIVE</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--streaming-->
-    <div class="mFullScreenAbsolute" [style.display]='mStreamModule.mState==STREAMING?"block":"none"'>
-        <div class="mContainer">
-            <div id="iHeader">
-                <div class="mContainer aHeader">
-                    <div id="header-stream-info">
-                        <ion-avatar id="talent-avatar">
-                            <img src={{mDataService.mUser.avatar}}>
-                        </ion-avatar>
-                        <div id="stream-info">
-                            <div id="host-name">{{mDataService.mUser.name}}</div>
-                            <div id="stream-view-container">
-                                <ion-icon name="eye" id="stream-view-icon">
-                                </ion-icon> <span id="span-view">0</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="aHeaderUsers" id="userscontainer">
-                        <div class="users-container">
-                            <img *ngFor="let newUser of mLiveStreamData.new_users" src={{newUser.avatar}} class="user-avatar">
-                        </div>
-                    </div>
-                    <img src="assets/v2/button-x.png" id="button-back" (click)="onClickBack()">
-                </div>
-                <div style="display:inline-block">
-                    <div class="talent-money" (click)="onClickShowView(VIEW_TOP)">
-                        <img src="assets/v2/icon-gift.png"> {{mLiveStreamData.roomlive.talent.point}}
-                        <ion-icon name="ios-arrow-forward"></ion-icon>
-                    </div>
-                </div>
-            </div>
-
-            <div id="mContentContainer">
-                <div id="iChatContainer">
-                    <div class="mContainer">
-                        <div *ngFor="let chat of mChatModule.chats">
-                            <div class="system-chat-session-container" *ngIf="chat.type==0" [innerHTML]="chat.content"></div>
-                            <div class="chat-session-container" *ngIf="chat.type==1">
-                                <div class="chat-session-container-avatar">
-                                    <ion-avatar><img src={{chat.avatar}}></ion-avatar>
-                                </div>
-                                <div class="chat-session-container-content">
-                                    <span *ngIf="chat.user_role==2"><img src="assets/v2/icon_admin_room.png" class="role-icon"></span>
-                                    <span *ngIf="chat.user_role==1"><img src="assets/v2/icon_talent_room.png" class="role-icon"></span>
-                                    <span class="chat-user-name" [class.user-color]="chat.user_role==0" [class.admin-color]="chat.user_role==2" [class.host-color]="chat.user_role==1">{{chat.name}}: </span>
-                                    <span [innerHTML]="chat.content"></span>
-                                </div>
-                            </div>
-
-                            <div class="chat-session-container" *ngIf="chat.type==2">
-                                <div class="chat-session-container-avatar">
-                                    <ion-avatar><img src={{chat.avatar}}></ion-avatar>
-                                </div>
-                                <div class="chat-session-container-content">
-                                    <span *ngIf="chat.user_role==2"><img src="assets/v2/icon_admin_room.png" class="role-icon"></span>
-                                    <span *ngIf="chat.user_role==1"><img src="assets/v2/icon_talent_room.png" class="role-icon"></span>
-                                    <span class="chat-user-name" [class.user-color]="chat.user_role==0" [class.admin-color]="chat.user_role==2" [class.host-color]="chat.user_role==1">{{chat.name}}: </span>
-                                    <span [innerHTML]="chat.content"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="iFooter" class="mFooterShow">
-                <div class="mContainer">
-                    <img src="assets/v2/button-chat.png" class="live-stream-button" (click)="onClickShowView(VIEW_CHAT)">
-                    <img src="assets/v2/icon-banbe.png" class="live-stream-button" (click)="onClickUsers()">
-                    <img src="assets/v2/icon-xoaycamera.png" class="live-stream-button" (click)="onClickSwapCamera()">
-                </div>
-            </div>
-
-
-
-
-
-
-            <div id="mChatContainer" [style.visibility]='mControls.mView==VIEW_CHAT?"visible":"hidden"'>
-                <div id="mChatBar">
-                    <div class="chat_emotion_icon chat_control_button" (click)="onClickChatControl(CHAT_EMOTION)" [class.emtion-select]="mControls.mChat==CHAT_EMOTION">
-                        <ion-icon name="happy"></ion-icon>
-                    </div>
-                    <ion-item class="chat-container">
-                        <ion-input #chatInput id="mChatInput" placeholder="Nhập tin nhắn" [(ngModel)]="mChatContent" (click)="onClickChatControl(CHAT_TEXT)"></ion-input>
-                    </ion-item>
-                    <div (click)="onClickSendChat()" class="chat_button_send chat_control_button">
-                        <ion-icon name="md-send" [class.button-send-chat-unselect]="mChatContent.length==0"></ion-icon>
-                    </div>
-                </div>
-                <div id="mStickerContainer">
-                    <div class="mContainer" *ngIf="mControls.mChat==CHAT_EMOTION">
-                        <div class="mStickerListContent">
-                            <div *ngFor="let emotion of chatService.mEmotions" class="emtion_holder" (click)="onClickEmotion(emotion)">
-                                <img src={{emotion.avatar}} class="emotion_image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+    <div class="a1-container-absolute">
+        <div class="a1-container">
             <div id="mGiftEffectContainer">
                 <div class="mContainer" id="mEffectHolder">
                     <div class="mGiftEffect mGiftEffect-hide" id="mEffect1">
@@ -148,8 +28,157 @@
                     </div>
                 </div>
             </div>
-
         </div>
+    </div>
+    <div class="mFullScreenAbsolute">
+        <ion-slides [options]="slides_options">
+            <!--view setting-->
+            <ion-slide class="a1-container slide-fix">
+
+                <div class="a1-acontainer-bottom" id="view-setting">
+                    <div style="width: 100%; overflow-x: auto;padding: 10px;white-space: nowrap" [style.visibility]="mShowFilter?'visible':'hidden'">
+                        <div class="preview-item" *ngFor="let filter of mDataService.mFilterManager.filters; let i=index;" (click)="onClickSelectFilter(i)" [class.preview-item-selected]="i==mDataService.mFilterManager.mSelectedIndex">
+                            <img src={{filter.preview}}>
+                            <div class="preview-item-name">{{filter.name}}</div>
+                        </div>
+                    </div>
+
+                    <div text-center style="padding-bottom: 10px">
+                        <button ion-button clear icon-only class="btn-icon" (click)="onClickSwitchCamera()">
+                            <ion-icon name="ios-reverse-camera-outline" class="mIcon"></ion-icon>    
+                        </button>
+                        <button ion-button clear icon-only class="btn-icon" (click)="onClickToggleFilters()">
+                            <ion-icon name="ios-color-wand-outline" class="mIcon"></ion-icon>    
+                        </button>
+                        <button ion-button clear icon-only class="btn-icon" (click)="onClickToggleAudio()">
+                            <ion-icon [name]='mAudioEnable? "ios-mic-outline": "ios-mic-off-outline"' class="mIcon" ></ion-icon>
+                        </button>
+                    </div>
+                </div>
+            </ion-slide>
+
+
+            <!--view main-->
+            <ion-slide class="a1-container slide-fix">
+
+                <!--preview-->
+                <div class="mFullScreenAbsolute" *ngIf="mStreamModule.mState==NONE || mStreamModule.mState==PREVIEWING">
+                    <div class="mContainer" style=" display: flex; align-items: center;">
+                        <div style="margin: 0 auto;">
+                            <div padding text-center class="mInputLive">
+                                <ion-input type="text" placeholder="Chủ đề LIVE của bạn" id="mInputText"></ion-input>
+                            </div>
+                            <div padding text-center class="mInputTag">
+                                #Tag LIVE của bạn
+                            </div>
+                            <div padding text-center>
+                                <button ion-button round class="button-live" (click)="onClickStartStream()">Bắt đầu LIVE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--streaming-->
+                <div class="mFullScreenAbsolute" [style.display]='mStreamModule.mState==STREAMING?"block":"none"'>
+                    <div class="mContainer">
+                        <div id="iHeader">
+                            <div class="mContainer aHeader">
+                                <div id="header-stream-info">
+                                    <img src={{mDataService.mUser.avatar}} id="talent-avatar">
+                                    <div id="stream-info">
+                                        <div id="host-name">{{mDataService.mUser.name}}</div>
+                                        <div id="stream-view-container">
+                                            <ion-icon name="eye" id="stream-view-icon">
+                                            </ion-icon> <span id="span-view">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="aHeaderUsers" id="userscontainer">
+                                    <div class="users-container">
+                                        <img *ngFor="let newUser of mLiveStreamData.new_users" src={{newUser.avatar}} class="user-avatar">
+                                    </div>
+                                </div>
+                                <img src="assets/v2/button-x.png" id="button-back" (click)="onClickBack()">
+                            </div>
+                            <div style="display:inline-block">
+                                <div class="talent-money" (click)="onClickShowView(VIEW_TOP)">
+                                    <img src="assets/v2/icon-gift.png"> {{mLiveStreamData.roomlive.talent.point}}
+                                    <ion-icon name="ios-arrow-forward"></ion-icon>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="mContentContainer">
+                            <div id="iChatContainer">
+                                <div class="mContainer">
+                                    <div *ngFor="let chat of mChatModule.chats">
+                                        <div class="system-chat-session-container" *ngIf="chat.type==0" [innerHTML]="chat.content"></div>
+                                        <div class="chat-session-container" *ngIf="chat.type==1">
+                                            <img src={{chat.avatar}} class="chat-session-avatar" (click)="onClickShowUserInfoOnChat(chat)">
+                                            <div class="chat-session-container-content">
+                                                <span *ngIf="chat.user_role==2"><img src="assets/v2/icon_admin_room.png" class="role-icon"></span>
+                                                <span *ngIf="chat.user_role==1"><img src="assets/v2/icon_talent_room.png" class="role-icon"></span>
+                                                <span class="chat-user-name" [class.user-color]="chat.user_role==0" [class.admin-color]="chat.user_role==2" [class.host-color]="chat.user_role==1">{{chat.name}}: </span>
+                                                <span [innerHTML]="chat.content"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="chat-session-container" *ngIf="chat.type==2">
+                                            <img src={{chat.avatar}} class="chat-session-avatar" (click)="onClickShowUserInfoOnChat(chat)">
+                                            <div class="chat-session-container-content">
+                                                <span *ngIf="chat.user_role==2"><img src="assets/v2/icon_admin_room.png" class="role-icon"></span>
+                                                <span *ngIf="chat.user_role==1"><img src="assets/v2/icon_talent_room.png" class="role-icon"></span>
+                                                <span class="chat-user-name" [class.user-color]="chat.user_role==0" [class.admin-color]="chat.user_role==2" [class.host-color]="chat.user_role==1">{{chat.name}}: </span>
+                                                <span [innerHTML]="chat.content"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="iFooter" class="mFooterShow">
+                            <div class="mContainer">
+                                <img src="assets/v2/button-chat.png" class="live-stream-button" (click)="onClickShowView(VIEW_CHAT)">
+                                <img src="assets/v2/icon-banbe.png" class="live-stream-button" (click)="onClickUsers()" (click)="onClickShowView(VIEW_TOP)">
+                                <img src="assets/v2/icon-xoaycamera.png" class="live-stream-button" (click)="onClickSwapCamera()">
+                            </div>
+                        </div>
+
+                        <div id="mChatContainer" [style.visibility]='mControls.mView==VIEW_CHAT?"visible":"hidden"'>
+                            <div id="mChatBar">
+                                <div class="chat_emotion_icon chat_control_button" (click)="onClickChatControl(CHAT_EMOTION)" [class.emtion-select]="mControls.mChat==CHAT_EMOTION">
+                                    <ion-icon name="happy"></ion-icon>
+                                </div>
+                                <ion-item class="chat-container">
+                                    <ion-input #chatInput id="mChatInput" placeholder="Nhập tin nhắn" [(ngModel)]="mChatContent" (click)="onClickChatControl(CHAT_TEXT)"></ion-input>
+                                </ion-item>
+                                <div (click)="onClickSendChat()" class="chat_button_send chat_control_button">
+                                    <ion-icon name="md-send" [class.button-send-chat-unselect]="mChatContent.length==0"></ion-icon>
+                                </div>
+                            </div>
+                            <div id="mStickerContainer">
+                                <div class="mContainer" *ngIf="mControls.mChat==CHAT_EMOTION">
+                                    <div class="mStickerListContent">
+                                        <div *ngFor="let emotion of chatService.mEmotions" class="emtion_holder" (click)="onClickEmotion(emotion)">
+                                            <img src={{emotion.avatar}} class="emotion_image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </ion-slide>
+            <!--view none-->
+            <ion-slide class="a1-container slide-fix">
+
+            </ion-slide>
+        </ion-slides>
     </div>
 
 
@@ -193,8 +222,6 @@
             </div>
         </div>
     </div>
-
-
 
     <!--stopped-->
     <div class="mFullScreenAbsolute" *ngIf="mStreamModule.mState ==STOPPED">
@@ -241,9 +268,15 @@
         </div>
     </div>
 
+
+
+
+
 </ion-content>
 
 <!--close button-->
 <div class="button-back" *ngIf="mStreamModule.mState!=STOPPED && mStreamModule.mState!=STREAMING">
     <img src="assets/v2/button-x.png" id="img-back" (click)="onClickBack()">
 </div>
+
+<div id="iMessage" *ngIf="mShowMessage">{{mMessage}}</div>

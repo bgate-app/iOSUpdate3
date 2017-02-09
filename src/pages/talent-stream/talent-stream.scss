@@ -104,7 +104,7 @@ page-talent-stream {
         height: 36px;
         border-radius: 18px;
         margin-left: 10px;
-        padding-left: 6px;
+        padding-left: 2px;
         padding-right: 6px;
         background-color: rgba(0, 0, 0, .6);
     }
@@ -130,9 +130,10 @@ page-talent-stream {
         margin-right: 4px;
     }
     #talent-avatar {
-        height: 30px;
-        padding-right: 10px;
+        height: 32px;
+        margin-right: 8px;
         display: inline-block;
+        border-radius: 16px;
     }
     #stream-info {
         display: inline-block;
@@ -194,11 +195,12 @@ page-talent-stream {
         position: absolute;
         bottom: 80px;
         width: 80vw;
-        transition: bottom 400ms;
+        transform: translate3d(0, 0, 0);
+        transition: 400ms;
     }
     .system-chat-session-container {
         color: white;
-        font-size: .8em;
+        font-size: 1em;
         line-height: 1.2em;
         padding: 10px;
     }
@@ -222,16 +224,13 @@ page-talent-stream {
     .clearfix {
         clear: both;
     }
-    .chat-session-container-avatar {
-        height: 36px;
+    .chat-session-avatar {
+        height: 28px;
+        width: 28px;
+        border-radius: 14px;
+        left: 4px;
+        top: 4px;
         position: absolute;
-    }
-    .chat-session-container-avatar ion-avatar {
-        height: 100%;
-        padding: 4px;
-    }
-    .chat-session-container-avatar img {
-        height: 100%;
     }
     .chat-session-container-content {
         padding-top: .8em;
@@ -433,7 +432,7 @@ page-talent-stream {
         overflow: hidden;
         display: inline-block;
         white-space: nowrap;
-        font-size: .8em;
+        font-size: 1em;
     }
     .user-send-gift-image {
         height: 8vh;
@@ -540,4 +539,50 @@ page-talent-stream {
         background-color: white;
     }
     //=========================== End top =============================
+    // =========================View Setting==========================
+    .mIcon {
+        font-size: 2em;
+        color: white;
+        font-weight: bold;
+    }
+    .preview-item {
+        display: inline-block;
+        width: 80px;
+        text-align: center;
+        padding: 6px;
+    }
+    .preview-item-selected {
+        border: solid 1px cyan;
+    }
+    .preview-item img {
+        width: 60px;
+        height: 60px;
+    }
+    .preview-item-name {
+        text-align: center;
+        color: white;
+        font-size: .8em;
+    }
+    //==============================End Setting=========================
+    .slide-fix {
+        font-size: 14px;
+        display: block !important;
+        width: 100vw !important;
+        height: 100vh !important;
+    }
+    .slide-fix .slide-zoom {
+        text-align: left;
+        height: 100%;
+    }
+    #iMessage {
+        position: absolute;
+        width: 100vw;
+        left: 0px;
+        top: 24vh;
+        padding: 16px;
+        text-align: center;
+        background-color: rgba(0, 0, 0, .4);
+        color: white;
+        font-size: 1em;
+    }
 }

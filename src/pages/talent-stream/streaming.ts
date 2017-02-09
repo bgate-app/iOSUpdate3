@@ -24,11 +24,8 @@ export class AbstractStream {
 
     constructor(dtService: DataService) {
         this.mDataService = dtService;
-        console.log("streaming : constructor");
-
     }
-    onInit() {
-        console.log("streaming : onInit");
+    onInit() {        
         this.mLiveStreamData = new LiveStreamData();
         this.mGiftEffectManager = new GiftEffectManager();
         this.mEffectManager = new EffectManager();

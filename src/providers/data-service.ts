@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { User, TopData, RoomLive, UserDevice,UserSetting } from './config';
-import { RoomManager } from './room-pages-manager';
+import { User, TopData, RoomLive, UserDevice, FilterManager, UserSetting } from './config';
+import { RoomPageManager } from './room-pages-manager';
 import { SocialLogin } from './social-login';
 import { GiftManager } from './gift-service';
 import { FollowManager } from './follow-service';
 import { NativeStorage } from 'ionic-native';
 import { NetworkService } from './network-service';
 import { PomeloService } from './pomelo-service';
-import { MessageManager } from './message-service';
 import { UserService } from './user-service';
+import { MessageManager } from './message-service';
 import { RoomLiveField, Chaos, FieldsBuilder, UserManagerField, ExtParamsKey, NetworkConfig } from './network-config';
 
 
@@ -20,21 +20,21 @@ export class TalentRoom {
     this.mRoom.poster = room.thumbnail_url;
     this.mRoom.talent.cloneFromUser(talent);
   }
-  onLoggedOut() {    
+  onLoggedOut() {
     this.mRoom = new RoomLive();
   }
 }
 
 @Injectable()
 export class DataService {
-  mUserService : UserService = new UserService();
-  mUserSetting : UserSetting = new UserSetting();
+  mUserService: UserService = new UserService();
+  mUserSetting: UserSetting = new UserSetting();
   mDevice: UserDevice = new UserDevice();
   mUser: User = new User();
   mTalentRoom: TalentRoom = new TalentRoom();
   mSocialLogin: SocialLogin = new SocialLogin();
   mGiftManager: GiftManager = new GiftManager();
-  mRoomPageManager = new RoomManager();
+  mRoomPageManager = new RoomPageManager();
   mNetworkService: NetworkService;
   mPomeloService: PomeloService;
   mMessageManager: MessageManager = new MessageManager();
@@ -45,7 +45,7 @@ export class DataService {
   mRangeGap: number = 5;
   mKeyBoardHeight: number = 0;
   mConfirmPromote: number = -1;
-
+  mFilterManager: FilterManager = new FilterManager();
   constructor() {
 
   }
@@ -62,16 +62,16 @@ export class DataService {
       }, error => {
       });
     this.getItemOnStorage("pomelo_connector").then(data => {
-        this.mPomeloService.onExistConnector(data);
-    },error=>{
-        this.mPomeloService.onNotExistConnector();
+      this.mPomeloService.onExistConnector(data);
+    }, error => {
+      this.mPomeloService.onNotExistConnector();
     });
     this.mDevice.onPlatformReady();
     this.mNetworkService.setUserDevice(this.mDevice);
     this.mPomeloService.setUserDevice(this.mDevice);
     this.requestLoadConfig();
   }
-  requestLoadConfig() {    
+  requestLoadConfig() {
     NetworkConfig.VERSION = "1.3";
     if (NetworkConfig.SERVER_TYPE == NetworkConfig.SERVER_LOCAL) {
       NetworkConfig.MAIN_URL = "http://125.212.192.94:8080/showtimes_app/ws/";
@@ -87,7 +87,7 @@ export class DataService {
   isAndroid() {
     return this.mDevice.isAndroid();
   }
-    isIOS() {
+  isIOS() {
     return this.mDevice.isIos();
   }
 
@@ -142,11 +142,6 @@ export class DataService {
         }
       }
     );
-  }
-  requestFollowRooms(){
-    
-
-
   }
   requestHomeRoomLives() {
     if (this.mNetworkService == undefined) return;
@@ -259,7 +254,6 @@ export class DataService {
       data => {
         this.mListRoomUserHomeRangeFirst += data['content'].length;
         this.mRoomPageManager.onResponseHotLiveStream(data, clearData);
-        //this.mRoomPageManager.onResponseRoomsLiveStream(this.mUserService,data, clearData);
       }
       );
   }
@@ -306,7 +300,6 @@ export class DataService {
   onLoggedOut() {
     this.mTalentRoom.onLoggedOut();
     this.mUser.onLoggedOut();
-    this.mUserService.onLoggedOut();
     if (this.mPomeloService != undefined) this.mPomeloService.onLoggedOut();
     this.enableConfirmPromote(false);
   }

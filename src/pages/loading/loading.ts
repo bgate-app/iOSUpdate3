@@ -5,7 +5,8 @@ import { LazyLoadService } from '../../providers/lazyload-service';
 import { DataService } from '../../providers/data-service';
 import { PomeloService } from '../../providers/pomelo-service';
 import { NetworkService } from '../../providers/network-service';
-import { ExtParamsKey, NetworkConfig, ResponsePomelo, PomeloCmd } from '../../providers/network-config';
+import { StreamPlugin } from '../../providers/stream-plugin';
+import { ExtParamsKey, NetworkConfig } from '../../providers/network-config';
 import { UserHomePage } from '../user-home/user-home';
 
 
@@ -19,6 +20,7 @@ export class LoadingPage {
     private lazyloadService: LazyLoadService,
     private mDataService: DataService,
     private networkService: NetworkService,
+    private mStreamPlugin: StreamPlugin,
     private platform: Platform
   ) {
     this.platform.ready().then(
@@ -35,8 +37,9 @@ export class LoadingPage {
     this.mDataService.requestHomeBanners();
     this.mDataService.requestHotLiveStream('' + this.mDataService.mListRoomUserHomeRangeFirst + '-' + this.mDataService.mRangeGap, true);
     this.mDataService.requestTopTalentRecieveGiftByYear();
+    this.mStreamPlugin.init();
   }
-  ionViewDidEnter() {  
+  ionViewDidEnter() {
     setTimeout(() => {
       this.doAutoLogin();
     }, 1000);

@@ -172,6 +172,10 @@ export class PomeloCmd {
     public static UNLIKE: string = "unlike";
     public static SHARE: string = "share";
     public static QUERY_USER_INFO: string = "query_user_info";
+    public static USER_LIKE: string = "user_like";
+    public static USER_SHARE: string = "user_share";
+    public static USER_FOLLOW: string = "user_follow";
+
 }
 
 export class Cmd {
