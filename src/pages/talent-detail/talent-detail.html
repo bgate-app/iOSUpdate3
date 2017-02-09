@@ -1,0 +1,101 @@
+<ion-content id="talent-detail-content">
+
+    <div class="user-poster-container">
+        <div class="user-poster" [style.background-image]="getTalentAvatar()"></div>
+
+        <div text-center class="user-info-container">
+            <div class="bg-top"></div>
+            <div class="bg-bottom"></div>
+
+            <div class="user-header-toolbar">
+
+                <button ion-button clear class="toolbar-button" (click)="onClickBack()">
+                  <ion-icon name="ios-arrow-back-outline"></ion-icon>
+                </button>
+
+                <span class="user-name">{{mTalent.name}}</span>
+
+                <button ion-button clear class="toolbar-button">
+                  <ion-icon name="md-more"></ion-icon>
+                </button>
+            </div>
+
+            <div class="room-status" *ngIf="mRoom.status==1" (click)="onClickRoomStreaming()">
+                <img src="assets/v2/streaming.gif">
+            </div>
+
+            <div class="info-container">
+                <img src="{{mTalent.avatar}}" class="user-info-avatar" (click)="onClickAvatar()">
+            </div>
+
+            <div class="user-top-fan">
+                <div class="user-top-fan-title">
+                    Top<br>Fans
+                </div>
+                <img *ngFor="let fan of fans" [src]="fan.avatar" class="fan-avatar" [class.no-fan]="fan.username=='undefined'">
+            </div>
+        </div>
+    </div>
+
+    <div class="talent-status">
+        {{mTalent.status}}
+    </div>
+
+    <div class="user-info-controls">
+        <div class="user-info-control-left">
+            <div text-center style="font-size:1.4em">0</div>
+            <div text-center class="text-gray" style="font-size:.8em">Đang theo dõi</div>
+            <div class="separate"></div>
+        </div>
+        <div class="user-info-control-right">
+            <div text-center style="font-size:1.4em">{{mTalent.followers}}</div>
+            <div text-center class="text-gray" style="font-size:.8em">Người hâm mộ</div>
+        </div>
+    </div>
+
+
+    <div class="settings">
+
+        <div class="item-setting">
+            <img src="assets/v2/icon-quatang.png"> <span>Quà tặng</span>
+            <div class="item-setting-right text-gray">
+                <span class="badge">{{mTalent.point}}</span>
+            </div>
+        </div>
+
+
+
+        <div class="item-setting">
+            <img src="assets/v2/icon-capdo.png"> <span>Cấp độ</span>
+            <div class="item-setting-right text-gray">
+                <span class="badge">{{mTalent.level}}</span>
+            </div>
+        </div>
+
+
+        <div class="item-setting">
+            <img src="assets/v2/icon-xephang.png"> <span>Xếp hạng</span>
+            <div class="item-setting-right text-gray">
+                <span class="badge">Ngoài top 100</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="height: 66px"></div>
+
+</ion-content>
+
+<div *ngIf="mTalent.role==1" class="follow-bar-container">
+    <div text-center class="follow-bar" *ngIf="mTalent.followed" (click)="onClickUnFollowTalent()">
+        <div class="user-info-following">
+            <img src="assets/v2/button-yes.png" class="followed-button"> Đang theo dõi
+        </div>
+    </div>
+
+    <div text-center class="follow-bar" *ngIf="!mTalent.followed" (click)="onClickFollowTalent()">
+        <div class="user-info-following" style="color:#202020">
+            <img src="assets/v2/button-plus.png" class="followed-button"> Theo dõi
+        </div>
+    </div>
+</div>

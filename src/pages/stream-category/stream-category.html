@@ -1,0 +1,32 @@
+<ion-content class="content-has-header">
+    <div class="fixed-toolbar" style="margin-top:-4px"></div>
+    <ion-list no-lines style="background-color:white;margin:0px;">
+        <div *ngFor="let room of this.mRoomPage.rooms" class="position-relative room" (click)="onClickOpenRoom(room)">
+            <div class="mContainer">
+                <img src={{room.poster}} class="width100 v-middle">
+                <div class="room-info">
+                    <div class="room-info-des">{{room.name}}</div>
+                    <div class="room-info-talent-name">{{room.talent.name}}</div>
+                    <div class="room-info-talent-view"><img src="assets/v2/icon_view.png" class="inline-image"> {{room.view}}</div>
+                </div>
+                <div class="room-status-live" *ngIf="room.status==1">
+                    <img src="assets/v2/streaming.gif">
+                </div>
+            </div>
+        </div>
+    </ion-list>
+</ion-content>
+
+<div class="a1-absolute a1-top a1-bg-white a1-shadow-bottom a1-width-100 a1-z-2">
+    <div class="a1-statusbar-height" *ngIf="mDataService.isIOS()"></div>
+    <div class="a1-width-100 a1-toolbar-height a3-container a3-items-center">
+        <div class="header-button" (click)="onClickBack()">
+            <ion-icon name="ios-arrow-back-outline" style="font-size: 1.4em; font-weight: lighter" (click)="onClickBack()"></ion-icon>
+        </div>
+        <div text-center style="font-size: 1.2em; flex: 1;">
+            {{mRoomPage.name}}
+        </div>
+        <div class="header-button">
+        </div>
+    </div>
+</div>

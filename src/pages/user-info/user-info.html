@@ -1,0 +1,92 @@
+<ion-content id="user-info-page" class="text-black">
+    <div class="user-info-header">
+        <ion-icon name="ios-arrow-back-outline" (click)="onClickBack()" id="i-btn-back"></ion-icon>
+        <img src="assets/v2/icon-view.png" class="user-info-view-icon">
+    </div>
+
+    <div class="user-info-poster">
+
+        <img src="{{mDataService.mUser.avatar}}" class="user-info-avatar" (click)="onClickAvatar()">
+        <div class="level-container">
+            <div class="user-info-level" (click)="onClickAvatar()">
+                <ion-icon name="md-star"></ion-icon> {{mDataService.mUser.level}}
+            </div>
+        </div>
+        <div class="user-info-name" text-center>
+            <div style="display: inline-block" (click)="onClickAvatar()">{{mDataService.mUser.name}} <img src={{getSexIcon()}} class="gender"></div>
+        </div>
+    </div>
+    <div class="user-info-controls">
+        <div class="user-info-control-left" (click)="onClickFollow()">
+            <div text-center style="font-size:1.4em">{{mDataService.mFollowManager.followings.length}}</div>
+            <div text-center class="text-gray" style="font-size:.8em">Đang theo dõi</div>
+            <div class="separate"></div>
+        </div>
+        <div class="user-info-control-right" (click)="onClickFan()">
+            <div text-center style="font-size:1.4em">0</div>
+            <div text-center class="text-gray" style="font-size:.8em">Người hâm mộ</div>
+        </div>
+    </div>
+    <div class="settings">
+        <div class="item-setting" (click)="onClickMessage()">
+            <img src="assets/v2/icon-tinnhan.png"> <span>Tin nhắn</span>
+
+            <div class="item-setting-right text-gray">
+                <span class="badge">{{mDataService.mMessageManager.messages.length}}</span>
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="item-setting" (click)="onClickGift()">
+            <img src="assets/v2/icon-quatang.png"> <span>Quà tặng</span>
+            <div class="item-setting-right text-gray">
+                <span class="badge">0</span>
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+            </div>
+        </div>
+
+
+        <!--<div class="item-setting" (click)="onClickMoney()">
+      <img src="assets/v2/icon-tien.png"> <span>Money</span>
+       <div class="item-setting-right text-gray">
+        <span class="badge">{{mDataService.mUser.money}}</span>
+        <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+      </div>
+    </div>-->
+
+        <div class="item-setting" (click)="onClickLevel()">
+            <img src="assets/v2/icon-capdo.png"> <span>Cấp độ</span>
+            <div class="item-setting-right text-gray">
+                <span class="badge">{{mDataService.mUser.level}}</span>
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+            </div>
+        </div>
+
+
+        <div class="item-setting">
+            <img src="assets/v2/icon-xephang.png"> <span>Xếp hạng</span>
+            <div class="item-setting-right text-gray">
+                <span class="badge">Ngoài top 100</span>
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+            </div>
+        </div>
+
+
+        <div class="item-setting" (click)="onClickSetting()">
+            <img src="assets/v2/icon-caidat.png"> <span>Cài đặt</span>
+            <div class="item-setting-right text-gray">
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+            </div>
+        </div>
+
+
+        <div class="item-setting" (click)="onClickFeedBack()">
+            <img src="assets/v2/icon-phanhoi.png"> Phản hồi
+            <div class="item-setting-right text-gray">
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+            </div>
+        </div>
+
+    </div>
+
+</ion-content>

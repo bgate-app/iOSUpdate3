@@ -1,0 +1,47 @@
+<ion-content id="top-content">
+  <div class="user-header">
+    <ion-icon name="ios-arrow-back-outline" class="user-header-back" (click)="onClickBack()"></ion-icon>
+    <div class="user-header-title">
+      Bảng xếp hạng
+    </div>
+  </div>
+  <div text-center>
+    <div class="segment-top">
+      <div class="segment-top-item" [class.segment-top-item-selected]="viewcontrol.type==TALENT" (click)="onClickShowView(TALENT)">TALENT</div>
+      <div class="segment-top-item" [class.segment-top-item-selected]="viewcontrol.type==FAN" (click)="onClickShowView(FAN)">FAN</div>
+    </div>
+  </div>
+  <div text-center padding>
+    <div class="segment-time">
+      <div class="segment-time-item" [class.segment-time-item-selected]="viewcontrol.time==DAY" (click)="onClickShowSubView(DAY)">Ngày</div>
+      <div class="segment-time-item" [class.segment-time-item-selected]="viewcontrol.time==MONTH" (click)="onClickShowSubView(MONTH)">Tháng</div>
+      <div class="segment-time-item" [class.segment-time-item-selected]="viewcontrol.time==YEAR" (click)="onClickShowSubView(YEAR)">Năm</div>
+    </div>
+  </div>
+
+  <div class="user-list-container">
+    <div class="loading-container" *ngIf="mLoading">
+      <div class="mContainer">
+        <ion-spinner name="ios" style="position:absolute; left : 50%; top:50%; transform: translate(-50%,-50%); width: 30px; height: 30px; color:#673283"></ion-spinner>
+      </div>
+    </div>
+    <div class="user-list" *ngIf="!mLoading">
+      <div *ngFor="let item of filtered_datas; let i = index;" class="item-top">
+        <div class="item-top-stt">
+          <img src="assets/v2/so1.png" *ngIf="i==0" class="stt-img">
+          <img src="assets/v2/so2.png" *ngIf="i==1" class="stt-img">
+          <img src="assets/v2/so3.png" *ngIf="i==2" class="stt-img">
+          <div *ngIf="i>2" class="stt-index">{{i+1}}</div>
+        </div>
+        <div class="item-top-avatar">
+          <img [src]="item.avatar">
+        </div>
+        <div class="item-top-infos">
+          {{item.name}}
+          <div class="info-money"> <img src="assets/v2/icon-money.png" class="info-money-icon"> {{item.top_value}}</div>
+        </div>
+        <!--<img src="assets/v2/button-plus.png" class="folow-button"  (click)="onClickFollow(item)">-->
+      </div>
+    </div>
+  </div>
+</ion-content>

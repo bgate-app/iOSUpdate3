@@ -1,0 +1,543 @@
+page-talent-stream {
+    #streamContent {
+        background-color: white;
+        background-image: url('../assets/v2/login-bg.png');
+        background-size: cover;
+        background-position: bottom;
+        overflow-y: hidden;
+    }
+    .button-back {
+        width: 3em;
+        height: 3em;
+        display: inline-flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 100;
+    }
+    #img-back {
+        height: 1.6em;
+    }
+    .mInputLive {
+        margin-left: 10%;
+        width: 80%;
+        position: relative;
+        border-bottom: 1px solid lightgray;
+    }
+    #mInputText {
+        font-size: 1.2em;
+        text-align: center;
+        width: 100%;
+    }
+    .text-input {
+        text-align: center;
+        color: white;
+    }
+    .mInputTag {
+        color: white;
+        text-shadow: 1px 1px #000;
+        padding-bottom: 40px;
+    }
+    .inline-image {
+        width: 40px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .button-live {
+        background-color: white;
+        box-shadow: none;
+        border: solid 1px black;
+        color: black;
+        font-weight: bold;
+        text-transform: none;
+    }
+    .light-text-number {
+        font-weight: bold;
+        font-size: 1em;
+        text-align: center;
+    }
+    .light-text-info {
+        margin-top: 10px;
+        font-weight: lighter;
+        font-size: .8;
+        text-align: center;
+    }
+    .holder {
+        display: inline-block;
+        width: 80px;
+        position: relative;
+    }
+    .button-home {
+        width: 60%;
+        background-color: transparent;
+        color: white;
+        border: solid 1px white;
+        text-transform: none;
+        height: 2em;
+        font-size: 1em;
+    }
+    #iHeader {
+        left: 0px;
+        top: 10px;
+        width: 100%;
+        position: absolute;
+        height: 60px;
+    }
+    .aHeader {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    }
+    #button-back {
+        height: 40px;
+        width: 40px;
+        padding: 10px;
+    }
+    #header-stream-info {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        flex: 0 auto;
+        height: 36px;
+        border-radius: 18px;
+        margin-left: 10px;
+        padding-left: 6px;
+        padding-right: 6px;
+        background-color: rgba(0, 0, 0, .6);
+    }
+    .users-container {
+        display: flex;
+        position: relative;
+        white-space: nowrap;
+        overflow-x: auto;
+        height: 100%;
+        align-items: center;
+    }
+    .aHeaderUsers {
+        display: inline-flex;
+        flex: 1 1 auto;
+        height: 100%;
+        align-items: center;
+        padding-left: 10px;
+    }
+    .user-avatar {
+        height: 32px;
+        border-radius: 16px;
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+    #talent-avatar {
+        height: 30px;
+        padding-right: 10px;
+        display: inline-block;
+    }
+    #stream-info {
+        display: inline-block;
+        height: 36px;
+        padding-right: 10px;
+        color: white;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    #host-name {
+        font-size: 12px;
+        letter-spacing: 1px;
+        line-height: 20px;
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    #stream-view-container {
+        font-size: 10px;
+        line-height: 10px;
+    }
+    .talent-money {
+        color: #fdbf36;
+        margin-left: 10px;
+        display: flex;
+        width: auto;
+        font-size: .8em;
+        align-items: center;
+        background-color: rgba(0, 0, 0, .6);
+        padding: 4px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 6px;
+    }
+    .talent-money img {
+        height: 1.2em;
+        padding-right: 10px;
+    }
+    .talent-money ion-icon {
+        padding-left: 6px;
+        font-size: 1em;
+    }
+    #stream-view-icon {
+        font-size: 14px;
+        vertical-align: middle;
+    }
+    #span-view {
+        padding-left: 1px;
+    }
+    #follow-button {
+        width: 0px;
+        transition: width 400ms;
+    }
+    /*
+    ============= For chat ==============
+    */
+    #mContentContainer {
+        position: absolute;
+        bottom: 80px;
+        width: 80vw;
+        transition: bottom 400ms;
+    }
+    .system-chat-session-container {
+        color: white;
+        font-size: .8em;
+        line-height: 1.2em;
+        padding: 10px;
+    }
+    .gift-on-chat {
+        height: 2em;
+        vertical-align: middle;
+    }
+    #iChatContainer {
+        max-height: 30vh;
+        overflow-y: auto;
+        padding-left: 10px;
+    }
+    .chat-session-container {
+        background-color: rgba(255, 255, 255, .8);
+        position: relative;
+        border-radius: 18px;
+        margin-top: 8px;
+        min-height: 36px;
+        display: inline-block;
+    }
+    .clearfix {
+        clear: both;
+    }
+    .chat-session-container-avatar {
+        height: 36px;
+        position: absolute;
+    }
+    .chat-session-container-avatar ion-avatar {
+        height: 100%;
+        padding: 4px;
+    }
+    .chat-session-container-avatar img {
+        height: 100%;
+    }
+    .chat-session-container-content {
+        padding-top: .8em;
+        padding-bottom: .6em;
+        padding-right: 10px;
+        padding-left: 40px;
+        font-size: 1em;
+        line-height: 1.2em;
+    }
+    .role-icon {
+        height: 1em;
+    }
+    .chat-user-name {
+        font-weight: bold;
+    }
+    .user-color {
+        color: #423688;
+    }
+    .admin-color {
+        color: #42c1c7;
+    }
+    .host-color {
+        color: #ef4e79;
+    }
+    .font-bold {
+        font-weight: bold;
+    }
+    /*For chat*/
+    #mChatBar {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        position: relative;
+        border-bottom: solid 1px lightgray;
+        background-color: white;
+    }
+    #mChatContainer {
+        background: transparent;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+    }
+    .chat_control_button {
+        width: 10vw;
+        height: 2em;
+        line-height: 2em;
+    }
+    .chat_emotion_icon {
+        color: lightgray;
+        font-size: 18px;
+        text-align: center;
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+    }
+    .emtion-select {
+        color: orange;
+    }
+    .chat-container {
+        min-height: 20px;
+        line-height: 20px;
+        max-height: 40px;
+        font-size: 1em;
+        width: 80vw;
+        margin-left: 10vw;
+        padding-left: 6px;
+        border-bottom: 0px;
+    }
+    .item-inner {
+        padding-right: 0px !important;
+        border-bottom: 0px !important;
+    }
+    .chat-container .text-input {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        text-align: left;
+        color: black;
+    }
+    .chat_button_send {
+        color: blue;
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        font-size: 18px;
+        text-align: center;
+    }
+    .chat_fan_emoticon {
+        height: 1.4em;
+        padding-left: 2px;
+        padding-right: 2px;
+        vertical-align: middle;
+    }
+    .emtion_holder {
+        float: left;
+        width: 40px;
+        padding: 10px;
+    }
+    #mStickerContainer {
+        width: 100%;
+        position: relative;
+        background-color: white;
+        height: 0px;
+    }
+    .mStickerListContent {
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+        position: relative;
+    }
+    .button-send-chat-unselect {
+        opacity: .2;
+    }
+    #iFooter {
+        position: absolute;
+        height: 50px;
+        left: 10px;
+        display: inline-block;
+    }
+    .live-stream-button {
+        height: 100%;
+        padding: 8px;
+    }
+    .live-stream-button-like {
+        float: right;
+        padding-right: 10px;
+        height: 80%;
+    }
+    .mFooterHide {
+        bottom: -60px;
+    }
+    .mFooterShow {
+        bottom: 16px;
+        transition: bottom 400ms;
+    }
+    /*===============start gift effect=================*/
+    #mGiftEffectContainer {
+        position: absolute;
+        bottom: 45vh;
+        width: 100%;
+    }
+    .mGiftEffect {
+        position: absolute;
+        height: 8vh;
+        border-radius: 4vh;
+        background-color: rgba(0, 0, 0, .4f);
+        display: inline-block;
+        color: white;
+        line-height: 8vh;
+    }
+    #mEffect1 {
+        bottom: 0px;
+    }
+    #mEffect2 {
+        bottom: 10vh;
+    }
+    #mEffect3 {
+        bottom: 20vh;
+    }
+    .mGiftEffect2 {
+        position: absolute;
+        height: 8vh;
+        border-radius: 4vh;
+        background-color: rgba(0, 0, 0, .4f);
+        display: inline-block;
+        color: white;
+        line-height: 8vh;
+        bottom: 12vh;
+    }
+    .mGiftEffect3 {
+        position: absolute;
+        height: 8vh;
+        border-radius: 4vh;
+        background-color: rgba(0, 0, 0, .4f);
+        display: inline-block;
+        color: white;
+        line-height: 8vh;
+        bottom: 24vh;
+    }
+    .mGiftEffect-show {
+        left: 10px;
+        transition: left 400ms;
+    }
+    .mGiftEffect-hide {
+        left: -100vw;
+        transition: left 200ms;
+    }
+    .user-send-gift-content {
+        display: inline-block;
+    }
+    .user-send-gift-avatar {
+        height: 100%;
+        border-radius: 50%;
+        padding: 2px;
+    }
+    .user-send-gift-name {
+        max-width: 120px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: inline-block;
+        white-space: nowrap;
+        font-size: .8em;
+    }
+    .user-send-gift-image {
+        height: 8vh;
+        line-height: 8vh;
+        display: inline-block;
+        position: relative;
+        min-width: 80px;
+        text-align: center;
+        padding-right: 20px;
+    }
+    .user-send-gift-image img {
+        height: 100%;
+    }
+    /*===============end gift effect=================*/
+    // ===================================begin top=========================================
+    .flex-center-vertical {
+        display: flex;
+        align-items: center;
+    }
+    .flex-align-bottom {
+        display: flex;
+        align-items: flex-end;
+    }
+    .flex-full-end {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .text-icon {
+        height: 1.4em;
+    }
+    .top-segment {
+        display: flex;
+        justify-content: space-around;
+    }
+    .top-segment-button {
+        width: 40%;
+        text-align: center;
+        color: gray;
+        border-bottom: 0px;
+        font-weight: bold;
+        padding: 10px;
+    }
+    .top-segment-selected {
+        color: black;
+        border-bottom: solid 2px #673283;
+    }
+    .top-content {
+        height: 40vh;
+        max-height: 40vh;
+        overflow-y: auto;
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+    .item-fan {
+        height: 60px;
+    }
+    .item-fan-stt {
+        width: 60px;
+        text-align: center;
+    }
+    .item-fan-stt img {
+        width: 24px;
+    }
+    .item-fan-avatar {
+        height: 48px;
+        width: 48px;
+    }
+    .item-fan-info {
+        margin-left: 10px;
+        flex: 1;
+        overflow: hidden;
+    }
+    .item-fan-talent-name {
+        font-size: 1.2em;
+        color: black;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .item-fan-level {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 20px;
+        border-radius: 10px;
+        color: white;
+        font-size: .8em;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .item-fan-level ion-icon {
+        margin-right: 4px;
+    }
+    .bg-touch-hide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        background-color: rgba(0, 0, 0, .4);
+    }
+    .bg-white {
+        background-color: white;
+    }
+    //=========================== End top =============================
+}

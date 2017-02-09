@@ -1,0 +1,30 @@
+<ion-content>
+
+  <div id="header">
+    <ion-icon name="ios-arrow-back-outline" (click)="onClickGoBack()" class="button-left"></ion-icon>
+    ĐĂNG KÝ
+  </div>
+
+  <div id="fixedcontenttop"></div>
+  <ion-list>
+    <ion-item style="border-top:0px" class="item-input">
+<ion-input #iUsername type="text" placeholder="Tên đăng nhập" clearInput [(ngModel)]="register_data.username"></ion-input>
+</ion-item>
+<ion-item class="item-input">
+  <ion-input #iPassword type="password" placeholder="Mật khẩu" clearInput [(ngModel)]="register_data.password"></ion-input>
+</ion-item>
+<ion-item class="item-input">
+  <ion-input #iConfirm type="password" placeholder="Nhập lại mật khẩu" clearInput [(ngModel)]="register_data.confirm"></ion-input>
+</ion-item>
+<!--<ion-item class="item-input">
+      <ion-input #iName type="text" placeholder="Tên hiển thị" clearInput [(ngModel)]="register_data.name"></ion-input>
+    </ion-item>-->
+<ion-item class="item-input">
+  <ion-input #iEmail type="email" placeholder="Email" clearInput [(ngModel)]="register_data.email"></ion-input>
+</ion-item>
+</ion-list>
+<div padding text-center>
+  <button ion-button full id="btn_login" (click)="onClickRegister()">{{mText}}</button>
+</div>
+</ion-content>
+<div style="width:100vw;height:100vh; position:absolute;top:0px;left:0px; z-index: 200" *ngIf="mRequesting"></div>

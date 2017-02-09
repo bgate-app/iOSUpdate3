@@ -1,0 +1,65 @@
+page-suggest-talent {
+.content-box{
+    display: flex;
+    flex-flow: column;
+    width:100%; 
+    height:100%;
+    position:relative;
+}
+.sHeader{
+    height: 50px;
+}
+.sContent{        
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: calc(100vh - 160px);
+    border-top: solid 1px lightgray;
+    border-bottom: solid 1px lightgray;      
+}
+.sFooter{
+    height: 60px;
+}
+.list-header{
+    padding-bottom: 10px;    
+}
+.talent_item{
+    display: inline-block;
+    max-width: 33%;
+    width: 33%;      
+}
+.talent-name{
+    padding-bottom: 20px;    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.s-talent-avatar{
+    padding: 10px;
+    position: relative;
+}
+.talent-checkbox{
+    width: 8vw;
+    position: absolute;
+    right: 4vw;
+    bottom: 4vw;
+}
+
+.talent-avatar{    
+    height: 24vw;
+    border-radius: 12vw;
+}
+.talent-info{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    color: gray;
+}
+.talent-info img{
+    height: 1.2em;
+    padding-right: 4px;    
+}
+
+
+}

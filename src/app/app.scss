@@ -1,0 +1,908 @@
+#showtime_app {
+    background-color: transparent;
+}
+
+.header-button {
+    position: relative;
+    display: inline-flex;
+    display: -webkit-inline-flex;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    width: $toolbar-height;
+    height: 100%;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.no-scroll {
+    .scroll-content {
+        overflow-y: hidden;
+    }
+}
+
+.has-scroll {
+    .scroll-content {
+        overflow-y: scroll;
+    }
+}
+
+.width50 {
+    width: 50%;
+    max-width: 50%;
+}
+
+.width100 {
+    width: 100%;
+}
+
+.height100 {
+    height: 100%;
+}
+
+.absolute-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.width-40 {
+    -webkit-flex: 0 0 40%;
+    -ms-flex: 0 0 40%;
+    flex: 0 0 40%;
+    max-width: 40%;
+}
+
+.width30 {
+    display: inline-block;
+    max-width: 30%;
+    width: 30%;
+}
+
+.width40 {
+    display: inline-block;
+    max-width: 40%;
+    width: 40%;
+}
+
+.width50 {
+    display: inline-block;
+    max-width: 50%;
+    width: 50%;
+}
+
+.width-60 {
+    -webkit-flex: 0 0 60%;
+    -ms-flex: 0 0 60%;
+    flex: 0 0 60%;
+    max-width: 60%;
+}
+
+.height40 {
+    height: 40%;
+    max-height: 40%;
+}
+
+.height50 {
+    height: 50%;
+    max-height: 50%;
+}
+
+.height60 {
+    height: 60%;
+    max-height: 60%;
+}
+
+.height80 {
+    height: 80%;
+    max-height: 80%;
+}
+
+.width-15 {
+    -webkit-flex: 0 0 15%;
+    -ms-flex: 0 0 15%;
+    flex: 0 0 15%;
+    max-width: 15%;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+.no-margin {
+    margin: 0px;
+}
+
+.no-padding-margin {
+    margin: 0px;
+    padding: 0px;
+}
+
+.fullwidthimage {
+    width: 100%;
+    display: block;
+}
+
+.mHeader {
+    height: $header-height;
+    position: relative;
+}
+
+.mContent {
+    height: $content-height;
+    overflow-y: scroll;
+}
+
+.mContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.mFullScreenAbsolute {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.mFullScreenFixed {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.center-background {
+    background-size: cover;
+    background-position: center;
+}
+
+.text-inline {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.user-header {
+    height: $toolbar-height;
+}
+
+.header-shadow {
+    box-shadow: 0px 1px 8px #222;
+    position: absolute;
+    z-index: 10;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    transition: top 300ms;
+    background-color: white;
+}
+
+.user-header-back {
+    font-size: 1.4em;
+    font-weight: lighter;
+    line-height: $toolbar-height;
+    padding-left: 10px;
+    padding-right: 10px;
+    float: left;
+}
+
+.user-header-title {
+    height: $toolbar-height;
+    line-height: $toolbar-height;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.fixed-toolbar {
+    height: $toolbar-height;
+}
+
+.abs-center {
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.inline-image {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.v-middle {
+    vertical-align: middle;
+}
+
+
+/*for room image*/
+
+.room {
+    margin-top: 2px;
+    min-height: 160px;
+    overflow: hidden;
+}
+
+.room-status-live {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 16px;
+    border: solid 1px lightgoldenrodyellow;
+    border-radius: 8px;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.room-status-live img {
+    height: 10px;
+}
+
+.room-status-live-sub {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 12px;
+    border: solid 1px lightgoldenrodyellow;
+    border-radius: 8px;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.room-status-live-sub img {
+    height: 8px;
+}
+
+.room-info {
+    background: url("../assets/common/bginfo.png");
+    background-size: cover;
+    background-position: bottom;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 20vw;
+}
+
+.room-info-des {
+    font-weight: lighter;
+    color: white;
+    position: absolute;
+    left: 16px;
+    bottom: 10px;
+    width: 60vw;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.room-info-talent-name {
+    color: white;
+    position: absolute;
+    left: 16px;
+    bottom: 30px;
+    display: block;
+    max-width: 60vw;
+}
+
+.room-info-talent-view {
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    line-height: 2em;
+}
+
+.room-info-talent-view img {
+    height: 2em;
+}
+
+.flexbox-container {
+    display: flex;
+    align-items: center;
+}
+
+.margin-auto {
+    margin: 0 auto;
+}
+
+.color-like {
+    color: #87bc45;
+}
+
+.color-money {
+    color: #fe9a0b;
+}
+
+.color-user {
+    color: #673283;
+}
+
+.color-lightgray {
+    color: lightgray;
+}
+
+.color-gray {
+    color: gray;
+}
+
+.color-host {
+    color: #ef4e79;
+}
+
+.spinner-small {
+    width: 20px;
+    height: 20px;
+    padding-top: 100px;
+    color: #673283;
+}
+
+.a1-spinner24 {
+    width: 24px;
+    height: 24px;
+}
+
+.a1-spinner32 {
+    width: 32px;
+    height: 32px;
+}
+
+.a1-spinner40 {
+    width: 40px;
+    height: 40px;
+}
+
+// ===============================Start Color CSS=======================================
+.a1-white {
+    color: white;
+}
+
+.a1-bg-white {
+    background-color: white;
+}
+
+.a1-black {
+    color: black;
+}
+
+.a1-bg-black {
+    background-color: black;
+}
+
+.a1-bg-black-transparent {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+// ===============================End Color CSS=========================================
+// ===============================Start Pure Layout CSS=======================================
+.a1-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.a1-container-absolute {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+}
+
+.a1-inline-block {
+    display: inline-block;
+}
+
+.a1-inline {
+    display: inline;
+}
+
+.a1-block {
+    display: block;
+}
+
+.a1-relative {
+    position: relative;
+}
+
+.a1-absolute {
+    position: absolute;
+}
+
+.a1-fill-parent {
+    width: 100%;
+    height: 100%;
+}
+
+.a1-top-left {
+    top: 0px;
+    left: 0px;
+}
+
+.a1-top {
+    top: 0px;
+}
+
+.a1-bottom {
+    bottom: 0px;
+}
+
+.a1-left {
+    left: 0px;
+}
+
+.a1-right {
+    right: 0px;
+}
+
+.a1-text-center {
+    text-align: center;
+}
+
+.a1-text-right {
+    text-align: right;
+}
+
+.a1-text-left {
+    text-align: left;
+}
+
+.a1-no-margin {
+    margin: 0px;
+}
+
+.a1-margin {
+    margin: 16px;
+}
+
+.a1-margin-left {
+    margin-left: 16px;
+}
+
+.a1-margin-right {
+    margin-right: 16px;
+}
+
+.a1-margin-top {
+    margin-top: 16px;
+}
+
+.a1-margin-bottom {
+    margin-bottom: 16px;
+}
+
+.a1-margin-auto {
+    margin: 0 auto;
+}
+
+.a1-no-padding {
+    padding: 0px;
+}
+
+.a1-padding {
+    padding: 16px;
+}
+
+.a1-padding-left {
+    padding-left: 16px;
+}
+
+.a1-padding-right {
+    padding-right: 16px;
+}
+
+.a1-padding-top {
+    padding-top: 16px;
+}
+
+.a1-padding-bottom,
+{
+    padding-bottom: 16px;
+}
+
+.a1-width-10 {
+    width: 10%;
+}
+
+.a1-width-20 {
+    width: 20%;
+}
+
+.a1-width-25 {
+    width: 25%;
+}
+
+.a1-width-30 {
+    width: 30%;
+}
+
+.a1-width-33 {
+    width: 33.33%;
+}
+
+.a1-width-40 {
+    width: 40%;
+}
+
+.a1-width-50 {
+    width: 50%;
+}
+
+.a1-width-60 {
+    width: 60%;
+}
+
+.a1-width-66 {
+    width: 66, 66%;
+}
+
+.a1-width-70 {
+    width: 70%;
+}
+
+.a1-width-80 {
+    width: 80%;
+}
+
+.a1-width-90 {
+    width: 90%;
+}
+
+.a1-width-100 {
+    width: 100%;
+}
+
+.a1-height-10 {
+    height: 10%;
+}
+
+.a1-height-20 {
+    height: 20%;
+}
+
+.a1-height-25 {
+    height: 25%;
+}
+
+.a1-height-30 {
+    height: 30%;
+}
+
+.a1-height-33 {
+    height: 33.33%;
+}
+
+.a1-height-40 {
+    height: 40%;
+}
+
+.a1-height-50 {
+    height: 50%;
+}
+
+.a1-height-60 {
+    height: 60%;
+}
+
+.a1-height-66 {
+    height: 66, 66%;
+}
+
+.a1-height-70 {
+    height: 70%;
+}
+
+.a1-height-80 {
+    height: 80%;
+}
+
+.a1-height-90 {
+    height: 90%;
+}
+
+.a1-height-100 {
+    height: 100%;
+}
+
+.a1-toolbar-height {
+    height: $toolbar-height;
+}
+
+.a1-statusbar-height {
+    height: $statusbar-height;
+}
+
+.a1-header-height {
+    height: $header-height;
+}
+
+.a1-circle {
+    border-radius: 50%;
+}
+
+.a1-shadow-bottom {
+    box-shadow: 0px 1px 8px #222;
+}
+
+.a1-z-1 {
+    z-index: 1;
+}
+
+.a1-z-2 {
+    z-index: 2;
+}
+
+.a1-z-3 {
+    z-index: 3;
+}
+
+.a1-z-4 {
+    z-index: 4;
+}
+
+.a1-z-5 {
+    z-index: 5;
+}
+
+.a1-z-6 {
+    z-index: 6;
+}
+
+.a1-z-7 {
+    z-index: 7;
+}
+
+.a1-z-8 {
+    z-index: 8;
+}
+
+.a1-z-9 {
+    z-index: 9;
+}
+
+.a1-z-10 {
+    z-index: 10;
+}
+
+// ===============================End Pure Layout CSS=======================================
+// ===============================Start Flex CSS=======================================
+
+/*Display*/
+
+.a3-container {
+    display: flex;
+    display: -webkit-flex;
+}
+
+.a3-container-inline {
+    display: inline-flex;
+    display: -webkit-inline-flex;
+}
+
+
+/*Align Items*/
+
+.a3-items-start {
+    align-items: flex-start;
+    -webkit-align-items: flex-start;
+}
+
+.a3-items-end {
+    align-items: flex-end;
+    -webkit-align-items: flex-end;
+}
+
+.a3-items-center {
+    align-items: center;
+    -webkit-align-items: center;
+}
+
+.a3-items-stretch {
+    align-items: stretch;
+    -webkit-align-items: stretch;
+}
+
+.a3-items-baseline {
+    align-items: baseline;
+    -webkit-align-items: baseline;
+}
+
+.a3-items-inherit {
+    align-items: inherit;
+    -webkit-align-items: inherit;
+}
+
+
+/*Align Content*/
+
+.a3-content-start {
+    align-content: flex-start;
+    -webkit-align-content: flex-start;
+}
+
+.a3-content-center {
+    align-content: center;
+    -webkit-align-content: center;
+}
+
+.a3-content-end {
+    align-content: flex-end;
+    -webkit-align-content: flex-end;
+}
+
+.a3-content-stretch {
+    align-content: stretch;
+    -webkit-align-content: stretch;
+}
+
+.a3-content-between {
+    align-content: space-between;
+    -webkit-align-content: space-between;
+}
+
+.a3-content-around {
+    align-content: space-around;
+    -webkit-align-content: space-around;
+}
+
+
+/*Justify content*/
+
+.a3-justify-start {
+    justify-content: flex-start;
+    -webkit-justify-content: flex-start;
+}
+
+.a3-justify-center {
+    justify-content: center;
+    -webkit-justify-content: center;
+}
+
+.a3-justify-end {
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+}
+
+.a3-justify-between {
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+}
+
+.a3-justify-around {
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+}
+
+
+/*Align self*/
+
+.a3-self-start {
+    align-self: flex-start;
+    -webkit-align-self: flex-start;
+}
+
+.a3-self-center {
+    align-self: center;
+    -webkit-align-self: center;
+}
+
+.a3-self-end {
+    align-self: flex-end;
+    -webkit-align-self: flex-end;
+}
+
+.a3-self-auto {
+    align-self: auto;
+    -webkit-align-self: auto;
+}
+
+.a3-self-baseline {
+    align-self: baseline;
+    -webkit-align-self: baseline;
+}
+
+.a3-self-stretch {
+    align-self: stretch;
+    -webkit-align-self: stretch;
+}
+
+
+/*Flex direction*/
+
+.a3-row {
+    flex-direction: row;
+    -webkit-flex-direction: row;
+}
+
+.a3-row-reverse {
+    flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+}
+
+.a3-column {
+    flex-direction: column;
+    -webkit-flex-direction: column;
+}
+
+.a3-column-reverse {
+    flex-direction: column-reverse;
+    -webkit-flex-direction: column-reverse;
+}
+
+
+/*Flex wrap*/
+
+.a3-nowrap {
+    flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+}
+
+.a3-wrap {
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+}
+
+.a3-wrap-reverse {
+    flex-wrap: wrap-reverse;
+    -webkit-flex-wrap: wrap-reverse;
+}
+
+
+/*Flex flow*/
+
+.a3-flow-row-wrap {
+    flex-flow: row wrap;
+    -webkit-flex-flow: row wrap;
+}
+
+.a3-flow-row-nowrap {
+    flex-flow: row nowrap;
+    -webkit-flex-flow: row nowrap;
+}
+
+.a3-flow-row-wrap-reverse {
+    flex-flow: row wrap-reverse;
+    -webkit-flex-flow: row wrap-reverse;
+}
+
+.a3-flow-column-wrap {
+    flex-flow: column wrap;
+    -webkit-flex-flow: column wrap;
+}
+
+.a3-flow-column-nowrap {
+    flex-flow: column nowrap;
+    -webkit-flex-flow: column nowrap;
+}
+
+.a3-flow-column-wrap-reverse {
+    flex-flow: column wrap-reverse;
+    -webkit-flex-flow: column wrap-reverse;
+}
+
+// ===============================End Flex CSS=========================================

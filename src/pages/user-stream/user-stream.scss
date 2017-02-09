@@ -1,0 +1,53 @@
+page-user-stream {
+#streamContent{
+    background-color: white;
+    background-image: url('../assets/v2/login-bg.png');
+    background-size: cover;
+    background-position: bottom;
+    overflow-y: hidden;
+}
+#button-back{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 40px;
+    padding: 10px;    
+}
+
+.mInputLive{
+    margin-top: 20vh;
+    margin-left: 10%;
+    width: 80%;    
+    position: relative;
+    border-bottom: 1px solid lightgray;
+    
+}
+#mInputText{
+    font-size: 1.2em;
+    text-align: center;
+    width:100%;
+    
+}
+.text-input{
+    text-align: center;
+    color: white;    
+}
+.mInputTag{
+    color: white;
+    text-shadow: 1px 1px #000;
+    padding-bottom: 40px;
+}
+.inline-image{    
+    width: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.button-live{
+    background-color: white;
+    box-shadow: none;
+    border: solid 1px black;
+    color: black;
+    font-weight: bold;
+    text-transform: none;    
+}
+}

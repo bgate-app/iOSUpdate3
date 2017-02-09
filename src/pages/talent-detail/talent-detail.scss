@@ -1,0 +1,215 @@
+page-talent-detail {
+    // .main-content {
+    //     height: calc(100vh - $toolbar-height);
+    //     overflow-x: hidden;
+    //     overflow-y: scroll;
+    //     width: 100vw;
+    //     position: relative;
+    // }
+    //==============================
+    .user-poster-container {
+        width: 100%;
+        height: 48vh;
+        position: relative;
+    }
+    .user-header-toolbar {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: $toolbar-height;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+        font-size: 1.2em;
+    }
+    .toolbar-button {
+        color: white;
+        font-size: 1.2em;
+    }
+    .room-status {
+        position: absolute;
+        top: $toolbar-height;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-left: 12px;
+        padding-right: 12px;
+        height: 20px;
+        border-radius: 10px;
+        display: -webkit-inline-flex;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+    .room-status img {
+        height: 10px;
+    }
+    .user-poster {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        -webkit-filter: blur(40px);
+        filter: blur(40px);
+        overflow: hidden;
+    }
+    .user-info-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+    }
+    .info-container {
+        text-align: center;
+        width: 100%;
+    }
+    .user-info-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 40px;
+    }
+    .user-top-fan {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        padding-right: 10px;
+        height: $toolbar-height;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .no-fan {
+        filter: grayscale(100%);
+        -webkit-filter: grayscale(100%);
+    }
+    .bg-top {
+        background-image: url('../assets/common/bginfo.png');
+        transform: scaleY(-1);
+        background-position: bottom;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 50%;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        opacity: .8;
+    }
+    .bg-bottom {
+        background-image: url('../assets/common/bginfo.png');
+        background-position: bottom;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 50%;
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        opacity: .6;
+    }
+    .user-top-fan-title {
+        font-weight: bold;
+        color: white;
+        font-size: 10px;
+    }
+    .fan-avatar {
+        height: 32px;
+        width: 32px;
+        border-radius: 16px;
+        border: solid 2px goldenrod;
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+    //==============================
+    .talent-status {
+        text-align: center;
+        font-weight: bold;
+        font-size: 2em;
+        padding: 16px;
+    }
+    .user-info-controls {
+        position: relative;
+        width: 100%;
+        padding-bottom: 10px;
+        border-bottom: solid 1px lightgray;
+        margin-top: 10px;
+    }
+    .user-info-control-left {
+        width: 50%;
+        max-width: 49%;
+        display: inline-block;
+        position: relative;
+    }
+    .user-info-control-right {
+        width: 50%;
+        max-width: 49%;
+        display: inline-block;
+        position: relative;
+    }
+    .separate {
+        height: 20px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 1px;
+        background-color: lightgray;
+    }
+    .item-setting {
+        height: 52px;
+        line-height: 52px;
+        position: relative;
+        padding-left: 4px;
+        font-size: 1em;
+        border-bottom: solid 1px lightgrey;
+    }
+    .item-setting img {
+        height: 100%;
+        float: left;
+        padding: 16px;
+    }
+    .item-setting span {
+        height: 100%;
+    }
+    .item-setting-right {
+        float: right;
+        height: 100%;
+        padding-right: 10px;
+    }
+    .badge {
+        padding-right: 8px;
+    }
+    .follow-bar-container {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        background-color: white;
+        z-index: 10;
+    }
+    .follow-bar {
+        height: 56px;
+        padding: 16px;
+    }
+    .user-info-following {
+        display: inline-flex;
+        align-items: center;
+        font-weight: bold;
+        color: gray;
+        font-size: 1.2em;
+        height: 100%;
+    }
+    .followed-button {
+        height: 1.2em;
+        padding-right: 6px;
+    }
+}

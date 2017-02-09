@@ -1,0 +1,357 @@
+<ion-content id="live-stream-page-content" style="height:100% !important">
+    <video style="width:100%;height:100%" playsinline webkit-playsinline autoplay preload="true" loop id="mVideoElement" poster="assets/v2/black.png"></video>
+
+    <div class="mFullScreenAbsolute background-has-image" id="videoposter" [style.background-image]="getStreamPoster()">
+        <div class="mContainer" text-center>
+            <div class="loading-container">
+                <img src="assets/v2/loadingggg.gif">
+            </div>
+            <div text-center padding style="color:white"> Đang tải ...</div>
+        </div>
+    </div>
+    <!--Hiệu ứng-->
+    <div class="mFullScreenAbsolute" id="effect-views">
+        <div class="mContainer" id="effect_container">
+            <img src="assets/v2/heart1.png" class="heart_item">
+            <img src="assets/v2/heart2.png" class="heart_item">
+            <img src="assets/v2/heart3.png" class="heart_item">
+            <img src="assets/v2/heart4.png" class="heart_item">
+            <img src="assets/v2/heart1.png" class="heart_item">
+            <img src="assets/v2/heart2.png" class="heart_item">
+            <img src="assets/v2/heart3.png" class="heart_item">
+            <img src="assets/v2/heart4.png" class="heart_item">
+        </div>
+        <img src="assets/v2/button-heart.png" class="live-stream-button-like" (click)="onClickAddHeart()">
+    </div>
+
+    <div class="mFullScreenAbsolute" style="z-index:2">
+        <ion-slides #mySlider class="mContainer" (ionDidChange)="onSlideChanged()">
+            <ion-slide class="mContainer">
+                <!--header-->
+                <div id="iHeader" class="mHeaderShow">
+                    <div class="mContainer aHeader">
+                        <div id="divxzz">
+                            <img src={{mLiveStreamData.roomlive.talent.avatar}} (click)="onClickShowHostInfo()" id="talent-avatar">
+                            <div id="div21" (click)="onClickShowHostInfo()">
+                                <div id="div22">{{mLiveStreamData.roomlive.talent.name}}</div>
+                                <div id="div23">
+                                    <ion-icon name="eye" id="stream-view-icon">
+                                    </ion-icon> <span id="span-view">0</span>
+                                </div>
+                            </div>
+                            <img src="assets/v2/button-follow4.png" id="follow-button" (click)="onClickFollowHost()">
+                        </div>
+                        <div class="aHeaderUsers" id="userscontainer">
+                            <div class="users-container">
+                                <ion-avatar *ngFor="let newUser of mLiveStreamData.new_users" class="user-avatar-holder">
+                                    <img src={{newUser.avatar}} class="user-avatar">
+                                </ion-avatar>
+                            </div>
+                        </div>
+                        <img src="assets/v2/button-x.png" id="button-back" (click)="onClickBack()">
+                    </div>
+                    <!--header money-->
+                    <div style="display:inline-block">
+                        <div class="talent-money" (click)="onClickShowView(VIEW_TOP)">
+                            <img src="assets/v2/icon-gift.png"> {{mLiveStreamData.roomlive.talent.point}}
+                            <ion-icon name="ios-arrow-forward"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+                <!--chat-->
+                <div id="mContentContainer">
+                    <div id="iChatContainer" [style.visibility]='viewcontrol.type==VIEW_GIFT?"hidden":"visible"'>
+                        <div class="mContainer">
+                            <div *ngFor="let chat of mLiveStreamData.chats" class="chat-session-item">
+                                <!--Tin nhắn hệ thống-->
+                                <div class="system-chat-session-container" *ngIf="chat.type==0" [innerHTML]="chat.content"></div>
+                                <!--Tin nhắn user gửi-->
+                                <div class="chat-session-container" *ngIf="chat.type==1">
+                                    <img src={{chat.avatar}} class="chat-session-avatar" (click)="onClickShowUserInfoOnChat(chat)">
+                                    <div class="chat-session-container-content">
+                                        <span *ngIf="chat.user_role==2"><img src="assets/v2/icon_admin_room.png" class="role-icon"></span>
+                                        <span *ngIf="chat.user_role==1"><img src="assets/v2/icon_talent_room.png" class="role-icon"></span>
+                                        <span class="chat-user-name" [class.user-color]="chat.user_role==0" [class.admin-color]="chat.user_role==2" [class.host-color]="chat.user_role==1" (click)="onClickShowUserInfoOnChat(chat)">{{chat.name}}: </span>
+                                        <span [innerHTML]="chat.content"></span>
+                                    </div>
+                                </div>
+                                <!--Tin nhắn từ quà tặng-->
+                                <div class="chat-session-container" *ngIf="chat.type==2">
+                                    <img src={{chat.avatar}} class="chat-session-avatar" (click)="onClickShowUserInfoOnChat(chat)">
+                                    <div class="chat-session-container-content">
+                                        <span *ngIf="chat.user_role==2"><img src="assets/v2/icon_admin_room.png" class="role-icon"></span>
+                                        <span *ngIf="chat.user_role==1"><img src="assets/v2/icon_talent_room.png" class="role-icon"></span>
+                                        <span class="chat-user-name" [class.user-color]="chat.user_role==0" [class.admin-color]="chat.user_role==2" [class.host-color]="chat.user_role==1" (click)="onClickShowUserInfoOnChat(chat)">{{chat.name}}: </span>
+                                        <span [innerHTML]="chat.content"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--footer-->
+                <div id="iFooter">
+                    <div class="mContainer">
+                        <img src="assets/v2/button-chat.png" class="live-stream-button" (click)="onClickShowView(VIEW_CHAT)">
+                        <img src="assets/v2/button-more.png" class="live-stream-button" (click)="onClickShowView(VIEW_SETTING)">
+                        <img src="assets/v2/button-rotation.png" class="live-stream-button" (click)="onClickRotateScreen()">
+                        <img src="assets/v2/button-sendgift.png" class="live-stream-button" (click)="onClickShowView(VIEW_GIFT)">
+                    </div>
+                </div>
+
+                <!--Gifts-->
+                <div id="mGiftEffectContainer">
+                    <div class="mContainer" id="mEffectHolder">
+                        <div class="mGiftEffect mGiftEffect-hide" id="mEffect1"> <img src="assets/common/default_avatar.png" class="user-send-gift-avatar">
+                            <span class="user-send-gift-name">User gửi tặng</span>
+                            <img src="assets/common/default_avatar.png" class="gift_img">
+                        </div>
+                        <div class="mGiftEffect mGiftEffect-hide" id="mEffect2">
+                            <img src="assets/common/default_avatar.png" class="user-send-gift-avatar">
+                            <span class="user-send-gift-name">User gửi tặng</span>
+                            <img src="assets/common/default_avatar.png" class="gift_img">
+                        </div>
+                        <div class="mGiftEffect mGiftEffect-hide" id="mEffect3">
+                            <img src="assets/common/default_avatar.png" class="user-send-gift-avatar">
+                            <span class="user-send-gift-name">User gửi tặng</span>
+                            <img src="assets/common/default_avatar.png" class="gift_img">
+                        </div>
+                    </div>
+                </div>
+            </ion-slide>
+            <ion-slide class="mContainer"></ion-slide>
+        </ion-slides>
+
+
+    </div>
+
+    <!-- Danh Sach USER-->
+    <div class="mFullScreenAbsolute" style="z-index:4" *ngIf='viewcontrol.type==VIEW_USER'>
+        <div class="mContainer">
+            <div class="mCloseContainer" (click)="onClickShowView(VIEW_NONE)"></div>
+            <div class="view-user" [class.view-user-show]="viewcontrol.type==VIEW_USER" [class.view-user-hide]="viewcontrol.type!=VIEW_USER">
+                <div class="view-user-header">
+                    <button ion-button clear icon-only (click)="onClickShowView(VIEW_NONE)" style="position:absolute;height:6vh;right:0px;top:2px;color:black">
+                    <ion-icon name="close" ></ion-icon>
+                </button>
+                    <img src="assets/common/gradient_line.png" class="fullwidthimage">
+                    <div text-center style="font-weight:bold;color:black;padding:10px">DANH SÁCH NGƯỜI XEM</div>
+                    <div text-center style="font-style:italic;color:gray;padding-bottom:10px">Đang có {{mLiveStreamData.roomlive.view}} người</div>
+                    <img src="assets/common/line.png" class="fullwidthimage">
+                </div>
+                <ion-row>
+                    <ion-col padding width-33 class="host-color font-bold" text-center [class.mselected]="viewcontrol.user==1" (click)="onClickChangeViewUser(1)">TALENT</ion-col>
+                    <ion-col padding width-33 class="admin-color font-bold" text-center [class.mselected]="viewcontrol.user==2" (click)="onClickChangeViewUser(2)">ADMIN</ion-col>
+                    <ion-col padding width-33 class="user-color font-bold" text-center [class.mselected]="viewcontrol.user==0" (click)="onClickChangeViewUser(0)">USER</ion-col>
+                </ion-row>
+                <div class="view-user-content">
+                    <ion-list *ngIf="viewcontrol.user==0" no-lines>
+                        <ion-item *ngFor="let user of mLiveStreamData.users;let i=index;" [class.bg-dark]="i%2==0" class="item-user" (click)="onClickShowUserInfo(user)">
+                            <ion-avatar item-left>
+                                <img src={{user.avatar}}>
+                            </ion-avatar>
+                            <h2>{{user.name}}</h2>
+                        </ion-item>
+                    </ion-list>
+                    <ion-list *ngIf="viewcontrol.user==1" no-lines>
+                        <ion-item *ngFor="let user of mLiveStreamData.talents;let i=index;" [class.bg-dark]="i%2==0" class="item-user" (click)="onClickShowUserInfo(user)">
+                            <ion-avatar item-left>
+                                <img src={{user.avatar}}>
+                            </ion-avatar>
+                            <h2>{{user.name}}</h2>
+                        </ion-item>
+                    </ion-list>
+                    <ion-list *ngIf="viewcontrol.user==2" no-lines>
+                        <ion-item *ngFor="let user of mLiveStreamData.admins;let i=index;" [class.bg-dark]="i%2==0" class="item-user" (click)="onClickShowUserInfo(user)">
+                            <ion-avatar item-left>
+                                <img src={{user.avatar}}>
+                            </ion-avatar>
+                            <h2>{{user.name}}</h2>
+                        </ion-item>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- View User Info-->
+    <div class="mFullScreenAbsolute" *ngIf="viewcontrol.type==VIEW_USER_INFO" style="z-index:5">
+        <div class="mContainer">
+            <div class="mCloseContainer" (click)="onClickShowView(VIEW_NONE)"></div>
+            <div class="user-info-container">
+                <div class="position-relative" text-center>
+                    <img src="{{mLiveStreamData.user.avatar}}" class="user-info-avatar" (click)="onClickUser(mLiveStreamData.user)">
+                    <div class="level-container">
+                        <div class="user-info-level" (click)="onClickUser(mLiveStreamData.user)">
+                            <ion-icon name="md-star" style="font-size:1em;padding-right:4px"></ion-icon> {{mLiveStreamData.user.level}}
+                        </div>
+                    </div>
+                    <div class="user-info-name">{{mLiveStreamData.user.name}} <img src={{getSexIcon(mLiveStreamData.user.sex)}} class="gender" (click)="onClickUser(mLiveStreamData.user)"></div>
+                </div>
+
+                <div class="user-info-bar">
+                    <div class="info-bar-sub">
+                        <img src="assets/v2/icon-user.png" class="info-bar-image"> {{mLiveStreamData.user.followers}}
+                    </div>
+                    <div class="info-bar-sub">
+                        <img src="assets/v2/icon-gift.png" class="info-bar-image"> {{mLiveStreamData.user.point}}
+                    </div>
+                    <div class="info-bar-sub">
+                        <img src="assets/v2/icon-money.png" class="info-bar-image"> {{mLiveStreamData.user.money}}
+                    </div>
+                </div>
+                <div *ngIf="mLiveStreamData.user.role==1">
+                    <div text-center style="border-top: solid 1px gray; padding : 10px" *ngIf="mLiveStreamData.user.followed" (click)="onClickUnFollowTalent()">
+                        <div class="user-info-following">
+                            <img src="assets/v2/button-yes.png" class="followed-button"> Đang theo dõi
+                        </div>
+                    </div>
+
+                    <div text-center style="border-top: solid 1px gray; padding : 10px" *ngIf="!mLiveStreamData.user.followed" (click)="onClickFollowTalent()">
+                        <div class="user-info-following" style="color:#202020">
+                            <img src="assets/v2/button-plus.png" class="followed-button"> Theo dõi
+                        </div>
+                    </div>
+                </div>
+
+                <ion-icon name="close" class="btn-close-user-info" (click)="onClickShowView(VIEW_NONE)">
+                </ion-icon>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <!-- View Gift-->
+    <div class="mFullScreenAbsolute" *ngIf='viewcontrol.type==VIEW_GIFT' style="z-index:6">
+        <div class="mContainer">
+            <div class="mCloseContainer" (click)="onClickShowView(VIEW_NONE)"></div>
+            <div id="view-gift">
+                <div class="mContainer">
+                    <div id="slides-gift">
+                        <ion-slides class="mContainer" [options]="mSlidesGiftOptions">
+                            <ion-slide class="mContainer" *ngFor="let page of mDataService.mGiftManager.pages">
+                                <div *ngFor="let gift of page.gifts" [style.width]="mGiftWidth" class="gift-item">
+                                    <div class="gift-item-container" (click)="onClickSelectedGift(gift)" [class.gift-item-selected]="mSelectedGiftID==gift.id">
+                                        <div class="gift-item-image"><img src={{gift.avatar}}></div>
+                                        <div class="gift-item-money"><img src="assets/v2/icon-money.png"> {{gift.price}}</div>
+                                    </div>
+                                </div>
+                            </ion-slide>
+                        </ion-slides>
+                    </div>
+                    <div id="control-gift">
+                        <div id="gift-money-button">
+                            <img src="assets/v2/icon-money.png"> {{mDataService.mUser.money}}
+                        </div>
+                        <button ion-button id="button-send-gift" clear icon-right [class.button-send-gift-unselect]="mSelectedGiftID==-1" (click)="onClickSendGift()">                            
+                            <ion-icon name="send"></ion-icon>                            
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View SETTING-->
+    <div class="mFullScreenAbsolute" *ngIf='viewcontrol.type==VIEW_SETTING' style="z-index:7">
+        <div class="mContainer view-setting" (click)="onClickShowView(VIEW_NONE)">
+            <div class="setting-container">
+                <div class="setting-item" (click)="onClickLikeStream()" *ngIf="!mLiveStreamData.is_liked">
+                    <img src="assets/v2/bieutuong-like.png"> Thích
+                </div>
+                <div class="setting-item" (click)="onClickShowView(VIEW_SHARE)">
+                    <img src="assets/v2/bieutuong-chiase.png"> Chia sẻ
+                </div>
+                <div class="setting-item" (click)="onClickReloadStream()">
+                    <img src="assets/v2/bieutuong-tailai.png"> Tải lại
+                </div>
+                <div class="setting-item" (click)="onClickShowView(VIEW_USER)">
+                    <img src="assets/v2/bieutuong-fancuong.png"> Đang xem
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- View Chat Controls-->
+    <div id="mChatContainer" [style.visibility]='viewcontrol.type==VIEW_CHAT?"visible":"hidden"' style="z-index:8">
+        <div id="mChatBar">
+            <div class="chat_emotion_icon chat_control_button" (click)="onClickChatControl(CHAT_EMOTION)" [class.emtion-select]="viewcontrol.chat==CHAT_EMOTION">
+                <ion-icon name="happy"></ion-icon>
+            </div>
+            <ion-item class="chat-container">
+                <ion-input #chatInput id="mChatInput" placeholder="Nhập tin nhắn" [(ngModel)]="mChatContent"></ion-input>
+            </ion-item>
+            <div (click)="onClickSendChat()" class="chat_button_send chat_control_button">
+                <ion-icon name="md-send" [class.button-send-gift-unselect]="mChatContent.length==0"></ion-icon>
+            </div>
+        </div>
+        <div id="mStickerContainer">
+            <div class="mContainer" *ngIf="viewcontrol.chat==CHAT_EMOTION">
+                <div class="mStickerListContent">
+                    <div *ngFor="let emotion of chatService.mEmotions" class="emtion_holder" (click)="onClickEmotion(emotion)">
+                        <img src={{emotion.avatar}} class="emotion_image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- View TOP FAN-->
+    <div class="mFullScreenAbsolute" *ngIf='viewcontrol.type==VIEW_TOP' style="z-index:9">
+        <div class="mContainer flex-full-end">
+            <div class="bg-touch-hide" (click)="onClickShowView(VIEW_NONE)"></div>
+            <div class="bg-white" style="z-index: 1">
+                <div class="top-header flex-center-vertical" padding>
+                    Quà tặng : <span class="color-money" style="padding-left: 10px">{{mLiveStreamData.roomlive.talent.point}}</span>
+                </div>
+                <div class="top-segment">
+                    <div class="top-segment-button" [class.top-segment-selected]="mTopType==TOP_USER" (click)="onClickShowTopView(TOP_USER)">Top User</div>
+                    <div class="top-segment-button" [class.top-segment-selected]="mTopType==TOP_FAN" (click)="onClickShowTopView(TOP_FAN)">Top Fan</div>
+                </div>
+                <div class="top-content">
+                    <div *ngIf="mLoadingTop" text-center style="padding-top: 80px">
+                        <ion-spinner name="ios" style=" width: 20px; height: 20px; color:#673283"></ion-spinner>
+                    </div>
+                    <div *ngIf="!mLoadingTop">
+                        <div *ngIf="filted_users.length==0" padding text-center>Chưa có dữ liệu</div>
+                        <div *ngFor="let user of filted_users; let i = index;" class="item-fan flex-center-vertical">
+                            <div class="item-fan-stt">
+                                <img src="assets/v2/so1.png" *ngIf="i==0" class="stt-img margin-auto">
+                                <img src="assets/v2/so2.png" *ngIf="i==1" class="stt-img margin-auto">
+                                <img src="assets/v2/so3.png" *ngIf="i==2" class="stt-img margin-auto">
+                                <span *ngIf="i>2" class="margin-auto">{{i+1}}</span>
+                            </div>
+
+                            <img [src]="user.avatar" class="item-fan-avatar a1-circle">
+
+                            <div class="item-fan-info">
+                                <div class="item-fan-talent-name">{{user.name}}</div>
+                                <div class="flex-align-bottom color-gray">Đóng góp <span class="color-money" style="margin-left: 10px;margin-right: 10px">{{user.top_value}}</span> <img src="assets/v2/icon-gift.png" class="text-icon"> </div>
+                            </div>
+                            <div class="item-fan-level" [style.background-color]="getLevelColor(user.level)">
+                                <ion-icon name="md-star"></ion-icon>
+                                <span>{{user.level}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--View OFF AIR-->
+    <!--<div class="mFullScreenAbsolute" *ngIf="mLiveStreamData.roomlive.status==0" style="z-index:10">
+        <div class="mContainer">
+            <img src="assets/v2/button-x.png" style="width: 20px; height: 20px; top: 20px; right: 20px; position: absolute" (click)="onClickBack()">
+        </div>
+    </div>-->
+</ion-content>
+
+
+<div id="next-stream">
+</div>

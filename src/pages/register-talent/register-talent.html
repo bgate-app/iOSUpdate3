@@ -1,0 +1,85 @@
+<ion-content id="register-talent-page">
+  <div class="mHeader position-relative">
+    <img src="assets/livestream/top_bar.png" style="width:100%;height:100%">
+    <ion-row class="no-padding no-margin height100 position-absolute">
+      <ion-col width-20 class="topbar-back" text-center (click)="onClickGoBack()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </ion-col>
+      <ion-col class="topbar-title" text-center>
+        ỨNG TUYỂN TALENT
+      </ion-col>
+      <ion-col width-20>
+
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="mContent">
+    <div text-center padding>
+      <div class="register-input">
+        <ion-input type="text" placeholder="Họ tên" clearInput [(ngModel)]="mRegisterData.username"></ion-input>
+      </div>
+      <ion-item class="mItemInput">
+        <ion-label>Giới tính</ion-label>
+        <ion-select [(ngModel)]="mRegisterData.gender">
+          <ion-option value="0">Nam</ion-option>
+          <ion-option value="1">Nữ</ion-option>
+          <ion-option value="2">Khác</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <div class="register-input">
+        <ion-input type="number" placeholder="CMTND" clearInput [(ngModel)]="mRegisterData.cmtnd"></ion-input>
+      </div>
+      <div class="register-input">
+        <ion-input type="text" placeholder="Địa chỉ" clearInput [(ngModel)]="mRegisterData.address"></ion-input>
+      </div>
+
+      <div class="register-input">
+        <ion-input type="datetime" placeholder="Ngày sinh" clearInput [(ngModel)]="mRegisterData.birthday"></ion-input>
+      </div>
+
+      <!--<div class="register-input">        
+        <ion-datetime style="padding-left:20px" text-left displayFormat="DD/MM/YYYY" [(ngModel)]="mRegisterData.birthday" class="height100"></ion-datetime>
+      </div>-->
+      <div class="register-input">
+        <ion-input type="number" placeholder="Số điện thoại" clearInput [(ngModel)]="mRegisterData.phone"></ion-input>
+      </div>
+
+      <div class="register-input">
+        <ion-input type="text" placeholder="https://facebook.com/tai_khoan" clearInput [(ngModel)]="mRegisterData.facebook"></ion-input>
+      </div>
+
+      <div class="register-input">
+        <ion-input type="text" placeholder="https://youtube.com/tai_khoan" clearInput [(ngModel)]="mRegisterData.youtube"></ion-input>
+      </div>
+      <ion-item class="mItemInput">
+        <ion-label>Chuyên mục</ion-label>
+        <ion-select [(ngModel)]="mRegisterData.category" multiple="true">
+          <ion-option value="Talent Trai Hàn">Talent Trai Hàn</ion-option>
+          <ion-option value="Talent Hát Hay">Talent Hát Hay</ion-option>
+          <ion-option value="Talent Gái Xinh">Talent Gái Xinh</ion-option>
+          <ion-option value="Talent Vip">Talent Vip</ion-option>
+          <ion-option value="Talent Làm Đẹp/Cosplay">Talent Làm Đẹp/Cosplay</ion-option>
+        </ion-select>
+      </ion-item>
+
+    </div>
+    <div padding>
+      <ion-row>
+        <ion-col width-20 text-right id="col-checkbox" (click)="onClickToggleAgreement()">
+          <img src="assets/common/button_remember_off.png" *ngIf="!mRegisterData.agreement">
+          <img src="assets/common/button_remember_on.png" *ngIf="mRegisterData.agreement">
+        </ion-col>
+        <ion-col style="line-height:140%; font-size:1.2em">Tôi đã đọc và chấp nhận <a href="">các điều khoản và điều kiện</a></ion-col>
+      </ion-row>
+    </div>
+
+    <div padding text-center>
+      <button ion-button round id="button-register" [class.register-disable]="!mRegisterData.agreement" [class.register-enable]="mRegisterData.agreement"
+        (click)="onClickRegister()">
+        ĐĂNG KÝ
+      </button>
+    </div>
+    <div padding></div>
+  </div>
+</ion-content>

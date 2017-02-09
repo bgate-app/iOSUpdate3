@@ -1,0 +1,44 @@
+<ion-content>
+    <div class="m-content">
+        <div class="fake-padding"></div>
+
+        <div *ngIf="!mLoadingMessages && mDataService.mMessageManager.messages.length==0" padding text-center>
+            Không có tin nhắn nào.
+        </div>
+        <div *ngIf="mLoadingMessages && mDataService.mMessageManager.messages.length==0" text-center>
+            <ion-spinner name="ios" class="spinner-small"></ion-spinner>
+        </div>
+
+        <ion-list class="messages-list">
+
+            <ion-item *ngFor="let message of mDataService.mMessageManager.messages" class="message-item" (click)="onClickMessage(message)" [class.message-read]="message.status==1">
+
+                <ion-avatar item-left>
+                    <img src={{message.sender_avatar}}>
+                </ion-avatar>
+                <h2 [class.message-unread]="message.status==0">{{message.sender_name}}</h2>
+                <p>{{message.title}}</p>
+                <ion-note item-right>{{message.time_str}}</ion-note>
+            </ion-item>
+        </ion-list>
+
+
+    </div>
+</ion-content>
+
+
+<div class="a1-absolute a1-top a1-bg-white a1-shadow-bottom a1-width-100 a1-z-2">
+    <div class="a1-statusbar-height" *ngIf="mDataService.isIOS()"></div>
+    <div class="a1-width-100 a1-toolbar-height a3-container a3-items-center">
+        <div class="header-button" (click)="onClickBack()">
+            <ion-icon name="ios-arrow-back-outline" style="font-size: 1.4em; font-weight: lighter" (click)="onClickBack()"></ion-icon>
+        </div>
+        <div text-center style="font-size: 1.2em; flex: 1;">
+            Tin nhắn
+        </div>
+        <div class="header-button">
+
+        </div>
+    </div>
+
+</div>

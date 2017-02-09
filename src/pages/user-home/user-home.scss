@@ -1,0 +1,291 @@
+page-user-home {
+    #user-home-page {
+        background-color: white;
+    }
+    .has-refresher>.scroll-content {
+        border-top: 0px;
+    }
+    #scroll-top-top {
+        position: absolute;
+        z-index: 999;
+        top: 100px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        visibility: hidden;
+        text-transform: none;
+        color: white;
+        font-size: 1.6em;
+    }
+    /* Header */
+    #header {
+        transition: 200ms;
+        transform: translate3d(0, 0, 0);
+    }
+    .mHeader-hide {
+        transform: translate3d(0, -80px, 0) !important;
+    }
+    #header-title {
+        height: 14px;
+    }
+    .avatar-notify {
+        position: absolute;
+        background-color: red;
+        height: 8px;
+        width: 8px;
+        border-radius: 4px;
+        right: 20%;
+        bottom: 20%;
+    }
+    /* Footer*/
+    .mFooter {
+        width: 100%;
+        height: 50px;
+        position: absolute;
+        z-index: 10;
+        left: 0px;
+        bottom: -1px;
+        background: white;
+        transition: 200ms;
+        transform: translate3d(0, 0, 0);
+    }
+    .mFooter-hide {
+        transform: translate3d(0, 100px, 0);
+    }
+    .footer-left {
+        display: inline-flex;
+        align-items: center;
+        padding-right: 10px;
+        padding-left: 10px;
+        height: 100%;
+    }
+    .footer-center {
+        display: inline-flex;
+        align-items: center;
+        padding-right: 20px;
+        padding-left: 20px;
+        height: 100%;
+    }
+    .footer-right {
+        display: inline-flex;
+        align-items: center;
+        padding-right: 10px;
+        padding-left: 10px;
+        height: 100%;
+    }
+    #footer-button-left {
+        height: 56%;
+    }
+    #footer-button-right {
+        height: 56%;
+    }
+    #footer-button-center {
+        height: 68%;
+    }
+    // ==========  for slidebanner ================
+    #mSlidebanner {
+        height: auto;
+        max-height: 30vw;
+        overflow: hidden;
+    }
+    /*For view notify*/
+    .view-notify {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 12;
+        top: 0px;
+        left: 0px;
+        visibility: hidden;
+        background-color: rgba(0, 0, 0, 0.0);
+        transition: background 200ms ease-in;
+    }
+    .view-notify-show {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    .view-notify-container {
+        position: absolute;
+        width: 70%;
+        height: 100%;
+        top: 0px;
+        right: -100vw;
+        background-color: white;
+        transition: 200ms ease-in;
+        transform: translate3d(-100vw, 0, 0);
+    }
+    .view-notify-container-hide {
+        transform: translate3d(0, 0, 0);
+    }
+    .view-notify-header {
+        height: $toolbar-height;
+        line-height: $toolbar-height;
+        position: relative;
+        font-size: 1.2em;
+    }
+    .button-left {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 40%;
+    }
+    .no-follower-online {
+        padding: 20px;
+        text-align: center;
+    }
+    //for view explore
+    #view_explore {
+        background-color: #fff;
+    }
+    .mSearchBar {
+        padding: 20px;
+        background: none;
+        border: 0px;
+    }
+    .searchbar-input {
+        background-color: #f8f8f8 !important;
+    }
+    .categories {
+        width: 100%;
+        position: relative;
+        clear: both;
+    }
+    .divider-item {
+        position: relative;
+        height: 30px;
+        line-height: 30px;
+        padding-left: 10px;
+        font-size: 1em;
+    }
+    .more-button {
+        float: right;
+        color: gray;
+        line-height: 30px;
+        padding-right: 10px;
+    }
+    .more-button ion-icon {
+        padding: 2px;
+        font-size: 1em;
+        vertical-align: middle;
+    }
+    .top {
+        position: relative;
+        height: 100px;
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        padding-left: 10px;
+        white-space: nowrap;
+    }
+    .topitem {
+        height: 100%;
+        width: 60px;
+        display: inline-block;
+        position: relative;
+        margin: 10px;
+    }
+    .top-item-avatar {
+        position: absolute;
+        width: 100%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .top-item-bg {
+        position: absolute;
+        width: 100%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .explore-room-lives {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        padding-left: 10px;
+        width: 100%;
+    }
+    .explore-room {
+        display: inline-block;
+        width: 160px;
+        padding-right: 2px;
+    }
+    .explore-room-info-des {
+        font-weight: lighter;
+        color: white;
+        position: absolute;
+        width: 80%;
+        left: 20px;
+        bottom: 10px;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .room-item {
+        margin: 0px;
+        padding: 0px;
+        font-size: 1em;
+        background-color: none;
+    }
+    //=============== select talents ===============
+    .flex-center-vertical {
+        display: flex;
+        align-items: center;
+    }
+    .bg-touch-hide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        background-color: rgba(0, 0, 0, .4);
+    }
+    .dia-container {
+        background-color: white;
+        border-radius: 10px;
+        padding: 10px;
+        max-width: 80vw;
+        width: 80vw;
+    }
+    .dia-title {
+        color: black;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .dia-divider {
+        color: gray;
+        padding-top: 10px;
+    }
+    .checkbox {
+        height: 16px;
+    }
+    .list-talents {
+        height: 40vh;
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+    .dia-item-talent {
+        height: 60px;
+        padding: 0px 20px 0px 20px;
+    }
+    .dia-item-talent-avatar {
+        height: 40px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .other-chanel {
+        display: inline-block;
+        padding: 10px;
+        color: gray;
+        border: solid 1px gray;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+    .button-done {
+        width: 100px;
+        max-width: 40vw;
+    }
+    #popup_promote {
+        visibility: hidden;
+    }
+}

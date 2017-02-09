@@ -1,0 +1,31 @@
+<ion-content id="user-follow-content">
+    <div class="user-header" style="background-color:white">
+        <ion-icon name="ios-arrow-back-outline" class="user-header-back" (click)="onClickBack()"></ion-icon>
+        <div class="user-header-title">
+            Đang theo dõi
+        </div>
+    </div>
+    <div *ngIf="mLoading" class="loading-container" text-center>
+        <ion-spinner name="ios" class="spinner-small"></ion-spinner>
+    </div>
+    <div *ngIf="!mLoading">
+        <div *ngIf="mFollowings.length==0" text-center>
+            <img src="assets/v2/emo-sleep.png" style="max-width:32%;padding-top:100px">
+            <div text-center padding>
+                Không theo dõi ai.
+            </div>
+        </div>
+
+        <div>
+            <ion-list no-lines>
+                <ion-item *ngFor="let follower of mFollowings" class="item-talent">
+                    <ion-avatar item-left>
+                        <img src={{follower.talent.avatar}}>
+                    </ion-avatar>
+                    <h2>{{follower.talent.name}}</h2>
+                    <img src="{{getFollowImage(follower)}}" class="follow-state-img" item-right (click)="onClickToggleFollow(follower)">
+                </ion-item>
+            </ion-list>
+        </div>
+    </div>
+</ion-content>

@@ -1,0 +1,24 @@
+
+pomelo :   <script src="assets/pomelo.js"></script> /*Thêm vào cuối file src/index.html*/
+
+md5 : npm install ts-md5
+
+Facebook: ionic plugin add cordova-plugin-facebook4 --variable APP_ID="1145306305504551" --variable APP_NAME="showtimes.vn"
+
+Google IOS :  ionic plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.717950871911-mgd2mrnt3phlmfehcdottsed618pgio3
+Google Android : ionic plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID=717950871911-3vu3pa7c6upq2m69kafpshtg0ruu536o.apps.googleusercontent.com
+
+Onesignal: ionic plugin add onesignal-cordova-plugin
+
+SocialSharing : ionic plugin add cordova-plugin-x-socialsharing
+
+Screen Orientation : ionic plugin add cordova-plugin-screen-orientation
+
+NativeStorage : ionic plugin add cordova-plugin-nativestorage
+
+Camera : ionic plugin add cordova-plugin-camera
+
+keyboard : thay android:windowSoftInputMode="adjustPan" vào mainifest android của activity chính.
+
+npm install -g ios-deploy --unsafe-perm=true
+

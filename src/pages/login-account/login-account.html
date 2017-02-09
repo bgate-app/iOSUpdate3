@@ -1,0 +1,22 @@
+<ion-content>
+    <div id="header">
+        <ion-icon name="ios-arrow-back-outline" (click)="onClickGoBack()" class="button-left"></ion-icon>
+        ĐĂNG NHẬP
+    </div>
+    <div id="fixedcontenttop"></div>
+    <ion-list>
+        <ion-item style="border-top:0px;" class="item-input">
+            <ion-input #iUsername type="text" placeholder="Tên đăng nhập" [(ngModel)]="login_data.username"></ion-input>
+        </ion-item>
+        <ion-item class="item-input">
+            <ion-input type="password" placeholder="Mật khẩu" [(ngModel)]="login_data.password"></ion-input>
+        </ion-item>
+    </ion-list>
+    <div padding text-center>
+        <button ion-button full class="btn_login" [class.btn-login-invalid]="!isValid()" (click)="onClickLogin()">{{mText}}</button>
+    </div>
+    <div id="login-options">
+        <span style="float:left" (click)="onCLickForgotPassword()">Quên mật khẩu</span>
+        <span style="float:right" (click)="onCLickRegister()">Đăng ký</span>
+    </div>
+</ion-content>
