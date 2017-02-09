@@ -72,9 +72,9 @@ export class UserDevice {
     device_id: string;
     device_name: string;
     platform: string;
-    mRealDevice: boolean = false;
-    mAndroidDevice: boolean = true;
-    mIOSDevice: boolean = false;
+    mRealDevice: boolean = true;
+    mAndroidDevice: boolean = false;
+    mIOSDevice: boolean = true;
 
 
     constructor() {
@@ -82,11 +82,11 @@ export class UserDevice {
         this.device_name = "device_name";
         this.platform = "iOS";
 
-        if (Device.platform == null) {
-            this.mRealDevice = false;
-            this.mAndroidDevice = false;
-            this.mIOSDevice = true;
-        }
+        // if (Device.platform == null) {
+        //     this.mRealDevice = false;
+        //     this.mAndroidDevice = false;
+        //     this.mIOSDevice = true;
+        // }
 
     }
     isRealDevice() {

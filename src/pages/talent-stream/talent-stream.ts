@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, AlertController, Events } from 'ionic-angular';
-import { StreamPlugin } from '../../providers/stream-plugin';
+
+import { AiaStream } from '../../providers/aia-stream';
 import { DataService } from '../../providers/data-service';
 import { Utils } from '../../providers/utils';
 import { ChatService } from '../../providers/chat-service';
@@ -89,38 +90,45 @@ export enum StreamState {
 }
 
 export class StreamModule {
-
+  mAiaStream: AiaStream;
   mState: StreamState = StreamState.NONE;
-  constructor(private mStreamPlugin: StreamPlugin) { }
+  constructor(private aiaStream: AiaStream) {
+    this.mAiaStream = aiaStream;
+  }
   startCameraPreview() {
     if (this.mState != StreamState.PREVIEWING) {
-      if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.startCameraPreview();
+      this.mAiaStream.mBroadcaster.startCameraPreview();
       this.setState(StreamState.PREVIEWING);
     }
   }
 
   startBroadcast(success, error, options) {
     if (this.mState != StreamState.BROADCASTING) {
-      if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.startBroadcast(success, error, options);
-      //this.setState(StreamState.BROADCASTING);
+      this.mAiaStream.mBroadcaster.startBroadcast(success, error, options);
+      // if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.startBroadcast(success, error, options);
+
     }
   }
   stopBroadcast() {
-    if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.stopBroadcast();
-    //  this.setState(StreamState.PREVIEWING);
+    //if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.stopBroadcast();
+    this.mAiaStream.mBroadcaster.stopBroadcast();
   }
   stopBroadcastAll() {
-    if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.stopBroadcastAndPreview();
+    this.mAiaStream.mBroadcaster.stopBroadcastAndPreview();
+    // if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.stopBroadcastAndPreview();
     this.setState(StreamState.NONE);
   }
   switchCamera() {
-    if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.switchCamera();
+    this.mAiaStream.mBroadcaster.switchCamera();
+    //if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.switchCamera();
   }
   setFilter(filter: number) {
-    if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.setFilter(filter);
+    this.mAiaStream.mBroadcaster.setFilter(filter);
+    // if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.setFilter(filter);
   }
   setAudioEnable(enable: boolean) {
-    if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.setAudioEnable(enable);
+    //  if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.setAudioEnable(enable);
+    this.mAiaStream.mBroadcaster.setAudioEnable(enable);
   }
   setState(newState: StreamState) {
     this.mState = newState;
@@ -174,10 +182,10 @@ export class TalentStreamPage {
     public navCtrl: NavController,
     private alertCtrl: AlertController,
     private events: Events,
-    private mStreamPlugin: StreamPlugin,
+    private mAiaStream: AiaStream,
     private mDataService: DataService,
     private chatService: ChatService) {
-    this.mStreamModule = new StreamModule(this.mStreamPlugin);
+    this.mStreamModule = new StreamModule(mAiaStream);
     this.mShowData = new ShowData();
     this.mLiveStreamData = new LiveStreamData();
     this.mChatModule = new ChatModule();
@@ -435,9 +443,9 @@ export class TalentStreamPage {
     }, error => {
       console.log("Broadcast error : " + JSON.stringify(error));
     }, {
-        rtmp: this.mLiveStreamData.roomlive.rtmp_url,
+        url: this.mLiveStreamData.roomlive.rtmp_url,
         filter: 0,
-        audio_enable: "true"
+        audio_enable: true
       });
   }
   dialog_showing: boolean = false;
@@ -786,6 +794,7 @@ export class TalentStreamPage {
   mShowFilter: boolean = true;
   onClickToggleFilters() {
     this.mShowFilter = !this.mShowFilter;
+    this.mStreamModule.setFilter(this.mShowFilter ? 0 : 1);
   }
   onClickSelectFilter(id) {
     this.mDataService.mFilterManager.setSelectedFilter(id);

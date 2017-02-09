@@ -1,4 +1,4 @@
-<ion-content id="streamContent">
+<ion-content id="streamContent" no-bounce>
     <div class="a1-container-absolute">
         <div class="a1-container">
             <div id="mGiftEffectContainer">
@@ -35,13 +35,13 @@
             <!--view setting-->
             <ion-slide class="a1-container slide-fix">
 
-                <div class="a1-acontainer-bottom" id="view-setting">
-                    <div style="width: 100%; overflow-x: auto;padding: 10px;white-space: nowrap" [style.visibility]="mShowFilter?'visible':'hidden'">
+                <div class="a1-container-bottom" id="view-setting">
+                    <!--<div style="width: 100%; overflow-x: auto;padding: 10px;white-space: nowrap" [style.visibility]="mShowFilter?'visible':'hidden'">
                         <div class="preview-item" *ngFor="let filter of mDataService.mFilterManager.filters; let i=index;" (click)="onClickSelectFilter(i)" [class.preview-item-selected]="i==mDataService.mFilterManager.mSelectedIndex">
                             <img src={{filter.preview}}>
                             <div class="preview-item-name">{{filter.name}}</div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div text-center style="padding-bottom: 10px">
                         <button ion-button clear icon-only class="btn-icon" (click)="onClickSwitchCamera()">
@@ -63,7 +63,7 @@
 
                 <!--preview-->
                 <div class="mFullScreenAbsolute" *ngIf="mStreamModule.mState==NONE || mStreamModule.mState==PREVIEWING">
-                    <div class="mContainer" style=" display: flex; align-items: center;">
+                    <div class="mContainer a3-container a3-items-center">
                         <div style="margin: 0 auto;">
                             <div padding text-center class="mInputLive">
                                 <ion-input type="text" placeholder="Chủ đề LIVE của bạn" id="mInputText"></ion-input>

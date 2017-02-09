@@ -1,6 +1,5 @@
 page-talent-stream {
     #streamContent {
-        background-color: white;
         background-image: url('../assets/v2/login-bg.png');
         background-size: cover;
         background-position: bottom;
@@ -569,6 +568,7 @@ page-talent-stream {
         display: block !important;
         width: 100vw !important;
         height: 100vh !important;
+        position: relative;
     }
     .slide-fix .slide-zoom {
         text-align: left;

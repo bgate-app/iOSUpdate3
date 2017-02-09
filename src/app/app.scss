@@ -2,6 +2,10 @@
     background-color: transparent;
 }
 
+.nav-decor {
+    background-color: transparent !important;
+}
+
 .header-button {
     position: relative;
     display: inline-flex;
@@ -412,6 +416,13 @@
     height: 100%;
     left: 0px;
     top: 0px;
+}
+
+.a1-container-bottom {
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
 }
 
 .a1-inline-block {

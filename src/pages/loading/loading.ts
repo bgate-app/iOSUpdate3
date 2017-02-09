@@ -6,9 +6,10 @@ import { DataService } from '../../providers/data-service';
 import { PomeloService } from '../../providers/pomelo-service';
 import { NetworkService } from '../../providers/network-service';
 import { StreamPlugin } from '../../providers/stream-plugin';
+import { AiaStream } from '../../providers/aia-stream';
 import { ExtParamsKey, NetworkConfig } from '../../providers/network-config';
 import { UserHomePage } from '../user-home/user-home';
-
+import { Keyboard } from 'ionic-native';
 
 @Component({
   selector: 'page-loading',
@@ -21,6 +22,7 @@ export class LoadingPage {
     private mDataService: DataService,
     private networkService: NetworkService,
     private mStreamPlugin: StreamPlugin,
+    private mAiaStream : AiaStream,
     private platform: Platform
   ) {
     this.platform.ready().then(
@@ -38,6 +40,10 @@ export class LoadingPage {
     this.mDataService.requestHotLiveStream('' + this.mDataService.mListRoomUserHomeRangeFirst + '-' + this.mDataService.mRangeGap, true);
     this.mDataService.requestTopTalentRecieveGiftByYear();
     this.mStreamPlugin.init();
+    this.mAiaStream.initialize(this.mDataService.isAndroid());
+
+    
+    Keyboard.disableScroll(true);
   }
   ionViewDidEnter() {
     setTimeout(() => {

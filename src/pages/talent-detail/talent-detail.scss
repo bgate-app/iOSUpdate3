@@ -12,10 +12,13 @@ page-talent-detail {
         height: 48vh;
         position: relative;
     }
-    .user-header-toolbar {
+    .user-header-container {
         position: absolute;
         top: 0px;
         left: 0px;
+        width: 100%;
+    }
+    .user-header-toolbar {
         width: 100%;
         height: $toolbar-height;
         display: flex;
@@ -29,19 +32,15 @@ page-talent-detail {
         font-size: 1.2em;
     }
     .room-status {
-        position: absolute;
-        top: $toolbar-height;
-        right: 20px;
         background-color: rgba(0, 0, 0, 0.4);
         padding-left: 12px;
         padding-right: 12px;
+        margin-right: 20px;
         height: 20px;
         border-radius: 10px;
         display: -webkit-inline-flex;
-        display: -ms-inline-flexbox;
         display: inline-flex;
         -webkit-align-items: center;
-        -ms-flex-align: center;
         align-items: center;
     }
     .room-status img {
@@ -71,6 +70,7 @@ page-talent-detail {
     .info-container {
         text-align: center;
         width: 100%;
+        margin-top: 20px;
     }
     .user-info-avatar {
         width: 80px;

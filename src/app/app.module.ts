@@ -31,6 +31,7 @@ import { NetworkService } from '../providers/network-service';
 import { DataService } from '../providers/data-service';
 import { ChatService } from '../providers/chat-service';
 import { StreamPlugin } from '../providers/stream-plugin';
+import { AiaStream } from '../providers/aia-stream';
 import { LazyLoadService } from '../providers/lazyload-service';
 import { TalentStreamPage } from '../pages/talent-stream/talent-stream';
 
@@ -67,12 +68,7 @@ import { TalentStreamPage } from '../pages/talent-stream/talent-stream';
     UserMessageDetailPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp,{
-      iconMode: 'ios',
-      pageTransition: 'ios',
-      scrollAssist: false,
-      scrollPadding: false
-    })
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -106,6 +102,6 @@ import { TalentStreamPage } from '../pages/talent-stream/talent-stream';
     TalentStreamPage,
     UserMessageDetailPage
   ],
-  providers: [NetworkService, DataService, ChatService, LazyLoadService,StreamPlugin,{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [NetworkService, DataService, ChatService, LazyLoadService,StreamPlugin,AiaStream,{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

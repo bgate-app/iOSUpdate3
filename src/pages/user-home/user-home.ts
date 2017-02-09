@@ -11,6 +11,7 @@ import { SuggestTalentPage } from '../suggest-talent/suggest-talent';
 import { TalentDetailPage } from '../talent-detail/talent-detail';
 
 import { StreamPlugin } from '../../providers/stream-plugin';
+import { AiaStream } from '../../providers/aia-stream';
 import { PomeloState } from '../../providers/pomelo-service';
 
 import { RoomLive, RoomPage, RefreshState, LoadMoreState, UserPreview, UserRole, Default } from '../../providers/config';
@@ -55,7 +56,7 @@ export class UserHomePage {
     mLastScrollTop: number = 0;
     mScrollElement: HTMLElement;
     mEnableDebug: boolean = false;
-    constructor(private mStreamPlugin: StreamPlugin, private platform: Platform, private alertController: AlertController, private events: Events, public navCtrl: NavController, public mDataService: DataService, private toastCtrl: ToastController) {
+    constructor(private mAiaStream : AiaStream,private mStreamPlugin: StreamPlugin, private platform: Platform, private alertController: AlertController, private events: Events, public navCtrl: NavController, public mDataService: DataService, private toastCtrl: ToastController) {
         this.platform.ready().then(() => {
             this.platform.registerBackButtonAction(() => {
                 this.events.publish("user:back");
@@ -419,15 +420,21 @@ export class UserHomePage {
 
     onClickShowView(type) {
         if (type == this.VIEW_STREAM) {
-            if (this.mDataService.isAndroid()) {
-                if (this.mDataService.mUser.role_id == UserRole.TALENT) {
-                    this.navCtrl.push(TalentStreamPage);
-                } else {
-                    this.navCtrl.push(UserStreamPage);
-                }
-            } else if (this.mDataService.isIOS()) {
+
+            if (this.mDataService.mUser.role_id == UserRole.TALENT) {
+                this.navCtrl.push(TalentStreamPage);
+            } else {
                 this.navCtrl.push(UserStreamPage);
             }
+            // if (this.mDataService.isAndroid()) {
+            //     if (this.mDataService.mUser.role_id == UserRole.TALENT) {
+            //         this.navCtrl.push(TalentStreamPage);
+            //     } else {
+            //         this.navCtrl.push(UserStreamPage);
+            //     }
+            // } else if (this.mDataService.isIOS()) {
+            //     this.navCtrl.push(UserStreamPage);
+            //  }
             return;
         }
         if (type == this.VIEW_USER_INFO) {

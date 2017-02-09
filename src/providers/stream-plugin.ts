@@ -1,12 +1,15 @@
 import { Injectable } from "@angular/core";
+import { CameraPreview, CameraPreviewRect } from 'ionic-native';
 
 @Injectable()
 export class StreamPlugin {
+  
   mAiaStream: any;
 
   constructor() {
 
   }
+ 
   init() {
     if (this.mAiaStream == undefined && window['plugins'] != undefined) {
       this.mAiaStream = window['plugins'].aiaStream;
