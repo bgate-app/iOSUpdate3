@@ -1,0 +1,18 @@
+{
+    "ImageIO.framework": 2,
+    "CoreLocation.framework": 2,
+    "AVFoundation.framework": 1,
+    "AddressBook.framework": 1,
+    "CoreText.framework": 1,
+    "SafariServices.framework": 1,
+    "Security.framework": 1,
+    "SystemConfiguration.framework": 1,
+    "libz.tbd": 1,
+    "libz.dylib": 1,
+    "Social.framework": 1,
+    "MessageUI.framework": 1,
+    "CoreImage.framework": 1,
+    "OpenGLES.framework": 1,
+    "GLKit.framework": 1,
+    "CoreVideo.framework": 1
+}
