@@ -4,6 +4,7 @@ import { DataService } from '../../providers/data-service';
 import { Utils } from '../../providers/utils';
 import { UserPreview, TalentTopData, RoomLive, RoomLiveStatus } from '../../providers/config';
 import { ResponseCode } from '../../providers/network-config';
+import {LiveStreamPage} from '../live-stream/live-stream';
 @Component({
   selector: 'page-talent-detail',
   templateUrl: 'talent-detail.html'
@@ -12,7 +13,7 @@ export class TalentDetailPage {
   mTalent: UserPreview;
   fans: Array<UserPreview> = [];
   mRoom: RoomLive = null;
-
+  from : string ="";
   constructor(public navCtrl: NavController,
     private navParams: NavParams,
     private mDataService: DataService,
@@ -26,8 +27,9 @@ export class TalentDetailPage {
       this.mRoom.talent = this.mTalent;
       this.mRoom.status = RoomLiveStatus.OFF_AIR;
     }
-
+    
     while (this.fans.length < 3) this.fans.push(UserPreview.createUser());
+    this.from = this.navParams.get('from');
   }
 
   ionViewDidEnter() {
@@ -68,7 +70,13 @@ export class TalentDetailPage {
 
   }
   onClickRoomStreaming() {
-
+    if(this.from == 'home-page'){
+       this.navCtrl.push(LiveStreamPage, {
+            room_live: this.mRoom
+        });
+    }else  if(this.from == 'livestream-page'){
+      this.navCtrl.pop();
+    }
   }
 
   onClickBack() {

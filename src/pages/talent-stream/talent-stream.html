@@ -2,41 +2,34 @@
     <div class="a1-container-absolute">
         <div class="a1-container">
             <div id="mGiftEffectContainer">
+
                 <div class="mContainer" id="mEffectHolder">
                     <div class="mGiftEffect mGiftEffect-hide" id="mEffect1">
                         <img src="assets/common/default_avatar.png" class="user-send-gift-avatar">
-                        <div class="user-send-gift-content">
-                            <span class="user-send-gift-name">User gửi tặng</span>
-                            <span class="user-send-gift-image"><img src="assets/common/default_avatar.png" class="gift_img"></span>
-                        </div>
+                        <span class="user-send-gift-name">User gửi tặng</span>
+                        <img src="" class="gift_img">
                     </div>
-
                     <div class="mGiftEffect mGiftEffect-hide" id="mEffect2">
                         <img src="assets/common/default_avatar.png" class="user-send-gift-avatar">
-                        <div class="user-send-gift-content">
-                            <span class="user-send-gift-name">User gửi tặng</span>
-                            <span class="user-send-gift-image"><img src="assets/common/default_avatar.png" class="gift_img"></span>
-                        </div>
+                        <span class="user-send-gift-name">User gửi tặng</span>
+                        <img src="" class="gift_img">
                     </div>
-
                     <div class="mGiftEffect mGiftEffect-hide" id="mEffect3">
                         <img src="assets/common/default_avatar.png" class="user-send-gift-avatar">
-                        <div class="user-send-gift-content">
-                            <span class="user-send-gift-name">User gửi tặng</span>
-                            <span class="user-send-gift-image"><img src="assets/common/default_avatar.png" class="gift_img"></span>
-                        </div>
+                        <span class="user-send-gift-name">User gửi tặng</span>
+                        <img src="" class="gift_img">
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="mFullScreenAbsolute">
-        <ion-slides [options]="slides_options">
+        <ion-slides initialSlide="1">
             <!--view setting-->
             <ion-slide class="a1-container slide-fix">
 
                 <div class="a1-container-bottom" id="view-setting">
-                    <!--<div style="width: 100%; overflow-x: auto;padding: 10px;white-space: nowrap" [style.visibility]="mShowFilter?'visible':'hidden'">
+                    <!--<div style="width: 100%; overflow-x: auto;padding: 10px;white-space: nowrap" [style.visibility]="mFilterEnable?'visible':'hidden'">
                         <div class="preview-item" *ngFor="let filter of mDataService.mFilterManager.filters; let i=index;" (click)="onClickSelectFilter(i)" [class.preview-item-selected]="i==mDataService.mFilterManager.mSelectedIndex">
                             <img src={{filter.preview}}>
                             <div class="preview-item-name">{{filter.name}}</div>
@@ -73,6 +66,14 @@
                             </div>
                             <div padding text-center>
                                 <button ion-button round class="button-live" (click)="onClickStartStream()">Bắt đầu LIVE</button>
+                            </div>
+                        </div>
+
+                        <div class="a1-container-bottom" padding>
+                            <div text-center style="height: 50px">
+                                <img src="assets/v2/icon-xoaycamera.png" class="live-stream-button" (click)="onClickSwitchCamera()">
+                                <img [src]='mFilterEnable?"assets/v2/button-filter-on.png":"assets/v2/button-filter-off.png"' class="live-stream-button" (click)="onClickToggleFilters()">
+                                <img [src]='mAudioEnable?"assets/v2/button-voice-on.png":"assets/v2/button-voice-off.png"' class="live-stream-button" (click)="onClickToggleAudio()">
                             </div>
                         </div>
                     </div>
@@ -142,7 +143,9 @@
                             <div class="mContainer">
                                 <img src="assets/v2/button-chat.png" class="live-stream-button" (click)="onClickShowView(VIEW_CHAT)">
                                 <img src="assets/v2/icon-banbe.png" class="live-stream-button" (click)="onClickUsers()" (click)="onClickShowView(VIEW_TOP)">
-                                <img src="assets/v2/icon-xoaycamera.png" class="live-stream-button" (click)="onClickSwapCamera()">
+                                <img src="assets/v2/icon-xoaycamera.png" class="live-stream-button" (click)="onClickSwitchCamera()">
+                                <img [src]='mFilterEnable?"assets/v2/button-filter-on.png":"assets/v2/button-filter-off.png"' class="live-stream-button" (click)="onClickToggleFilters()">
+                                <img [src]='mAudioEnable?"assets/v2/button-voice-on.png":"assets/v2/button-voice-off.png"' class="live-stream-button" (click)="onClickToggleAudio()">
                             </div>
                         </div>
 

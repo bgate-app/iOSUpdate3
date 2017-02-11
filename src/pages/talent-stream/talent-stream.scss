@@ -365,20 +365,11 @@ page-talent-stream {
         bottom: 16px;
         transition: bottom 400ms;
     }
-    /*===============start gift effect=================*/
+    //========== Start Gift Effects ===============
     #mGiftEffectContainer {
         position: absolute;
         bottom: 45vh;
         width: 100%;
-    }
-    .mGiftEffect {
-        position: absolute;
-        height: 8vh;
-        border-radius: 4vh;
-        background-color: rgba(0, 0, 0, .4f);
-        display: inline-block;
-        color: white;
-        line-height: 8vh;
     }
     #mEffect1 {
         bottom: 0px;
@@ -389,25 +380,16 @@ page-talent-stream {
     #mEffect3 {
         bottom: 20vh;
     }
-    .mGiftEffect2 {
+    .mGiftEffect {
         position: absolute;
-        height: 8vh;
-        border-radius: 4vh;
+        display: inline-flex;
+        display: -webkit-inline-flex;
+        height: 48px;
+        border-radius: 24px;
         background-color: rgba(0, 0, 0, .4f);
-        display: inline-block;
         color: white;
-        line-height: 8vh;
-        bottom: 12vh;
-    }
-    .mGiftEffect3 {
-        position: absolute;
-        height: 8vh;
-        border-radius: 4vh;
-        background-color: rgba(0, 0, 0, .4f);
-        display: inline-block;
-        color: white;
-        line-height: 8vh;
-        bottom: 24vh;
+        align-items: center;
+        -webkit-align-items: center;
     }
     .mGiftEffect-show {
         left: 10px;
@@ -421,23 +403,24 @@ page-talent-stream {
         display: inline-block;
     }
     .user-send-gift-avatar {
-        height: 100%;
-        border-radius: 50%;
-        padding: 2px;
+        height: 44px;
+        width: 44px;
+        border-radius: 22px;
+        margin-left: 2px;
+        margin-right: 6px;
     }
     .user-send-gift-name {
         max-width: 120px;
+        padding-left: 2px;
+        padding-right: 2px;
         text-overflow: ellipsis;
         overflow: hidden;
         display: inline-block;
         white-space: nowrap;
-        font-size: 1em;
+        font-size: .8em;
     }
     .user-send-gift-image {
-        height: 8vh;
-        line-height: 8vh;
-        display: inline-block;
-        position: relative;
+        height: 60px;
         min-width: 80px;
         text-align: center;
         padding-right: 20px;
@@ -445,7 +428,7 @@ page-talent-stream {
     .user-send-gift-image img {
         height: 100%;
     }
-    /*===============end gift effect=================*/
+    //========== End Gift Effects ================
     // ===================================begin top=========================================
     .flex-center-vertical {
         display: flex;

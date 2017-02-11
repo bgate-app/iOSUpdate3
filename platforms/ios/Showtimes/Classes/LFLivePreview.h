@@ -17,15 +17,11 @@
 
 - (void) switchCamera;
 
-- (void) setAudioOn;
+- (void) setAudio : (bool) enable;
 
-- (void) setAudioOff;
+- (void) setBeauty : (bool) enable;
 
-- (void) setBeautyOn;
-
-- (void) setBeautyOff;
-
-- (void) startBroadcast;
+- (void) startBroadcast : (NSString*) url;
 
 - (void) stopBroadcast;
 

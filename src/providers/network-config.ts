@@ -2,7 +2,7 @@ export class NetworkConfig {
 
     public static SERVER_SHOWTIME: number = 1;
     public static SERVER_LOCAL: number = 2;
-    public static SERVER_TYPE: number = NetworkConfig.SERVER_LOCAL;
+    public static SERVER_TYPE: number = NetworkConfig.SERVER_SHOWTIME;
 
     public static MAIN_URL: string = "";
     public static MAIN_HOST: string = "";

@@ -46,10 +46,6 @@ export class LiveStreamPage {
 
     mLiveStreamData: LiveStreamData = new LiveStreamData();
 
-    mSlidesGiftOptions = {
-        pager: true
-    };
-
     mSelectedGiftID = -1;
 
     viewcontrol = {
@@ -129,9 +125,10 @@ export class LiveStreamPage {
     }
 
     public onLeft() {
-        if (this.mDataService.isAndroid()) this.mStreamPlugin.stopVideoPlayer();
+        this.stopVideo();
         this.mEffectManager.stopAll();
         this.unScheduleUpdate();
+
     }
     getStreamPoster() {
         return "url(" + this.mLiveStreamData.roomlive.poster + ")";
@@ -412,7 +409,7 @@ export class LiveStreamPage {
             this.mDataService.mPomeloService.leave_room();
         }
         this.onLeft();
-        ScreenOrientation.unlockOrientation();
+        ScreenOrientation.lockOrientation("portrait");
     }
 
     updateViewers(userview: number) {
@@ -803,7 +800,8 @@ export class LiveStreamPage {
             setTimeout(() => {
                 let modal = this.modalCtrl.create(TalentDetailPage, {
                     talent: user,
-                    room_live: this.mLiveStreamData.roomlive
+                    room_live: this.mLiveStreamData.roomlive,
+                    from : 'livestream-page'
                 });
                 modal.present();
                 modal.onDidDismiss(() => {

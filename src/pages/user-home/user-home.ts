@@ -420,12 +420,12 @@ export class UserHomePage {
 
     onClickShowView(type) {
         if (type == this.VIEW_STREAM) {
-
-            if (this.mDataService.mUser.role_id == UserRole.TALENT) {
-                this.navCtrl.push(TalentStreamPage);
-            } else {
-                this.navCtrl.push(UserStreamPage);
-            }
+             this.navCtrl.push(TalentStreamPage);
+            // if (this.mDataService.mUser.role_id == UserRole.TALENT) {
+            //     this.navCtrl.push(TalentStreamPage);
+            // } else {
+            //     this.navCtrl.push(UserStreamPage);
+            // }
             // if (this.mDataService.isAndroid()) {
             //     if (this.mDataService.mUser.role_id == UserRole.TALENT) {
             //         this.navCtrl.push(TalentStreamPage);
@@ -556,7 +556,8 @@ export class UserHomePage {
         this.onClickShowNotify(false);
         setTimeout(() => {
             this.navCtrl.push(TalentDetailPage, {
-                talent: talent
+                talent: talent,
+                from : 'home-page'
             });
         }, 400);
     }

@@ -16,7 +16,8 @@ export class FollowManager {
             talent.name = tl.title;
             talent.avatar = tl.avatar;
             talent.point = tl.point;
-            talent.level = tl.level;                              
+            talent.level = tl.level;       
+            talent.followed = true;                       
             this.followings.push(talent);
         }                
     }

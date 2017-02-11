@@ -79,6 +79,8 @@
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.opaque = NO;
     
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
 }
 
 

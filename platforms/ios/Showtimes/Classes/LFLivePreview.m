@@ -68,28 +68,22 @@ inline static NSString *formatedSpeed(float bytes, float elapsed_milli) {
     AVCaptureDevicePosition devicePositon = self.session.captureDevicePosition;
     self.session.captureDevicePosition = (devicePositon == AVCaptureDevicePositionBack) ? AVCaptureDevicePositionFront : AVCaptureDevicePositionBack;
 }
-
-- (void) setAudioOn{
-    self.session.muted = false;
+- (void) setAudio:(bool)enable{
+    self.session.muted = !enable;
+}
+- (void)setBeauty:(bool)enable{
+    self.session.beautyFace = enable;
 }
 
-- (void) setAudioOff{
-    self.session.muted = true;
-}
-
-- (void) setBeautyOn{
-    self.session.beautyFace = true;
-    
-}
-- (void) setBeautyOff{
-    self.session.beautyFace = false;
-    
-}
-
-- (void) startBroadcast{
+- (void)startBroadcast:(NSString *)url{
+    LFLiveStreamInfo *stream = [LFLiveStreamInfo new];
+    stream.url = url;
+    [self.session startLive:stream];
+   
 }
 
 - (void) stopBroadcast{
+    [self.session stopLive];
 }
 
 - (void) initialize{

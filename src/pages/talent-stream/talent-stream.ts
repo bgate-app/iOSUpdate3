@@ -32,9 +32,14 @@ export class ChatModule {
     this.reset();
   }
 
-  initElements(id: string) {
-    this.mChatContainer = document.getElementById(id);
+  initElements() {
+    this.mChatContainer = document.getElementById("iChatContainer");
   }
+
+  floatingInput(floating: boolean) {
+
+  }
+
   floatingChat(floating: boolean) {
     let ele = document.getElementById('mContentContainer');
     if (ele == undefined) return;
@@ -177,6 +182,8 @@ export class TalentStreamPage {
 
   mJoinRoomAfterLeaveRoom: boolean = false;
 
+  mFilterEnable: boolean = true;
+  mAudioEnable: boolean = true;
 
   constructor(
     public navCtrl: NavController,
@@ -218,6 +225,12 @@ export class TalentStreamPage {
       }
     }
   }
+  lockScreenOrientation() {
+    ScreenOrientation.lockOrientation("portrait");
+  }
+  unLockScreenOrientation() {
+  //  ScreenOrientation.unlockOrientation();
+  }
 
   isPortraitMode() {
     if (this.mDataService.isAndroid()) {
@@ -228,7 +241,7 @@ export class TalentStreamPage {
   }
 
   ionViewDidEnter() {
-
+    this.lockScreenOrientation();
     this.mChatModule.setKeyboardHeight(this.mDataService.mKeyBoardHeight);
 
     this.events.unsubscribe("user:back");
@@ -239,7 +252,7 @@ export class TalentStreamPage {
 
     this.mGiftManager.onInit();
 
-    this.mChatModule.initElements("iChatContainer");
+    this.mChatModule.initElements();
 
     let input = document.getElementById("mInputText");
     if (input != undefined) input.focus();
@@ -282,9 +295,9 @@ export class TalentStreamPage {
           ele.style.height = this.mDataService.mKeyBoardHeight + "px";
         }
         setTimeout(() => { this.mDataService.setItemOnStorage("keyboardheight", this.mDataService.mKeyBoardHeight); }, 1000);
-
       }
     }
+
   }
 
   enableViewChat(enable) {
@@ -379,6 +392,7 @@ export class TalentStreamPage {
   }
 
   ionViewDidLeave() {
+    this.unLockScreenOrientation();
     this.unScheduleUpdate();
     this.tryLeaveRoom();
     this.mStreamModule.stopBroadcastAll();
@@ -420,26 +434,24 @@ export class TalentStreamPage {
 
 
   onClickStartStream() {
+    if (this.mLiveStreamData.roomlive.talent.role != UserRole.TALENT) {
+      let alert = this.alertCtrl.create({
+        title: "Chức năng chỉ dành cho talent !",
+        subTitle: "Vui lòng đăng kí talent để có thể livestream được.",
+        buttons: [
+          {
+            text: "OK"
+          }
+        ]
+      });
+      alert.present();
+      return;
+    }
+
     if (this.mBusy) return;
     this.mBusy = true;
-    this.mStreamModule.startBroadcast(data => {
-      console.log(JSON.stringify(data));
-      if (data.status == 0) {
-        this.onRTMPConnecting();
-      } else if (data.status == 1) {
-        this.onRTMPConnected();
-      } else if (data.status == 2) {
-        this.onRTMPStreammed();
-      }
-      else if (data.status == 3) {
-        this.onRTMPStopped();
-      }
-      else if (data.status == 4) {
-        this.onRTMPDisconnected();
-      }
-      else if (data.status == 5) {
-        this.onRTMPNetworkWeak();
-      }
+    this.mStreamModule.startBroadcast(() => {
+      this.onRTMPStreammed();
     }, error => {
       console.log("Broadcast error : " + JSON.stringify(error));
     }, {
@@ -447,6 +459,34 @@ export class TalentStreamPage {
         filter: 0,
         audio_enable: true
       });
+
+
+
+    // this.mStreamModule.startBroadcast(data => {
+    //   console.log(JSON.stringify(data));
+    //   if (data.status == 0) {
+    //     this.onRTMPConnecting();
+    //   } else if (data.status == 1) {
+    //     this.onRTMPConnected();
+    //   } else if (data.status == 2) {
+    //     this.onRTMPStreammed();
+    //   }
+    //   else if (data.status == 3) {
+    //     this.onRTMPStopped();
+    //   }
+    //   else if (data.status == 4) {
+    //     this.onRTMPDisconnected();
+    //   }
+    //   else if (data.status == 5) {
+    //     this.onRTMPNetworkWeak();
+    //   }
+    // }, error => {
+    //   console.log("Broadcast error : " + JSON.stringify(error));
+    // }, {
+    //     url: this.mLiveStreamData.roomlive.rtmp_url,
+    //     filter: 0,
+    //     audio_enable: true
+    //   });
   }
   dialog_showing: boolean = false;
   showConfirmStopStreaming() {
@@ -477,6 +517,7 @@ export class TalentStreamPage {
 
   stopBroadcast() {
     this.mStreamModule.stopBroadcast();
+    this.onRTMPStopped();
 
   }
   onClickBack() {
@@ -504,15 +545,14 @@ export class TalentStreamPage {
         ele.style.height = this.mDataService.mKeyBoardHeight + "px";
       }
 
+      if (this.isPortraitMode()) this.mChatModule.floatingChat(true);
+      this.mChatContent = "";
       setTimeout(() => {
         this.mChatInput.setFocus();
-        //this.mChatModule.floatingChat(true);
-        if (this.isPortraitMode()) this.mChatModule.floatingChat(true);
-      }, 100);
+      }, 400);
     }
 
     if (type == this.NONE) {
-      //this.mChatModule.floatingChat(false);
       this.mChatModule.floatingChat(false);
     }
 
@@ -786,15 +826,14 @@ export class TalentStreamPage {
       event.stopPropagation();
     });
   }
-  mAudioEnable: boolean = true;
+
   onClickToggleAudio() {
     this.mAudioEnable = !this.mAudioEnable;
     this.mStreamModule.setAudioEnable(this.mAudioEnable);
   }
-  mShowFilter: boolean = true;
   onClickToggleFilters() {
-    this.mShowFilter = !this.mShowFilter;
-    this.mStreamModule.setFilter(this.mShowFilter ? 0 : 1);
+    this.mFilterEnable = !this.mFilterEnable;
+    this.mStreamModule.setFilter(this.mFilterEnable ? 1 : 0);
   }
   onClickSelectFilter(id) {
     this.mDataService.mFilterManager.setSelectedFilter(id);

@@ -15,7 +15,7 @@
                     <ion-refresher-content refreshingSpinner="ios"></ion-refresher-content>
                 </ion-refresher>
                 <div>
-                    <ion-slides id="mSlidebanner" [options]="slide_banner_options" *ngIf="mDataService.mBanners.length>0">
+                    <ion-slides id="mSlidebanner" loop="true" autoplay="3000" *ngIf="mDataService.mBanners.length>0">
                         <ion-slide *ngFor="let banner of mDataService.mBanners">
                             <img src={{banner.image}} class="width100" (click)="onClickAdsPage()">
                         </ion-slide>

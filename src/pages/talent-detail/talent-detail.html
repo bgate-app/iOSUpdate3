@@ -1,4 +1,4 @@
-<ion-content id="talent-detail-content">
+<ion-content id="talent-detail-content" no-bounce>
 
     <div class="mFullScreenAbsolute">
         <div class="mContainer">
@@ -22,11 +22,6 @@
                       <ion-icon name="md-more"></ion-icon>
                     </button>
                         </div>
-                        <div text-right>
-                            <div class="room-status" *ngIf="mRoom.status==1" (click)="onClickRoomStreaming()">
-                                <img src="assets/v2/streaming.gif">
-                            </div>
-                        </div>
                     </div>
 
                     <div class="info-container">
@@ -39,6 +34,13 @@
                         </div>
                         <img *ngFor="let fan of fans" [src]="fan.avatar" class="fan-avatar" [class.no-fan]="fan.username=='undefined'">
                     </div>
+
+                    <div class="room-status-container" *ngIf="mRoom.status==1">
+                        <div class="room-status" (click)="onClickRoomStreaming()">
+                            <img src="assets/v2/streaming.gif">
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

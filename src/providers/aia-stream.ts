@@ -79,8 +79,8 @@ export class IosStreamBroadcaster implements StreamBroadcaster {
   }
   startBroadcast(successCallback, errorCallback, options: BroadcastOption) { 
     console.log("ios start broadcast");
-    successCallback();
     CameraPreview.setColorEffect("startBroadcast|"+options.url);
+    successCallback();
   }
   stopBroadcast() { 
     console.log("ios stop broadcast ");
@@ -98,7 +98,7 @@ export class IosStreamBroadcaster implements StreamBroadcaster {
   }
   setFilter(index: number) { 
     console.log("ios switch filter "+ index);
-    if(index == 0) CameraPreview.setColorEffect("setBeautyOn");
+    if(index == 1) CameraPreview.setColorEffect("setBeautyOn");
     else CameraPreview.setColorEffect("setBeautyOff");
   }
   setAudioEnable(enable: boolean) { 

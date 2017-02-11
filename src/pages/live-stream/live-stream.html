@@ -1,5 +1,5 @@
 <ion-content id="live-stream-page-content" style="height:100% !important">
-    <!--<video style="width:100%;height:100%" playsinline webkit-playsinline autoplay preload="true" loop id="mVideoElement" poster="assets/v2/black.png"></video>-->
+    <video style="width:100%;height:100%" playsinline webkit-playsinline autoplay preload="true" loop id="mVideoElement" poster="assets/v2/black.png"></video>
     <div class="mFullScreenAbsolute background-has-image" id="videoposter" [style.background-image]="getStreamPoster()">
         <div class="mContainer" text-center>
             <div class="loading-container">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="mFullScreenAbsolute" style="z-index:2">
-        <ion-slides #mySlider class="mContainer" (ionDidChange)="onSlideChanged()">
+        <ion-slides #mySlider class="mContainer" (ionSlideDidChange)="onSlideChanged()">
             <ion-slide class="mContainer">
                 <!--header-->
                 <div id="iHeader" class="mHeaderShow">
@@ -232,7 +232,7 @@
             <div id="view-gift">
                 <div class="mContainer">
                     <div id="slides-gift">
-                        <ion-slides class="mContainer" [options]="mSlidesGiftOptions">
+                        <ion-slides class="mContainer" pager="true">
                             <ion-slide class="mContainer" *ngFor="let page of mDataService.mGiftManager.pages">
                                 <div *ngFor="let gift of page.gifts" [style.width]="mGiftWidth" class="gift-item">
                                     <div class="gift-item-container" (click)="onClickSelectedGift(gift)" [class.gift-item-selected]="mSelectedGiftID==gift.id">
