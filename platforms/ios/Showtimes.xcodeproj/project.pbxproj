@@ -1561,8 +1561,8 @@
 				LastUpgradeCheck = 820;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = 7ALDF9WDW8;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 7JM2WZ88J8;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1888,9 +1888,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 7ALDF9WDW8;
+				DEVELOPMENT_TEAM = 7JM2WZ88J8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"Showtimes/Plugins/cordova-plugin-facebook4\"",
@@ -1913,10 +1913,10 @@
 				INFOPLIST_FILE = "Showtimes/Showtimes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.aia.showtimesstream;
+				PRODUCT_BUNDLE_IDENTIFIER = com.100shows.showtimes;
 				PRODUCT_NAME = Showtimes;
-				PROVISIONING_PROFILE = "89a68074-f01d-401d-ae8a-c3026e883a1b";
-				PROVISIONING_PROFILE_SPECIFIER = showtimesstream_dis_ih;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1931,9 +1931,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = 7ALDF9WDW8;
+				DEVELOPMENT_TEAM = 7JM2WZ88J8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"Showtimes/Plugins/cordova-plugin-facebook4\"",
@@ -1954,10 +1954,10 @@
 				INFOPLIST_FILE = "Showtimes/Showtimes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.aia.showtimesstream;
+				PRODUCT_BUNDLE_IDENTIFIER = com.100shows.showtimes;
 				PRODUCT_NAME = Showtimes;
-				PROVISIONING_PROFILE = "89a68074-f01d-401d-ae8a-c3026e883a1b";
-				PROVISIONING_PROFILE_SPECIFIER = showtimesstream_dis_ih;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

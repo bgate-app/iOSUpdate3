@@ -19,7 +19,7 @@ import { DataService } from '../../providers/data-service';
 import { LiveStreamPage } from '../live-stream/live-stream';
 import { RoomLiveField, Chaos, FieldsBuilder, PomeloCmd, ResponseCode, UserManagerField, NetworkConfig } from '../../providers/network-config';
 
-
+import {StatusBar,ScreenOrientation} from 'ionic-native';
 @Component({
     selector: 'page-user-home',
     templateUrl: 'user-home.html'
@@ -56,7 +56,7 @@ export class UserHomePage {
     mLastScrollTop: number = 0;
     mScrollElement: HTMLElement;
     mEnableDebug: boolean = false;
-    constructor(private mAiaStream : AiaStream,private mStreamPlugin: StreamPlugin, private platform: Platform, private alertController: AlertController, private events: Events, public navCtrl: NavController, public mDataService: DataService, private toastCtrl: ToastController) {
+    constructor(private mAiaStream: AiaStream, private mStreamPlugin: StreamPlugin, private platform: Platform, private alertController: AlertController, private events: Events, public navCtrl: NavController, public mDataService: DataService, private toastCtrl: ToastController) {
         this.platform.ready().then(() => {
             this.platform.registerBackButtonAction(() => {
                 this.events.publish("user:back");
@@ -110,7 +110,8 @@ export class UserHomePage {
             this.mDataService.mPomeloService.checkConnectoConnector(this.mDataService.mUser.username, () => {
                 this.mEnableDisconnectEvent = true;
             }, () => { });
-            if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.initAll();
+            //if (this.mStreamPlugin.isAvailable()) this.mStreamPlugin.initAll();
+            this.mAiaStream.createViews();
         }, 500);
         this.requestUserInfo();
         this.mDataService.requestMessages();
@@ -118,6 +119,8 @@ export class UserHomePage {
         this.mDataService.requestHomeRoomLives();
         this.start();
         this.checkPopupPromote();
+        StatusBar.styleDefault();
+        ScreenOrientation.lockOrientation("portrait");
     }
 
     onClickBack() {
@@ -420,7 +423,7 @@ export class UserHomePage {
 
     onClickShowView(type) {
         if (type == this.VIEW_STREAM) {
-             this.navCtrl.push(TalentStreamPage);
+            this.navCtrl.push(TalentStreamPage);
             // if (this.mDataService.mUser.role_id == UserRole.TALENT) {
             //     this.navCtrl.push(TalentStreamPage);
             // } else {
@@ -557,7 +560,7 @@ export class UserHomePage {
         setTimeout(() => {
             this.navCtrl.push(TalentDetailPage, {
                 talent: talent,
-                from : 'home-page'
+                from: 'home-page'
             });
         }, 400);
     }

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Events, NavController, NavParams, Platform, AlertController, ToastController, Slides,ModalController } from 'ionic-angular';
+import { Events, NavController, NavParams, Platform, AlertController, ToastController, Slides, ModalController } from 'ionic-angular';
 import { UserPreview, ChatSession, UserRole } from '../../providers/config';
 import { Utils } from '../../providers/utils';
 import { RoomLive, LiveStreamData, ChatSessionType, RoomLiveStatus, TalentTopData } from '../../providers/config';
@@ -15,15 +15,16 @@ import { NextStreamManager } from './next-stream';
 import { EffectManager } from './heart-effect';
 import { GiftEffectManager } from './gift-effects';
 
-import { StreamPlugin } from '../../providers/stream-plugin';
+//import { StreamPlugin } from '../../providers/stream-plugin';
+import { AiaStream, MEventListener } from '../../providers/aia-stream';
 
 import { TalentDetailPage } from '../talent-detail/talent-detail';
-
+import { StatusBar} from 'ionic-native';
 @Component({
     selector: 'page-live-stream',
     templateUrl: 'live-stream.html'
 })
-export class LiveStreamPage {
+export class LiveStreamPage implements MEventListener {
     @ViewChild('mySlider') slider: Slides;
     @ViewChild('chatInput') mChatInput;
 
@@ -86,7 +87,8 @@ export class LiveStreamPage {
         private alertController: AlertController,
         private navParams: NavParams,
         private toastCtrl: ToastController,
-        private mStreamPlugin: StreamPlugin,
+        // private mStreamPlugin: StreamPlugin,
+        private mAiaStream: AiaStream,
         private events: Events,
         private modalCtrl: ModalController) {
         this.mLiveStreamData.roomlive = this.navParams.get("room_live");
@@ -97,11 +99,18 @@ export class LiveStreamPage {
         }
 
     }
+    dispatchEvent(cmd: string, data: any) {
+        console.log("cmd : " + cmd);
+        if (cmd == "playing") {
+            this.onStreamPlayed();
+        }
+    }
     log(message: string) {
         if (this.mEnableDebug) {
             console.log("live-stream, " + message);
         }
     }
+
     // ========================= for self update ===================
     public scheduleUpdate() {
         let target = this;
@@ -128,7 +137,6 @@ export class LiveStreamPage {
         this.stopVideo();
         this.mEffectManager.stopAll();
         this.unScheduleUpdate();
-
     }
     getStreamPoster() {
         return "url(" + this.mLiveStreamData.roomlive.poster + ")";
@@ -178,88 +186,100 @@ export class LiveStreamPage {
     //=========================== for live stream========================
     /*Check xem đã khởi tạo view cho video hay chưa, nếu chưa thì khởi tạo*/
     initVideoPlayer() {
-        if (this.mDataService.isAndroid()) {
-            this.mStreamPlugin.initVideoPlayer();
-        } else if (this.mDataService.isIOS()) {
-            if (this.mVideo == undefined) {
-                this.mVideo = <HTMLVideoElement>document.getElementById("mVideoElement");
-                if (this.mVideo != undefined) {
-                    this.mVideo.addEventListener("playing", (event) => {
-                        this.onStreamPlayed();
-                    });
+        this.mAiaStream.mPlayer.setEventListener(this);
+        this.mAiaStream.mPlayer.createPlayer({
+            video_id: "mVideoElement"
+        });
 
-                    this.mVideo.addEventListener("play", (event) => { });
+        // if (this.mDataService.isAndroid()) {
+        //     //this.mStreamPlugin.initVideoPlayer();
+        //     this.mAiaStream.mPlayer.createPlayer({
+        //         video_id: "mVideoElement"
+        //     });
+        // } else if (this.mDataService.isIOS()) {
+        //     if (this.mVideo == undefined) {
+        //         this.mVideo = <HTMLVideoElement>document.getElementById("mVideoElement");
+        //         if (this.mVideo != undefined) {
+        //             this.mVideo.addEventListener("playing", (event) => {
+        //                 this.onStreamPlayed();
+        //             });
 
-                    this.mVideo.addEventListener("pause", (event) => {
-                        this.mVideo.load();
-                    });
-                    this.mVideo.onloadeddata = () => { }
-                }
-            }
-        }
+        //             this.mVideo.addEventListener("play", (event) => { });
+
+        //             this.mVideo.addEventListener("pause", (event) => {
+        //                 this.mVideo.load();
+        //             });
+        //             this.mVideo.onloadeddata = () => { }
+        //         }
+        //     }
+        // }
     }
 
 
     stopVideo() {
-        if (this.mDataService.isAndroid()) {
-            this.mStreamPlugin.stopVideoPlayer();
-        } else if (this.mDataService.isIOS()) {
-            this.mVideo.src = "";
-            this.mVideo.load();
-        }
+        this.mAiaStream.mPlayer.stopStream();
+        // if (this.mDataService.isAndroid()) {
+        //     // this.mStreamPlugin.stopVideoPlayer();
+        //     this.mAiaStream.mPlayer.stopStream();
+        // } else if (this.mDataService.isIOS()) {
+        //     this.mVideo.src = "";
+        //     this.mVideo.load();
+        // }
     }
     /**Call when start new room live */
     playVideoStream() {
-        if (this.mDataService.isAndroid()) {
-            this.mStreamPlugin.playVideo(this.mLiveStreamData.roomlive.rtmp_url).then(
-                data => {
-                    this.onStreamPlayed();
-                },
-                error => { }
-            );
-        } else if (this.mDataService.isIOS()) {
-            if (this.mVideo != undefined) {
-                this.mVideo.src = this.mLiveStreamData.roomlive.hls_url;
-                this.mVideo.load();
-                this.log("play video " + this.mLiveStreamData.roomlive.hls_url);
-            } else {
-                this.stopVideo();
-            }
-        }
+        this.mAiaStream.mPlayer.playStream(this.mDataService.isAndroid() ? this.mLiveStreamData.roomlive.rtmp_url : this.mLiveStreamData.roomlive.hls_url);
+
+        // if (this.mDataService.isAndroid()) {
+        //     // this.mStreamPlugin.playVideo(this.mLiveStreamData.roomlive.rtmp_url).then(
+        //     //     data => {
+        //     //         this.onStreamPlayed();
+        //     //     },
+        //     //     error => { }
+        //     // );
+        // } else if (this.mDataService.isIOS()) {
+        //     if (this.mVideo != undefined) {
+        //         this.mVideo.src = this.mLiveStreamData.roomlive.hls_url;
+        //         this.mVideo.load();
+        //         this.log("play video " + this.mLiveStreamData.roomlive.hls_url);
+        //     } else {
+        //         this.stopVideo();
+        //     }
+        // }
     }
     /**Call when start new room live and room is not streaming*/
     playVideoStreamDefault() {
-        if (this.mDataService.isAndroid()) {
-            this.mStreamPlugin.playVideo(this.mLiveStreamData.roomlive.default_video).then(
-                data => {
-                    this.onStreamPlayed();
-                },
-                error => { }
-            );
-        } else if (this.mDataService.isIOS()) {
-            if (this.mVideo != undefined) {
-                this.mVideo.src = this.mLiveStreamData.roomlive.default_video;
-                this.mVideo.load();
-                this.log("play default video " + this.mLiveStreamData.roomlive.hls_url);
-
-            } else {
-                this.stopVideo();
-            }
-        }
-
+        this.mAiaStream.mPlayer.playDefaultVideo(this.mLiveStreamData.roomlive.default_video);
+        // if (this.mDataService.isAndroid()) {
+        //     this.mStreamPlugin.playVideo(this.mLiveStreamData.roomlive.default_video).then(
+        //         data => {
+        //             this.onStreamPlayed();
+        //         },
+        //         error => { }
+        //     );
+        // } else if (this.mDataService.isIOS()) {
+        //     if (this.mVideo != undefined) {
+        //         this.mVideo.src = this.mLiveStreamData.roomlive.default_video;
+        //         this.mVideo.load();
+        //         this.log("play default video " + this.mLiveStreamData.roomlive.hls_url);
+        //     } else {
+        //         this.stopVideo();
+        //     }
+        // }
     }
 
 
 
     reloadVideo() {
-        if (this.mDataService.isAndroid()) {
-            this.mStreamPlugin.reloadVideo();
-        } else if (this.mDataService.isIOS()) {
-            if (this.mVideo != undefined && this.mLiveStreamData.roomlive.status == RoomLiveStatus.ON_AIR) {
-                this.mVideo.src = this.mLiveStreamData.roomlive.hls_url;
-                this.mVideo.load();
-            }
-        }
+        this.mAiaStream.mPlayer.reloadStream();
+        // if (this.mDataService.isAndroid()) {
+        //     this.mStreamPlugin.reloadVideo();
+        // } else if (this.mDataService.isIOS()) {
+        //     if (this.mVideo != undefined && this.mLiveStreamData.roomlive.status == RoomLiveStatus.ON_AIR) {
+        //         this.mVideo.src = this.mLiveStreamData.roomlive.hls_url;
+        //         this.mVideo.load();
+        //     }
+        // }
     }
     resetNextStreamElement() {
         let nextStream = document.getElementById("next-stream");
@@ -357,6 +377,7 @@ export class LiveStreamPage {
             this.onClickBack();
         });
     }
+    // =========================== Keyboard Events ==========================
     addEventListenerKeyboard() {
         Keyboard.onKeyboardHide().subscribe(() => {
             this.onKeyboardHide();
@@ -365,7 +386,7 @@ export class LiveStreamPage {
             this.onKeyboardShow(event);
         });
     }
-    // =========================== Keyboard Events ==========================
+
     onKeyboardShow(e) {
         if (e != undefined && e.keyboardHeight != undefined) {
             this.mKeyboardHeight = e.keyboardHeight;
@@ -401,6 +422,7 @@ export class LiveStreamPage {
         }, 1000);
         this.unScheduleUpdate();
         this.scheduleUpdate();
+        StatusBar.styleLightContent();
     }
 
     ionViewWillLeave() {
@@ -409,7 +431,6 @@ export class LiveStreamPage {
             this.mDataService.mPomeloService.leave_room();
         }
         this.onLeft();
-        ScreenOrientation.lockOrientation("portrait");
     }
 
     updateViewers(userview: number) {
@@ -508,8 +529,9 @@ export class LiveStreamPage {
         }
     }
     onSlideChanged() {
-        if (this.viewcontrol.type == this.VIEW_NONE)
+        if (this.viewcontrol.type == this.VIEW_NONE) {
             this.showBubbleHeart(this.slider.getActiveIndex() == 0);
+        }
     }
 
 
@@ -698,7 +720,7 @@ export class LiveStreamPage {
         if (this.viewcontrol.type != this.VIEW_NONE) {
             this.onClickShowView(this.VIEW_NONE);
         } else {
-            this.showVideoPoster(true);
+           // this.showVideoPoster(true);
             this.navCtrl.pop();
         }
     }
@@ -794,14 +816,14 @@ export class LiveStreamPage {
 
     }
 
-      onClickUser(user: UserPreview) {
+    onClickUser(user: UserPreview) {
         if (user.role == UserRole.TALENT) {
             this.onClickShowView(this.VIEW_NONE);
             setTimeout(() => {
                 let modal = this.modalCtrl.create(TalentDetailPage, {
                     talent: user,
                     room_live: this.mLiveStreamData.roomlive,
-                    from : 'livestream-page'
+                    from: 'livestream-page'
                 });
                 modal.present();
                 modal.onDidDismiss(() => {
@@ -885,7 +907,7 @@ export class LiveStreamPage {
         else if (route.localeCompare(PomeloCmd.LIST_USERS) == 0) {
             let size_users = data[PomeloParamsKey.SIZE_USERS];
             let size_users_spec = data[PomeloParamsKey.SIZE_SPEC];
-            this.updateViewers(size_users + size_users_spec);
+            this.updateViewers(data[PomeloParamsKey.SIZE_USERS]);
 
             for (let user of data[PomeloParamsKey.USERS]) {
                 let userobject = UserPreview.createUser();
@@ -914,7 +936,6 @@ export class LiveStreamPage {
         else if (route.localeCompare(PomeloCmd.JOIN_ROOM) == 0) {
             this.mDataService.mPomeloService.mPomeloState = PomeloState.ROOM_JOINED;
             this.mDataService.mPomeloService.room_info();
-
         }
         else if (route.localeCompare(PomeloCmd.USER_JOIN_ROOM) == 0) {
             if (data[PomeloParamsKey.SIZE_USERS] != undefined) {

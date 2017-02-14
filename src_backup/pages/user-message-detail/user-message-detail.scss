@@ -1,0 +1,30 @@
+page-user-message-detail {
+    .ms-content {
+        background-color: white;
+    }
+    .ms-header {
+        background-color: white;
+        box-shadow: 0px 1px 8px #222;
+    }
+    .item-message {
+        display: flex;
+        align-items: flex-start;
+        padding: 16px;
+    }
+    .item-message-avatar {
+        width: 48px;
+        height: 48px;
+    }
+    .item-message-content {
+        margin-left: 12px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #d8f2ff;
+        box-shadow: 0px 1px 1px #888;
+    }
+    .message-time {
+        color: gray;
+        padding-top: 10px;
+        font-size: .8em;
+    }
+}

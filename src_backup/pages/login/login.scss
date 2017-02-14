@@ -1,0 +1,17 @@
+page-login {
+    #loginpage {
+        background-image: url('../assets/v2/login-bg.png');
+        background-size: cover;
+        background-position: bottom;
+        overflow-y: hidden;
+    }
+    .scroll-content {
+        overflow-y: hidden;
+    }
+    .social-icon-login {
+        width: 14vw;
+        height: 14vw;
+        margin-left: 8vw;
+        margin-right: 8vw;
+    }
+}

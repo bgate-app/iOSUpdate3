@@ -1,0 +1,26 @@
+<ion-content class="ms-content">
+    <div style="height: 60px"></div>
+    <div class="item-message">
+        <img src={{message.sender_avatar}} class="item-message-avatar a1-circle">
+        <div class="item-message-content">
+            <div class="message-content">{{message.content}}</div>
+            <div class="message-time">{{mTime}}</div>
+        </div>
+    </div>
+</ion-content>
+
+<div class="a1-absolute a1-top a1-bg-white a1-shadow-bottom a1-width-100 a1-z-2">
+    <div class="a1-statusbar-height" *ngIf="mDataService.isIOS()"></div>
+    <div class="a1-width-100 a1-toolbar-height a3-container a3-items-center">
+        <div class="header-button" (click)="onClickBack()">
+            <ion-icon name="ios-arrow-back-outline" style="font-size: 1.4em; font-weight: lighter" (click)="onClickBack()"></ion-icon>
+        </div>
+        <div text-center style="font-size: 1.2em; flex: 1;">
+            {{message.title}}
+        </div>
+        <div class="header-button">
+
+        </div>
+    </div>
+
+</div>

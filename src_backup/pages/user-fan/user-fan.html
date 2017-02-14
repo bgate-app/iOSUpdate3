@@ -1,0 +1,22 @@
+<ion-content>
+    <div class="user-header">
+        <ion-icon name="ios-arrow-back-outline" class="user-header-back" (click)="onClickBack()"></ion-icon>
+        <div class="user-header-title">
+            Người hâm mộ
+        </div>
+    </div>
+    <div class="mContent">
+        <div *ngIf="mLoadingFan" text-center>
+            <ion-spinner name="ios" class="spinner-small"></ion-spinner>
+        </div>
+        <div *ngIf="!mLoadingFan">
+            <div *ngIf="mFollowings.length==0" text-center>
+                <img src="assets/v2/emo-sleep.png" style="max-width:32%;padding-top:100px">
+                <div text-center padding>
+                    Chưa có ai theo dõi bạn
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ion-content>

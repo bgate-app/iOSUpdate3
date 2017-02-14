@@ -1,0 +1,210 @@
+<ion-content id="user-home-page">
+    <div class="mContainer">
+        <!-- View LOADING -->
+        <div class="mFullScreenAbsolute" *ngIf="viewcontrol.type==VIEW_LOADING">
+            <div class="mContainer" text-center>
+                <ion-spinner name="ios" class="a1-spinner32" style="margin-top: 100px"></ion-spinner>
+            </div>
+        </div>
+
+        <!-- View HOME -->
+        <div class="mFullScreenAbsolute" *ngIf="viewcontrol.type==VIEW_HOME">
+            <div class="mContainer" id="view_stream">
+                <div class="a1-relative a1-toolbar-height"></div>
+                <ion-refresher (ionRefresh)="doRefresh($event)" class="a1-toolbar-height">
+                    <ion-refresher-content refreshingSpinner="ios"></ion-refresher-content>
+                </ion-refresher>
+                <div>
+                    <ion-slides id="mSlidebanner" loop="true" autoplay="3000" *ngIf="mDataService.mBanners.length>0">
+                        <ion-slide *ngFor="let banner of mDataService.mBanners">
+                            <img src={{banner.image}} class="width100" (click)="onClickAdsPage()">
+                        </ion-slide>
+                    </ion-slides>
+                    <ion-list no-lines style="background-color:white;margin:0px;">
+                        <div *ngFor="let room of mDataService.mRoomPageManager.mRooms" class="position-relative room" (click)="onClickOpenRoom(room,-1)">
+                            <div class="mContainer">
+                                <img src={{room.poster}} class="width100 v-middle">
+                                <div class="room-info">
+                                    <div class="mContainer">
+                                        <div class="room-info-des">{{room.name}}</div>
+                                        <div class="room-info-talent-name">{{room.talent.name}}</div>
+                                        <div class="room-info-talent-view"><img src="assets/v2/icon_view.png" class="inline-image"> {{room.view}}</div>
+                                    </div>
+                                </div>
+                                <div class="room-status-live" *ngIf="room.status==1">
+                                    <img src="assets/v2/streaming.gif">
+                                </div>
+                            </div>
+                        </div>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- View EXPLORE -->
+        <div class="mFullScreenAbsolute" *ngIf="viewcontrol.type==VIEW_EXPLORE">
+            <div class="mContainer" id="view_explore">
+                <div class="a1-toolbar-height"></div>
+                <ion-searchbar mode="ios" class="mSearchBar" placeholder="Tìm kiếm"></ion-searchbar>
+                <div class="divider-item">
+                    BẢNG XẾP HẠNG
+                    <div class="more-button" (click)="onClickShowViewTop()">
+                        Thêm
+                        <ion-icon name="ios-arrow-forward"></ion-icon>
+                    </div>
+                </div>
+                <div class="top top-user">
+                    <div *ngFor="let user of mDataService.mTopData.getTalentPreviews(); let i=index;" class="topitem">
+                        <img src={{user.avatar}} class="abs-center" (click)="onClickTopUser(user)">
+                        <img src={{getBorderTopItem(i)}} class="abs-center">
+                    </div>
+                </div>
+
+                <div class="hash-tags"></div>
+
+                <div *ngIf="mDataService.mRoomPageManager.mPages.length==0">
+                    <div text-center style="padding-top:100px;padding-bottom:40px">
+                        <ion-spinner name="ios" style="width:30px;height:30px;color:#673283"></ion-spinner>
+                    </div>
+                </div>
+
+                <div class="categories" *ngFor="let category of mDataService.mRoomPageManager.mPages">
+                    <div class="divider-item">
+                        {{category.name}}
+                        <div class="more-button" (click)="onClickShowViewCategory(category)">
+                            Thêm
+                            <ion-icon name="ios-arrow-forward"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="explore-room-lives">
+                        <div *ngFor="let room of category.getRoomsPreview()" class="explore-room" (click)="onClickOpenRoom(room,category.id)">
+                            <div class="mContainer">
+                                <img src={{room.poster}} class="width100 v-middle">
+                                <div class="room-info">
+                                    <div class="explore-room-info-des">{{room.talent.name}}</div>
+                                </div>
+                                <div class="room-status-live-sub" *ngIf="room.status==1">
+                                    <img src="assets/v2/streaming.gif">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</ion-content>
+
+<div id="scroll-top-top" (click)="onClickScrollToTop()">
+    <ion-icon name="md-arrow-round-up"></ion-icon>
+</div>
+<!-- HEADER ELEMENT -->
+<div id="header" class="a1-absolute a1-top a1-bg-white a1-shadow-bottom a1-width-100 a1-z-2">
+    <div class="a1-statusbar-height" *ngIf="mDataService.isIOS()"></div>
+    <div class="a1-width-100 a1-toolbar-height a3-container a3-items-center a3-justify-between">
+        <div class="header-button" (click)="onClickShowView(VIEW_USER_INFO)">
+            <img src="{{mDataService.mUser.avatar}}" width="36px" height="36px" class="a1-circle">
+            <div class="avatar-notify" *ngIf="mHasNotify"></div>
+        </div>
+        <img src="assets/v2/text-showtime.png" id="header-title" (click)="onClickHeaderRefresh()">
+        <div class="header-button" (click)="onClickShowNotify(true)">
+            <img src="assets/v2/icon-notification.png" height="24px">
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER ELEMENT -->
+<div id="footer" class="mFooter">
+    <div class="mContainer" text-center>
+        <div class="footer-left" (click)="onClickShowView(VIEW_HOME)">
+            <img [src]='viewcontrol.type==VIEW_HOME?"assets/v2/icon-home.png" :"assets/v2/icon-home-off.png"' id="footer-button-left">
+        </div>
+        <div class="footer-center" (click)="onClickShowView(VIEW_STREAM)">
+            <img src="assets/v2/icon-live.png" id="footer-button-center">
+        </div>
+        <div class="footer-right" (click)="onClickShowView(VIEW_EXPLORE)">
+            <img [src]='viewcontrol.type==VIEW_EXPLORE?"assets/v2/icon-explore.png" :"assets/v2/icon-explore-off.png"' id="footer-button-right">
+        </div>
+    </div>
+</div>
+
+
+<!-- NOTIFY ELEMENT -->
+<div id="view-notify" class="view-notify">
+    <div class="mContainer">
+        <div class="mFullScreenAbsolute" (click)="onClickShowNotify(false)"></div>
+        <div id="view-notify-container" class="view-notify-container view-notify-container-hide">
+            <div class="a1-statusbar-height" *ngIf="mDataService.isIOS()"></div>
+            <div class="view-notify-header" text-center>
+                <img src="assets/v2/icon-notification.png" class="button-left"> Nhắc nhở
+            </div>
+            <div class="view-notify-content" text-center>
+                <div *ngIf="mRequestingFollow" style="padding-top:100px" text-center>
+                    <ion-spinner name="ios" style="width: 30px; height: 30px; color:#673283"></ion-spinner>
+                </div>
+
+                <div *ngIf="!mRequestingFollow">
+                    <div *ngIf="mDataService.mFollowManager.followings.length==0">
+                        <img src="assets/v2/emo-sleep.png" style="width:40%;margin-top:60px;margin-bottom:20px">
+                        <div class="no-follower-online">
+                            Người bạn đang theo dõi không có ai trực tuyến bây giờ
+                        </div>
+                        <div padding text-center>
+                            <img src="assets/v2/button-theodoi.png" style="max-width:80%" (click)="onClickShowSuggestTalent()">
+                        </div>
+                    </div>
+
+                    <ion-list no-lines>
+                        <ion-item *ngFor="let follower of mDataService.mFollowManager.followings" (click)="onClickTalent(follower)">
+                            <ion-thumbnail item-left>
+                                <img src={{follower.avatar}}>
+                            </ion-thumbnail>
+                            <h2>{{follower.name}}</h2>
+                        </ion-item>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="mFullScreenAbsolute" style="z-index: 100" id="popup_promote">
+    <div class="mContainer flex-center-vertical">
+        <div class="bg-touch-hide" (click)="onClickHidePromotePopup()"></div>
+
+        <div class="margin-auto dia-container" style="z-index:1" text-center>
+
+            <div text-center class="dia-title">Bạn biết đến SHOWTIMES qua kênh nào?</div>
+
+            <div text-center class="dia-divider">TALENTS</div>
+
+            <div class="list-talents">
+                <div *ngIf="mRequestingTalents && mTalents.length==0" text-center style="padding-top: 10vh">
+                    <ion-spinner name="ios" style="width: 20px; height: 20px; color:#673283"></ion-spinner>
+                </div>
+
+                <div *ngFor="let talent of mTalents; let i =index;">
+                    <div class="dia-item-talent flex-center-vertical" (click)="onClickSelectedTalent(i)">
+                        <img src={{getCheckBox(i)}} class="checkbox">
+                        <img src={{talent.avatar}} class="a1-circle dia-item-talent-avatar">
+                        <span>{{talent.name}}</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="other-chanel" (click)="onClickOtherChannel()">
+                Kênh khác(facebook,google ...)
+            </div>
+            <div padding text-center>
+                <img src="assets/v2/button-ok.png" class="button-done" (click)="onClickDone()">
+            </div>
+
+        </div>
+
+    </div>
+</div>

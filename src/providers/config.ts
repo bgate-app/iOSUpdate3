@@ -81,13 +81,6 @@ export class UserDevice {
         this.device_id = "device_id";
         this.device_name = "device_name";
         this.platform = "iOS";
-
-        // if (Device.platform == null) {
-        //     this.mRealDevice = false;
-        //     this.mAndroidDevice = false;
-        //     this.mIOSDevice = true;
-        // }
-
     }
     isRealDevice() {
         return this.mRealDevice;

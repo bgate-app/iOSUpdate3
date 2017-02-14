@@ -1,5 +1,13 @@
 <ion-content id="live-stream-page-content" style="height:100% !important">
-    <video style="width:100%;height:100%" playsinline webkit-playsinline autoplay preload="true" loop id="mVideoElement" poster="assets/v2/black.png"></video>
+
+    <!--HTML5 video-->
+    <div class="mFullScreenAbsolute" *ngIf="mDataService.isIOS()">
+        <div class="a3-container a3-items-center a1-width-100 a1-height-100">
+            <video style="width:100% !important;height:auto; max-height: 100%" playsinline webkit-playsinline autoplay preload="true" loop id="mVideoElement" poster="assets/v2/black.png"></video>
+        </div>
+    </div>
+
+    <!--For video poster preload-->
     <div class="mFullScreenAbsolute background-has-image" id="videoposter" [style.background-image]="getStreamPoster()">
         <div class="mContainer" text-center>
             <div class="loading-container">
@@ -8,6 +16,7 @@
             <div text-center padding style="color:white"> Đang tải ...</div>
         </div>
     </div>
+
     <!--Hiệu ứng-->
     <div class="mFullScreenAbsolute" id="effect-views">
         <div class="mContainer" id="effect_container">
@@ -218,9 +227,6 @@
                 <ion-icon name="close" class="btn-close-user-info" (click)="onClickShowView(VIEW_NONE)">
                 </ion-icon>
             </div>
-
-
-
         </div>
     </div>
 

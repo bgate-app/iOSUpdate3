@@ -1,0 +1,40 @@
+<ion-content id="editpage">
+    <div class="user-header">
+        <ion-icon name="ios-arrow-back-outline" class="user-header-back" (click)="onClickBack()"></ion-icon>
+        <div class="user-header-title">
+            Chỉnh sửa
+        </div>
+    </div>
+    <div class="seprate"></div>
+    <div class="single-item" (click)="onClickChangeAvatar()">
+        <div class="left-item">Ảnh đại diện</div>
+        <img src={{user.avatar}} style="width:40px;height:40px" class="right-item a1-circle">
+    </div>
+    <div class="seprate"></div>
+    <div class="inline-item" (click)="onClickChangeName()">
+        <div class="left-item">Tên hiển thị</div>
+        <div class="right-item">{{user.name}}</div>
+    </div>
+
+    <div class="inline-item" (click)="onClickChangeSex()">
+        <div class="left-item">Giới tính</div>
+        <div class="right-item">{{user.sex}}</div>
+    </div>
+
+    <div class="inline-item" (click)="onClickChangePhone()">
+        <div class="left-item">Số điện thoại</div>
+        <div class="right-item">{{user.phone}}</div>
+    </div>
+
+    <div class="inline-item" (click)="onClickChangeEmail()">
+        <div class="left-item">Email</div>
+        <div class="right-item">{{user.email}}</div>
+    </div>
+
+    <div class="inline-item" style="position:relative">
+        <div class="left-item">Ngày sinh</div>
+        <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="user.birthday" (ngModelChange)="onBirthdayChange()"></ion-datetime>
+    </div>
+
+
+</ion-content>

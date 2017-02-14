@@ -1,0 +1,35 @@
+<ion-content>
+  <div class="sHeader">
+    <ion-icon name="ios-arrow-back-outline" class="user-header-back" (click)="onClickBack()"></ion-icon>
+    <div class="user-header-title">
+      Top Talent
+    </div>
+  </div>
+  <div text-center class="list-header">
+    Showtime đề cử: hot talent
+  </div>
+
+  <div class="sContent">
+    <div *ngIf="mRequesting" text-center style="padding-top:100px">
+      <ion-spinner name="ios" style="width: 40px; height: 40px; color:#673283"></ion-spinner>
+    </div>
+    <div class="list-content" *ngIf="!mRequesting">
+      <div class="mContainer">
+        <div *ngFor="let talent of talents" class="talent_item">
+          <div class="mContainer" text-center>
+            <div class="s-talent-avatar">
+              <img src={{talent.avatar}} class="talent-avatar">
+              <img src={{getCheckBox(talent)}} class="talent-checkbox" (click)="onClickToggleFollow(talent)">
+            </div>
+            <div class="talent-name">{{talent.name}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sFooter" padding text-center>
+    <img src="assets/v2/button-xong.png" style="max-width:60%" (click)="onClickDone()">    
+  </div>
+
+</ion-content>

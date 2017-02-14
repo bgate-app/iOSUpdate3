@@ -434,7 +434,7 @@ export class TalentStreamPage {
 
 
   onClickStartStream() {
-    if (this.mLiveStreamData.roomlive.talent.role != UserRole.TALENT) {
+    if (this.mDataService.mUser.role_id != UserRole.TALENT) {
       let alert = this.alertCtrl.create({
         title: "Chức năng chỉ dành cho talent !",
         subTitle: "Vui lòng đăng kí talent để có thể livestream được.",

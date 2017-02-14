@@ -1,0 +1,13 @@
+page-user-message {
+    .fake-padding {
+        height: $toolbar-height;
+        margin-top: 10px;
+    }
+    .message-read {
+        color: gray;
+    }
+    .message-unread {
+        font-weight: bold;
+        color: #222;
+    }
+}

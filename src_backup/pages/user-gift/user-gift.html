@@ -1,0 +1,28 @@
+<ion-content id="user-gift-content">
+    <div class="user-header" style="background-color:white">
+        <ion-icon name="ios-arrow-back-outline" class="user-header-back" (click)="onClickBack()"></ion-icon>
+        <div class="user-header-title">
+            Lịch sử quà tặng
+        </div>
+    </div>
+    <div class="gift-content">
+        <div *ngIf="mLoading" class="loading-container">
+            <ion-spinner name="ios" style="position:absolute; left : 50%; top:50%; transform: translate(-50%,-50%); width: 30px; height: 30px; color:#673283"></ion-spinner>
+        </div>
+
+
+        <!--<div>
+      <ion-list no-lines>
+        <ion-item *ngFor="let follower of mFollowings" class="item-history">
+          <ion-avatar item-left>
+            <img src={{follower.talent.avatar}}>
+          </ion-avatar>
+          <h2>{{follower.talent.name}}</h2>
+          <button ion-button icon-only item-right>
+          <ion-icon name="md-close" style="color:gray"></ion-icon>
+        </button>
+        </ion-item>
+      </ion-list>
+    </div>-->
+    </div>
+</ion-content>

@@ -1,0 +1,19 @@
+page-user-setting {
+    #settingpage {
+        background-color: #f8f8f8;
+    }
+    .user-header {
+        background-color: white;
+    }
+    .item-setting {
+        background-color: white;
+        height: 50px;
+        font-size: 1.2em;
+        padding: 0px;
+        padding-left: 16px;
+        margin-top: 20px;
+    }
+    .item-setting .item-inner {
+        border-bottom: 0px !important;
+    }
+}

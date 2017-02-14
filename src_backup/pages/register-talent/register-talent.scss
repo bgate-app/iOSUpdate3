@@ -1,0 +1,71 @@
+page-register-talent {
+#register-talent-page .scroll-content{
+    overflow-y: hidden;
+    
+}
+
+#register-talent-page{
+    background-color: #e6e6e6;
+}
+.mHeader ion-row{
+    bottom : 0px;    
+}
+.mHeader ion-col{
+    line-height: $header-height;
+    padding: 0px;
+    margin: 0px;
+    color: white;
+}
+.topbar-back{
+    font-size: 6vw;
+}
+.register-input{
+    width: 400px;
+    max-width: 100%;        
+    font-weight: bold;
+    margin-top: 20px;
+    display: inline-block;
+    color : #42337e;
+    background-color: white;
+    border-radius: 20px;          
+}
+.mItemInput{
+    margin-top: 20px;
+    color : #42337e;
+    background-color: white;
+    border-radius: 20px;
+}
+.register-input ion-input{
+    padding-left: 16px; 
+}
+
+.register-input:hover{
+    background-color: white;
+    border: solid 1px cyan;
+
+}
+/*.register-input .datetime-text:empty:not(:focus):before{
+    content : 'Ngày sinh'    
+}
+.register-input .datetime-text:empty:not(:focus){
+    color: #a6a6a6;
+    padding-left: 6px;
+}*/
+
+
+#button-register{
+    /*background-color: #87bc45;*/
+    letter-spacing: 1px;
+}
+
+.register-disable{
+    background-color: lightgrey;
+}
+
+.register-enable{
+    background-color: #87bc45;
+}
+
+
+
+}

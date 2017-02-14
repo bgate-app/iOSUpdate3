@@ -1,0 +1,25 @@
+page-test {
+    .mIcon {
+        font-size: 2em;
+        color: white;
+        font-weight: bold;
+    }
+    .preview-item {
+        display: inline-block;
+        width: 80px;
+        text-align: center;
+        padding: 6px;
+    }
+    .preview-item-selected {
+        border: solid 1px cyan;
+    }
+    .preview-item img {
+        width: 60px;
+        height: 60px;
+    }
+    .preview-item-name {
+        text-align: center;
+        color: white;
+        font-size: .8em;
+    }
+}
